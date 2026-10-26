@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import DisclaimerGate from '@/components/DisclaimerGate';
 import JsonLd from '@/components/JsonLd';
 import Preloader from '@/components/Preloader';
+import BackgroundEmblem from '@/components/BackgroundEmblem';
 import ScrollAnimations from '@/components/ScrollAnimations';
 import SmoothScroll from '@/components/SmoothScroll';
 import ScrollUI from '@/components/ScrollUI';
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
       <body>
+        <BackgroundEmblem />
         <Preloader />
         <ScrollAnimations />
         <SmoothScroll />

@@ -8,7 +8,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-line bg-[#070707]">
+    <footer className="relative border-t border-line bg-black/50">
       <span aria-hidden data-anim="line-x" className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-gold/70 via-gold/25 to-transparent" />
       <div data-anim="stagger" className="container grid gap-14 py-20 md:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-4">

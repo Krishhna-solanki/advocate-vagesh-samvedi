@@ -5,7 +5,7 @@ import { site } from '@/lib/site';
 // Animated by the hero timeline in ScrollAnimations.tsx (data-hero-* attributes).
 export default function Hero() {
   return (
-    <section data-hero className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-ink lg:items-center">
+    <section data-hero className="relative isolate flex min-h-[100svh] items-end overflow-hidden lg:items-center">
       {/* Background: drifting column texture and soft gold light */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
         <div data-hero-columns className="texture-columns absolute -inset-x-[10%] inset-y-0" />

@@ -11,7 +11,7 @@
     text-rendering: optimizeLegibility;
   }
   body {
-    @apply bg-ink font-sans text-[15px] leading-relaxed text-ivory md:text-base;
+    @apply font-sans text-[15px] leading-relaxed text-ivory md:text-base;
   }
   ::selection {
     @apply bg-gold/30 text-ivory;
@@ -25,6 +25,18 @@
   h4 {
     @apply font-serif font-medium tracking-[-0.01em] text-ivory;
   }
+}
+
+/* Hide the browser's default scrollbar everywhere; scrolling (wheel, touch, keyboard, Lenis) is unaffected.
+   The gold scroll-progress bar at the top of the page is the visual indicator instead. */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge */
+}
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+  width: 0;
+  height: 0;
 }
 
 /* Lenis smooth scrolling (from lenis/dist/lenis.css) */
@@ -181,6 +193,11 @@ html.js:not(.anim-off) [data-anim='progress'] {
 .split-word-mask {
   padding: 0 0.08em 0.1em;
   margin: 0 -0.08em -0.1em;
+}
+
+/* Background emblem fades in after the preloader (visible immediately without JS or if animations fail) */
+html.js:not(.anim-off) .bg-emblem {
+  visibility: hidden;
 }
 
 /* ---------- Preloader ---------- */

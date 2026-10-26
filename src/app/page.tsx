@@ -136,7 +136,7 @@ export default function HomePage() {
       )}
 
       {/* Philosophy — proposed editorial copy, pending the advocate's approval */}
-      <section aria-label="Professional philosophy" className="texture-grain relative overflow-hidden border-y border-line bg-[#080808] py-32 md:py-44">
+      <section aria-label="Professional philosophy" className="texture-grain relative overflow-hidden border-y border-line bg-black/40 py-32 md:py-44">
         <div aria-hidden className="absolute left-1/2 top-0 h-20 w-px -translate-x-1/2 bg-gradient-to-b from-transparent to-gold/70" />
         <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center" data-speed="0.4">
           <span className="select-none font-serif text-[22rem] leading-none text-gold/[0.04]">“</span>
