@@ -1,0 +1,102 @@
+# Decap CMS — content stored as files in this Git repository.
+# Authentication and authorisation are enforced by the Git host: only users with write
+# access to the repository can sign in and publish. See README → "Content management".
+backend:
+  name: github
+  repo: Krishhna-solanki/advocate-vagesh-samvedi
+  branch: main
+  # base_url: https://your-oauth-provider.example.com  # required unless hosted on Netlify
+
+# Run `npm run cms` alongside `npm run dev` to edit local files without signing in.
+local_backend: true
+
+# Draft → In review → Ready workflow; nothing is published until approved.
+publish_mode: editorial_workflow
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+site_url: https://www.vageshsamvedi.com
+display_url: https://www.vageshsamvedi.com
+logo_url: /images/law-astra-logo.png
+
+collections:
+  - name: insights
+    label: Insights & News
+    label_singular: Article
+    folder: content/insights
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    preview_path: 'insights/{{slug}}'
+    summary: '{{title}} — {{date | date("D MMM YYYY")}}'
+    sortable_fields: ['date', 'title', 'category']
+    view_filters:
+      - { label: Featured, field: featured, pattern: true }
+      - { label: Hidden drafts, field: draft, pattern: true }
+    view_groups:
+      - { label: Category, field: category }
+      - { label: Year, field: date, pattern: '\d{4}' }
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Publication date, name: date, widget: datetime, format: 'YYYY-MM-DDTHH:mm:ss', date_format: 'D MMM YYYY', time_format: 'HH:mm' }
+      - { label: Last updated, name: updated, widget: datetime, required: false, format: 'YYYY-MM-DDTHH:mm:ss' }
+      - label: Category
+        name: category
+        widget: relation
+        collection: settings
+        file: categories
+        search_fields: ['categories.*.name']
+        display_fields: ['categories.*.name']
+        value_field: 'categories.*.slug'
+      - { label: Tags, name: tags, widget: list, required: false }
+      - { label: Author, name: author, widget: string, default: Vagesh Samvedi, hint: 'Only use a verified author name.' }
+      - { label: Summary / excerpt, name: excerpt, widget: text, hint: 'Shown on listings and as the article standfirst. 1–2 sentences.' }
+      - { label: Cover image, name: cover, widget: image, required: false }
+      - { label: Cover image description (alt text), name: coverAlt, widget: string, required: false }
+      - { label: Featured article, name: featured, widget: boolean, default: false, hint: 'The newest featured article leads the Insights page.' }
+      - { label: Hide from site (draft), name: draft, widget: boolean, default: false }
+      - { label: SEO title, name: seoTitle, widget: string, required: false, hint: 'Defaults to the title. Keep under 60 characters.' }
+      - { label: SEO description, name: seoDescription, widget: text, required: false, hint: 'Defaults to the excerpt. Keep under 160 characters.' }
+      - label: Content status
+        name: migrationStatus
+        widget: select
+        options: [{ label: Full article, value: full }, { label: Summary (migration in progress), value: summary }]
+        default: full
+      - { label: Original URL, name: source, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: settings
+    label: Settings
+    editor: { preview: false }
+    files:
+      - name: categories
+        label: Categories
+        file: content/categories.json
+        fields:
+          - label: Categories
+            name: categories
+            widget: list
+            summary: '{{fields.name}}'
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Slug, name: slug, widget: string, hint: 'lowercase-with-hyphens. Changing a slug orphans existing articles.' }
+              - { label: Description, name: description, widget: string, required: false }
+      - name: publications
+        label: Publications
+        file: content/publications.json
+        fields:
+          - label: Publications
+            name: publications
+            widget: list
+            summary: '{{fields.title}}'
+            hint: 'External, verified publications only — each must link to the genuine source.'
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text, required: false }
+              - { label: Date, name: date, widget: datetime, format: 'YYYY-MM-DD', time_format: false }
+              - { label: Author, name: author, widget: string, default: Vagesh Samvedi }
+              - { label: Publisher / journal, name: publisher, widget: string, required: false }
+              - { label: URL, name: url, widget: string }

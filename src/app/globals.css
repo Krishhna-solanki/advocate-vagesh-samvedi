@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html {
+    @apply bg-ink text-ivory antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-ink font-sans text-[15px] leading-relaxed text-ivory md:text-base;
+  }
+  ::selection {
+    @apply bg-gold/30 text-ivory;
+  }
+  :focus-visible {
+    @apply outline outline-1 outline-offset-4 outline-gold;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif font-medium tracking-[-0.01em] text-ivory;
+  }
+}
+
+/* Lenis smooth scrolling (from lenis/dist/lenis.css) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+@layer components {
+  .label {
+    @apply font-sans text-[11px] font-semibold uppercase tracking-label text-gold;
+  }
+  .display {
+    @apply font-serif font-medium leading-[1.04] tracking-[-0.02em];
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-3 border px-6 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.18em] transition-colors duration-300;
+  }
+  .btn-gold {
+    @apply btn border-gold bg-gold text-ink hover:border-gold-light hover:bg-gold-light;
+  }
+  .btn-outline {
+    @apply btn border-gold/60 text-gold-light hover:border-gold hover:text-ink;
+  }
+  .link-gold {
+    @apply inline-flex items-center gap-2 font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-gold transition-colors hover:text-gold-light;
+  }
+  .link-gold .arrow {
+    @apply transition-transform duration-300;
+  }
+  .link-gold:hover .arrow {
+    @apply translate-x-1;
+  }
+  .rule {
+    @apply h-px w-full bg-line;
+  }
+  .rule-gold {
+    @apply h-px w-16 bg-gold;
+  }
+  .field {
+    @apply w-full border-0 border-b border-line bg-transparent px-0 py-3 text-ivory placeholder:text-muted/60 transition-colors focus:border-gold focus:outline-none focus:ring-0;
+  }
+}
+
+/* ---------- Micro-interactions ---------- */
+/* Outline buttons fill with gold from the bottom */
+.btn-outline {
+  background-image: linear-gradient(#c8a45d, #c8a45d);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0%;
+  transition: background-size 0.55s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.4s ease, border-color 0.4s ease;
+}
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  background-size: 100% 100%;
+}
+/* Gold buttons: a soft sheen passes across */
+.btn-gold {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 250, 235, 0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.btn-gold:hover::after {
+  transform: translateX(120%);
+}
+.group:hover .link-gold .arrow {
+  transform: translateX(4px);
+}
+
+/* Faint architectural column texture */
+.texture-columns {
+  background-image:
+    radial-gradient(ellipse at 70% 40%, rgba(200, 164, 93, 0.07), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(245, 241, 232, 0.025) 0 1px, transparent 1px 120px);
+}
+
+.texture-grain {
+  background-image: radial-gradient(rgba(245, 241, 232, 0.035) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+/* Editorial treatment for illustrations migrated from the old site */
+.cover-tone {
+  filter: grayscale(0.85) sepia(0.25) brightness(0.72) contrast(1.05);
+  /* hover uses the independent `scale` property so it never fights GSAP transforms */
+  transition: filter 0.7s ease, scale 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.group:hover .cover-tone {
+  filter: grayscale(0.4) sepia(0.15) brightness(0.85);
+  scale: 1.03;
+}
+
+/* ---------- GSAP animation initial states ----------
+   Hidden only when JS runs (html.js); ScrollAnimations.tsx reveals them — with full motion, or as gentle
+   fades when the visitor prefers reduced motion. html.anim-off is a failsafe if animations cannot start. */
+html.js:not(.anim-off) :is(
+    [data-anim='fade-up'],
+    [data-anim='heading'],
+    [data-anim='scrub-words'],
+    [data-anim='stagger'] > *,
+    [data-anim='children'] > *,
+    [data-anim='image'],
+    [data-anim='line-x'],
+    [data-anim='line-y'],
+    [data-hero-label],
+    [data-hero-title],
+    [data-hero-text],
+    [data-hero-cta] > *,
+    [data-hero-meta],
+    [data-hero-line],
+    [data-hero-glow]
+  ) {
+  visibility: hidden;
+}
+html.js:not(.anim-off) [data-anim='progress'] {
+  transform: scaleX(0);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.js:not(.anim-off) [data-hero-media] {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js:not(.anim-off) [data-hero-media] {
+    visibility: hidden;
+  }
+}
+
+/* SplitText line masks */
+.split-line-mask {
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+/* Word masks: room for italic overhang and descenders without shifting layout */
+.split-word-mask {
+  padding: 0 0.08em 0.1em;
+  margin: 0 -0.08em -0.1em;
+}
+
+/* ---------- Preloader ---------- */
+.preloader {
+  display: none;
+}
+html.js:not(.preloaded) .preloader {
+  display: flex;
+}
+/* Undrawn until the preloader timeline takes over (no flash before hydration) */
+html.js .pl-draw {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+}
+html.js :is(.pl-char, .pl-glow) {
+  visibility: hidden;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-up {
+  animation: fade-up 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes scroll-cue {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(200%);
+  }
+}
+.animate-scroll-cue {
+  animation: scroll-cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+dialog::backdrop {
+  background: rgba(5, 5, 5, 0.82);
+  backdrop-filter: blur(4px);
+}

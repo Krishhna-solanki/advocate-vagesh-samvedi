@@ -1,0 +1,13 @@
+{
+  "categories": [
+    { "slug": "legal-news", "name": "Legal News", "description": "Notable legal developments and legislative updates." },
+    { "slug": "supreme-court-high-courts", "name": "Supreme Court & High Courts", "description": "Developments from the constitutional courts." },
+    { "slug": "case-analysis", "name": "Case Analysis", "description": "Close readings of judgments and their implications." },
+    { "slug": "intellectual-property", "name": "Intellectual Property Rights", "description": "Trademarks, copyright, patents and brand protection." },
+    { "slug": "technology-it-law", "name": "Technology & IT Law", "description": "Cyber law, data protection and the IT Act." },
+    { "slug": "business-taxation", "name": "Business & Taxation", "description": "Commercial, corporate and compliance questions for businesses." },
+    { "slug": "arbitration-adr", "name": "Arbitration & ADR", "description": "Arbitration, mediation and conciliation." },
+    { "slug": "legal-education", "name": "Legal Education & Careers", "description": "Studying law and building a legal career in India." },
+    { "slug": "legal-commentary", "name": "Legal Commentary", "description": "Perspectives on emerging legal questions." }
+  ]
+}
