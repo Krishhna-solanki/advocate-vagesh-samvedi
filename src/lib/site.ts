@@ -28,7 +28,6 @@ export const nav = [
   { href: '/about', label: 'About' },
   { href: '/practice-areas', label: 'Practice Areas' },
   { href: '/insights', label: 'Insights & News' },
-  { href: '/publications', label: 'Publications' },
   { href: '/contact', label: 'Contact' },
 ];
 

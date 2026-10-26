@@ -47,9 +47,6 @@ export default function Footer() {
               </li>
             ))}
           </ul>
-          <Link href="/publications" className="link-gold mt-6">
-            Publications <span className="arrow" aria-hidden>→</span>
-          </Link>
         </div>
 
         <div className="lg:col-span-3">
