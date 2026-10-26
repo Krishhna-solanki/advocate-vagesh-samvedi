@@ -3,6 +3,8 @@ import typography from '@tailwindcss/typography';
 
 const config: Config = {
   content: ['./src/**/*.{ts,tsx}'],
+  // No sticky hover states after taps on touch screens
+  future: { hoverOnlyWhenSupported: true },
   theme: {
     container: { center: true, padding: { DEFAULT: '1.25rem', md: '2rem', lg: '3rem' }, screens: { '2xl': '1320px' } },
     extend: {
@@ -19,6 +21,9 @@ const config: Config = {
         sans: ['var(--font-sans)', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
       },
       letterSpacing: { label: '0.22em' },
+      // Smooth default for every hover/transition utility
+      transitionDuration: { DEFAULT: '450ms' },
+      transitionTimingFunction: { DEFAULT: 'cubic-bezier(0.22, 1, 0.36, 1)', lux: 'cubic-bezier(0.22, 1, 0.36, 1)' },
       maxWidth: { prose: '68ch' },
       typography: ({ theme }: { theme: (path: string) => string }) => ({
         legal: {

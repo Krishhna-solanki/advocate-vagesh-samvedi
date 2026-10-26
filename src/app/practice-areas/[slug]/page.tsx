@@ -96,7 +96,7 @@ export default async function PracticeAreaPage({ params }: Params) {
               <li key={p.slug} className="border-b border-line">
                 <Link href={`/practice-areas/${p.slug}`} className="group flex items-center justify-between py-5">
                   <span className="font-serif text-xl transition-colors group-hover:text-gold-light">{p.title}</span>
-                  <span aria-hidden className="text-gold transition-transform group-hover:translate-x-1">
+                  <span aria-hidden className="text-gold transition-transform motion-safe:group-hover:translate-x-1">
                     →
                   </span>
                 </Link>

@@ -74,7 +74,7 @@ export default function ScrollUI() {
             strokeDashoffset={RING}
           />
         </svg>
-        <svg viewBox="0 0 24 24" className="relative h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
+        <svg viewBox="0 0 24 24" className="relative h-4 w-4 transition-transform duration-500 motion-safe:group-hover:-translate-y-0.5" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
           <path d="M12 19V5M6 11l6-6 6 6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
