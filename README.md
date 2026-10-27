@@ -123,7 +123,7 @@ Do this before launch: once the domain points here, the old WordPress pages will
 - [ ] **Education** — LinkedIn lists Vikram University; confirm and add the degree if wished.
 - [ ] **Practice areas** — taken from the old site. Tax law was mentioned on LinkedIn only and is deliberately omitted.
 - [ ] **About text** and the **Professional Philosophy** quote on the homepage (proposed copy, not attributed).
-- [ ] **Bar Council of India compliance review** — including the entry disclaimer, the "Get in Touch" button, and the
+- [ ] **Bar Council of India compliance review** — including whether to restore an entry disclaimer pop-up (removed at the owner's request), the "Get in Touch" button, and the
       promotional passages about Law Astra & Associates in two migrated articles.
 - [ ] **Privacy policy** — review against actual hosting/email providers.
 - [ ] Set `NEXT_PUBLIC_SITE_URL` for canonical URLs, sitemap and Open Graph tags.

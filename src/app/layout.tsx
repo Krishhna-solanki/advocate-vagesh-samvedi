@@ -5,7 +5,6 @@ import { site } from '@/lib/site';
 import { personJsonLd, websiteJsonLd } from '@/lib/seo';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import DisclaimerGate from '@/components/DisclaimerGate';
 import JsonLd from '@/components/JsonLd';
 import Preloader from '@/components/Preloader';
 import BackgroundEmblem from '@/components/BackgroundEmblem';
@@ -66,7 +65,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <ScrollUI />
-        <DisclaimerGate />
         <JsonLd data={[personJsonLd(), websiteJsonLd()]} />
       </body>
     </html>
