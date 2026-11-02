@@ -1,6 +1,7 @@
 import PageHeader from '@/components/PageHeader';
 import ContactForm from '@/components/ContactForm';
 import OfficeLocations from '@/components/OfficeLocations';
+import SocialLinks from '@/components/SocialLinks';
 import JsonLd from '@/components/JsonLd';
 import { site } from '@/lib/site';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
@@ -54,8 +55,11 @@ export default function ContactPage() {
             </div>
             <div>
               <dt className="label">Profiles</dt>
+              <dd className="mt-4">
+                <SocialLinks variant="labelled" />
+              </dd>
               <dd className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
-                {site.profiles.map((p) => (
+                {site.profiles.filter((p) => !p.social).map((p) => (
                   <a key={p.href} href={p.href} target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light">
                     {p.label} ↗<span className="sr-only"> (opens in a new tab)</span>
                   </a>

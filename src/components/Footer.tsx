@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { nav, site } from '@/lib/site';
 import { getArticleMetas } from '@/lib/insights';
 import Monogram from './Monogram';
+import SocialLinks from './SocialLinks';
 
 export default function Footer() {
   const recent = getArticleMetas().slice(0, 3);
@@ -64,8 +65,9 @@ export default function Footer() {
               {site.location.city}, {site.location.region}, {site.location.country}
             </p>
           </address>
-          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-            {site.profiles.map((p) => (
+          <SocialLinks className="mt-6" />
+          <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+            {site.profiles.filter((p) => !p.social).map((p) => (
               <li key={p.href}>
                 <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-gold transition-colors hover:text-gold-light">
                   {p.label}

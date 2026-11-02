@@ -3,7 +3,8 @@ import SocialGallery from '@/components/SocialGallery';
 import EmptyState from '@/components/EmptyState';
 import JsonLd from '@/components/JsonLd';
 import { getSocialPosts } from '@/lib/social';
-import { site } from '@/lib/site';
+import { socialProfiles } from '@/lib/site';
+import SocialLinks from '@/components/SocialLinks';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata({
@@ -14,7 +15,6 @@ export const metadata = pageMetadata({
 
 export default function SocialPage() {
   const posts = getSocialPosts();
-  const profiles = site.profiles.filter((p) => p.label !== 'Digital Card');
   const crumbs = [
     { name: 'Home', path: '/' },
     { name: 'Social Life', path: '/social' },
@@ -36,16 +36,11 @@ export default function SocialPage() {
         {posts.length > 0 ? (
           <>
             <SocialGallery posts={posts} />
-            {profiles.length > 0 && (
-              <p data-anim="fade-up" className="mt-14 flex flex-wrap items-center justify-center gap-6 border-t border-line pt-10">
+            {socialProfiles.length > 0 && (
+              <div data-anim="fade-up" className="mt-14 flex flex-wrap items-center justify-center gap-6 border-t border-line pt-10">
                 <span className="label text-muted">Follow</span>
-                {profiles.map((p) => (
-                  <a key={p.href} href={p.href} target="_blank" rel="noopener noreferrer" className="link-gold">
-                    {p.label} <span className="arrow" aria-hidden>↗</span>
-                    <span className="sr-only"> (opens in a new tab)</span>
-                  </a>
-                ))}
-              </p>
+                <SocialLinks variant="labelled" />
+              </div>
             )}
           </>
         ) : (

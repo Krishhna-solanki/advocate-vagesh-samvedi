@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { nav, site } from '@/lib/site';
 import Monogram from './Monogram';
+import SocialLinks from './SocialLinks';
 import { gsap, ScrollTrigger, EASE, prefersReducedMotion } from '@/lib/gsap';
 import { whenPreloaderDone } from '@/lib/preloader-signal';
 import { lockScroll } from '@/lib/smooth-scroll';
@@ -168,6 +169,10 @@ export default function Header() {
                 </li>
               );
             })}
+            {/* Social icons where there is room for them (narrower screens: in the mobile menu) */}
+            <li data-header-item className="hidden xl:block">
+              <SocialLinks size="sm" />
+            </li>
             <li data-header-item>
               <Link href="/contact" data-magnetic className="btn-outline px-5 py-2.5" aria-current={isActive(pathname, '/contact') ? 'page' : undefined}>
                 Get in Touch
@@ -224,6 +229,7 @@ export default function Header() {
             <p>
               {site.location.city}, {site.location.region}
             </p>
+            <SocialLinks size="sm" className="pt-4" />
           </div>
         </nav>
       </div>

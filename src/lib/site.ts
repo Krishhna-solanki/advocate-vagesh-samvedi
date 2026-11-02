@@ -17,8 +17,10 @@ export const site = {
   education: { institution: 'Vikram University', city: 'Ujjain' },
   firm: { name: 'Law Astra & Associates', city: 'Indore', logo: '/images/law-astra-logo.png' },
   profiles: [
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/vagesh-samvedi-07a545232/' },
-    { label: 'Digital Card', href: 'https://dvc.vageshsamvedi.com' },
+    // Verified by the client (2 November 2026). `social: true` entries appear as icons in the header, footer and social sections.
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/adv-vagesh-samvedi-07a545232/', social: true },
+    { label: 'Instagram', href: 'https://www.instagram.com/adv.vageshsamvedi/?hl=en', social: true },
+    { label: 'Digital Card', href: 'https://dvc.vageshsamvedi.com', social: false },
   ],
   portrait: '/images/portrait.jpg',
 };
@@ -32,5 +34,7 @@ export const nav = [
   { href: '/social', label: 'Social Life' },
   { href: '/contact', label: 'Contact' },
 ];
+
+export const socialProfiles = site.profiles.filter((p) => p.social);
 
 export const absoluteUrl = (path = '/') => `${site.url}${path === '/' ? '' : path}`;
