@@ -22,7 +22,7 @@ logo_url: /images/law-astra-logo.png
 
 collections:
   - name: insights
-    label: Insights & News
+    label: Blog & Articles
     label_singular: Article
     folder: content/insights
     create: true
@@ -30,7 +30,7 @@ collections:
     extension: md
     format: frontmatter
     slug: '{{slug}}'
-    preview_path: 'insights/{{slug}}'
+    preview_path: 'blog/{{slug}}'
     summary: '{{title}} — {{date | date("D MMM YYYY")}}'
     sortable_fields: ['date', 'title', 'category']
     view_filters:
@@ -68,6 +68,60 @@ collections:
       - { label: Original URL, name: source, widget: string, required: false }
       - { label: Body, name: body, widget: markdown }
 
+  - name: news
+    label: News
+    label_singular: News item
+    description: Professional activities, events, achievements and updates. Use real, verified items only.
+    folder: content/news
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: '{{year}}-{{month}}-{{slug}}'
+    preview_path: 'news/{{slug}}'
+    summary: '{{title}} — {{date | date("D MMM YYYY")}}'
+    sortable_fields: ['date', 'title', 'type']
+    view_groups:
+      - { label: Type, field: type }
+      - { label: Year, field: date, pattern: '\d{4}' }
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, format: 'YYYY-MM-DD', time_format: false }
+      - { label: Type, name: type, widget: select, options: ['Achievement', 'Event', 'Professional Activity', 'Legal Update', 'Announcement', 'Media'] }
+      - { label: Location, name: location, widget: string, required: false }
+      - { label: Summary, name: excerpt, widget: text, hint: 'One or two sentences shown in listings.' }
+      - { label: Photograph, name: cover, widget: image, required: false }
+      - { label: Photograph description (alt text), name: coverAlt, widget: string, required: false }
+      - { label: External link, name: link, widget: string, required: false, hint: 'e.g. press coverage or the original announcement' }
+      - { label: External link label, name: linkLabel, widget: string, required: false }
+      - { label: Lead story on homepage, name: featured, widget: boolean, default: false }
+      - { label: Hide from site (draft), name: draft, widget: boolean, default: false }
+      - { label: Details, name: body, widget: markdown, required: false }
+
+  - name: social
+    label: Social Life
+    label_singular: Social post
+    description: Photographs and posts from events and professional activities. Each post needs a photograph.
+    folder: content/social
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: '{{year}}-{{month}}-{{day}}-{{fields.platform}}'
+    identifier_field: caption
+    summary: '{{caption}} — {{platform}}'
+    sortable_fields: ['date', 'platform']
+    view_groups:
+      - { label: Platform, field: platform }
+    fields:
+      - { label: Caption, name: caption, widget: text }
+      - { label: Date, name: date, widget: datetime, format: 'YYYY-MM-DD', time_format: false }
+      - { label: Photograph, name: image, widget: image }
+      - { label: Photograph description (alt text), name: imageAlt, widget: string, required: false }
+      - { label: Platform, name: platform, widget: select, options: ['LinkedIn', 'Instagram', 'Facebook', 'X', 'YouTube', 'Other'] }
+      - { label: Link to the post, name: url, widget: string, required: false }
+      - { label: Hide from site (draft), name: draft, widget: boolean, default: false }
+
   - name: settings
     label: Settings
     editor: { preview: false }
@@ -84,6 +138,22 @@ collections:
               - { label: Name, name: name, widget: string }
               - { label: Slug, name: slug, widget: string, hint: 'lowercase-with-hyphens. Changing a slug orphans existing articles.' }
               - { label: Description, name: description, widget: string, required: false }
+      - name: offices
+        label: Office Locations
+        file: content/offices.json
+        fields:
+          - label: Offices
+            name: offices
+            widget: list
+            summary: '{{fields.name}} — {{fields.city}}'
+            hint: 'Add, remove or reorder offices (3–4 recommended). Untick "Placeholder" once the real details are entered.'
+            fields:
+              - { label: Office name, name: name, widget: string }
+              - { label: Address, name: address, widget: text, hint: 'Street address; use new lines where needed.' }
+              - { label: City / region, name: city, widget: string, required: false }
+              - { label: Google Maps link, name: mapUrl, widget: string, required: false, hint: 'In Google Maps open the office, choose Share → Copy link, and paste it here. If left empty, the map link searches Google Maps for the address.' }
+              - { label: Phone, name: phone, widget: string, required: false }
+              - { label: Placeholder (details not yet confirmed), name: placeholder, widget: boolean, default: false, hint: 'Shows a Placeholder badge and hides the map link.' }
       - name: publications
         label: Publications
         file: content/publications.json

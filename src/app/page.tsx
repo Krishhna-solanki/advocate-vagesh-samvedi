@@ -6,8 +6,15 @@ import PracticeGrid from '@/components/PracticeGrid';
 import FeaturedArticle from '@/components/FeaturedArticle';
 import ArticleCard from '@/components/ArticleCard';
 import ContactForm from '@/components/ContactForm';
+import OfficeLocations from '@/components/OfficeLocations';
 import Reveal from '@/components/Reveal';
 import { getArticleMetas, getFeatured } from '@/lib/insights';
+import { getNewsMetas } from '@/lib/news';
+import { getSocialPosts } from '@/lib/social';
+import { NewsLead, NewsRow } from '@/components/NewsItems';
+import SocialGallery from '@/components/SocialGallery';
+import DigitalCardPromo from '@/components/DigitalCardPromo';
+import EmptyState from '@/components/EmptyState';
 import { site } from '@/lib/site';
 
 export default function HomePage() {
@@ -15,6 +22,10 @@ export default function HomePage() {
   const recent = getArticleMetas()
     .filter((a) => a.slug !== featured?.slug)
     .slice(0, 3);
+  const news = getNewsMetas();
+  const leadNews = news.find((n) => n.featured) ?? news[0];
+  const moreNews = news.filter((n) => n !== leadNews).slice(0, 4);
+  const social = getSocialPosts().slice(0, 5);
 
   return (
     <>
@@ -22,7 +33,7 @@ export default function HomePage() {
 
       {/* About */}
       <section aria-labelledby="about-heading" className="relative py-28 md:py-36">
-        <div className="container grid gap-16 lg:grid-cols-12 lg:gap-20">
+        <div className="container grid gap-16 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-20">
           <div className="relative lg:col-span-5">
             <Reveal variant="image" className="relative aspect-[4/5] overflow-hidden">
               <div className="absolute -inset-y-[10%] inset-x-0" data-speed="0.25">
@@ -45,7 +56,7 @@ export default function HomePage() {
           <div className="lg:col-span-7 lg:pt-10">
             <SectionHeading
               id="about-heading"
-              label="About the Advocate"
+              label="About Vagesh Samvedi"
               title={
                 <>
                   An Approach Grounded in Law, <span className="italic text-gold-light">Research</span> &amp; Perspective
@@ -100,19 +111,59 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Insights */}
+      {/* News */}
+      <section aria-labelledby="news-heading" className="border-t border-line py-28 md:py-36">
+        <div className="container">
+          <SectionHeading
+            id="news-heading"
+            align="split"
+            label="News"
+            title="News & Professional Updates"
+            intro="Professional activities, events, achievements and updates from the practice."
+            aside={
+              news.length > 0 && (
+                <Link href="/news" className="link-gold mt-6">
+                  View all news <span className="arrow">→</span>
+                </Link>
+              )
+            }
+          />
+          <div className="mt-16">
+            {leadNews ? (
+              <div className="grid gap-12 lg:grid-cols-12">
+                <div className="lg:col-span-5" data-anim="fade-up">
+                  <NewsLead item={leadNews} />
+                </div>
+                {moreNews.length > 0 && (
+                  <ul data-anim="stagger" data-delay="200" className="border-t border-line lg:col-span-7">
+                    {moreNews.map((n) => (
+                      <li key={n.slug}>
+                        <NewsRow item={n} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ) : (
+              <EmptyState title="News coming soon" text="Updates on professional activities, events and achievements will be shared here." />
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Blog & Articles */}
       {featured && (
-        <section aria-labelledby="insights-heading" className="py-28 md:py-36">
+        <section aria-labelledby="insights-heading" className="border-t border-line bg-charcoal/40 py-28 md:py-36">
           <div className="container">
             <SectionHeading
               id="insights-heading"
               align="split"
-              label="Insights & News"
+              label="Blog & Articles"
               title="Legal Insights & Developments"
               intro="Perspectives on legal developments, legislation, landmark judgments and emerging legal questions."
               aside={
-                <Link href="/insights" className="link-gold mt-6">
-                  View all insights <span className="arrow">→</span>
+                <Link href="/blog" className="link-gold mt-6">
+                  View all articles <span className="arrow">→</span>
                 </Link>
               }
             />
@@ -134,6 +185,36 @@ export default function HomePage() {
           </div>
         </section>
       )}
+
+      {/* Social Life */}
+      <section aria-labelledby="social-heading" className="border-t border-line py-28 md:py-36">
+        <div className="container">
+          <SectionHeading
+            id="social-heading"
+            align="split"
+            label="Social Life"
+            title="Beyond the Courtroom"
+            intro="Moments from events, professional gatherings and the work behind the practice."
+            aside={
+              social.length > 0 && (
+                <Link href="/social" className="link-gold mt-6">
+                  View the gallery <span className="arrow">→</span>
+                </Link>
+              )
+            }
+          />
+          <div className="mt-16">
+            {social.length > 0 ? (
+              <SocialGallery posts={social} />
+            ) : (
+              <EmptyState title="Gallery coming soon" text="Photographs and posts from events and professional activities will appear here." />
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Digital visiting card */}
+      <DigitalCardPromo />
 
       {/* Philosophy — proposed editorial copy, pending the advocate's approval */}
       <section aria-label="Professional philosophy" className="texture-grain relative overflow-hidden border-y border-line bg-black/40 py-32 md:py-44">
@@ -202,11 +283,16 @@ export default function HomePage() {
               </Reveal>
             </div>
           </div>
-          <Reveal delay={150} className="lg:col-span-6 lg:col-start-7 lg:pt-6">
+          <Reveal delay={150} className="form-panel lg:col-span-6 lg:col-start-7 lg:mt-6">
+            <h3 className="font-serif text-3xl">Send a message</h3>
+            <p className="mb-10 mt-3 text-sm text-muted">All fields are required.</p>
             <ContactForm />
           </Reveal>
         </div>
       </section>
+
+      {/* Office locations */}
+      <OfficeLocations />
     </>
   );
 }

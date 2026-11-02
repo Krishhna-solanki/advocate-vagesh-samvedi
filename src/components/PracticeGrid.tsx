@@ -7,14 +7,20 @@ export default function PracticeGrid({ headingLevel = 'h3' }: { headingLevel?: '
   return (
     <ul data-anim="stagger" className="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
       {practiceAreas.map((p, i) => (
-        <li key={p.slug} className="group relative border-b border-r border-line">
+        // Raised on hover so the card's soft halo is not covered by its neighbours
+        <li key={p.slug} className="group relative border-b border-r border-line hover:z-10">
           <span
             aria-hidden
-            className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gold transition-transform duration-700 group-hover:scale-x-100"
+            className="absolute inset-x-0 top-0 z-[1] h-px origin-left scale-x-0 bg-gold transition-transform duration-700 group-hover:scale-x-100 motion-safe:group-hover:-translate-y-1"
           />
-          <div className="flex h-full flex-col p-8 transition-[background-color,box-shadow] duration-700 group-hover:bg-charcoal group-hover:shadow-[inset_0_0_0_1px_rgba(200,164,93,0.22),inset_0_-60px_80px_-60px_rgba(200,164,93,0.12)] md:p-10">
+          {/* Default: charcoal with a soft gold glow rising from the bottom.
+              Hover: a slight lift, fine gold border, gentle gold halo and a deeper glow. */}
+          <div className="flex h-full flex-col bg-charcoal p-8 shadow-[inset_0_0_0_1px_rgba(200,164,93,0),inset_0_-60px_80px_-60px_rgba(200,164,93,0.12),0_0_0_0_rgba(200,164,93,0)] transition-[box-shadow,transform] duration-700 group-hover:shadow-[inset_0_0_0_1px_rgba(200,164,93,0.38),inset_0_-80px_90px_-60px_rgba(200,164,93,0.2),0_26px_50px_-28px_rgba(200,164,93,0.38)] motion-safe:group-hover:-translate-y-1 md:p-10">
             <div className="flex items-start justify-between">
-              <PracticeIcon name={p.icon} className="h-11 w-11 text-gold transition-[color,transform] duration-500 motion-safe:group-hover:-translate-y-1 group-hover:text-gold-light" />
+              <PracticeIcon
+                name={p.icon}
+                className="h-11 w-11 text-gold transition-[color,transform,filter] duration-500 group-hover:text-gold-light group-hover:drop-shadow-[0_0_10px_rgba(200,164,93,0.45)] motion-safe:group-hover:-translate-y-1"
+              />
               <span className="font-serif text-sm italic text-muted">{String(i + 1).padStart(2, '0')}</span>
             </div>
             <H className="mt-10 font-serif text-[1.65rem] leading-tight">

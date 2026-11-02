@@ -9,9 +9,9 @@ import remarkRehype from 'remark-rehype';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
 import { getCategory } from './categories';
+import { SHOW_DRAFTS, toIso } from './content';
 
 const DIR = path.join(process.cwd(), 'content', 'insights');
-const SHOW_DRAFTS = process.env.NODE_ENV === 'development';
 
 export type ArticleMeta = {
   slug: string;
@@ -36,13 +36,6 @@ export type ArticleMeta = {
 
 export type Article = ArticleMeta & { body: string };
 export type Heading = { id: string; text: string; depth: 2 | 3 };
-
-// WordPress exports local time without an offset; treat it as IST.
-const toIso = (v: unknown): string => {
-  if (v instanceof Date) return v.toISOString();
-  const s = String(v ?? '');
-  return /T\d\d:\d\d(:\d\d)?$/.test(s) ? `${s}+05:30` : s;
-};
 
 function parseFile(file: string): Article {
   const raw = fs.readFileSync(path.join(DIR, file), 'utf8');

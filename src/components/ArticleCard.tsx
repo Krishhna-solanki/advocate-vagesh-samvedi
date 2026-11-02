@@ -50,7 +50,7 @@ export default function ArticleCard({ article, headingLevel = 'h3' }: { article:
       <div className="flex flex-1 flex-col border-b border-line pb-8 pt-6">
         <ArticleMetaLine article={article} />
         <H className="mt-4 font-serif text-2xl leading-snug text-ivory transition-colors group-hover:text-gold-light">
-          <Link href={`/insights/${article.slug}`} className="after:absolute after:inset-0">
+          <Link href={`/blog/${article.slug}`} className="after:absolute after:inset-0">
             {article.title}
           </Link>
         </H>

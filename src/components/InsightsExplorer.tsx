@@ -61,6 +61,7 @@ export default function InsightsExplorer({ articles, featuredSlug, categories }:
   useLayoutEffect(() => {
     const root = rootRef.current;
     if (!root) return;
+    root.dataset.hydrated = '1';
     animateNew(root);
     // A new filter replaces the list, so every card animates in again
     if (lastFilter.current !== filterKey) {
@@ -76,7 +77,7 @@ export default function InsightsExplorer({ articles, featuredSlug, categories }:
   }, [visibleKey, featured?.slug, filterKey]);
 
   return (
-    <div ref={rootRef}>
+    <div ref={rootRef} data-anim-local>
       {/* Controls */}
       <div className="flex flex-col gap-8 border-b border-line pb-10 lg:flex-row lg:items-end lg:justify-between">
         <form

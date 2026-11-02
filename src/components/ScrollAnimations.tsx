@@ -32,9 +32,13 @@ let splits: SplitText[] = [];
 let processed: HTMLElement[] = [];
 
 // Elements under root that have not been animated yet (marks them as taken).
+// Content inside [data-anim-local] (client components that hydrate later, e.g. inside Suspense) is skipped by the
+// page-wide pass until that component marks itself data-hydrated and calls animateNew — touching it earlier
+// would make React's hydration see attributes it did not render.
 function fresh(root: ParentNode, sel: string) {
   return Array.from(root.querySelectorAll<HTMLElement>(sel)).filter((el) => {
     if (el.dataset.animInit) return false;
+    if (root === document && el.closest('[data-anim-local]:not([data-hydrated])')) return false;
     el.dataset.animInit = '1';
     processed.push(el);
     return true;

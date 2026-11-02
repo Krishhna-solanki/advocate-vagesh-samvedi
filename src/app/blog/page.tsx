@@ -9,10 +9,10 @@ import { categories } from '@/lib/categories';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata({
-  title: 'Insights & News',
+  title: 'Blog & Articles',
   description:
     'Legal insights and developments from Advocate Vagesh Samvedi — perspectives on legislation, judgments, arbitration, business law, intellectual property and technology law.',
-  path: '/insights',
+  path: '/blog',
 });
 
 export default function InsightsPage() {
@@ -41,7 +41,7 @@ export default function InsightsPage() {
   return (
     <>
       <PageHeader
-        label="Insights & News"
+        label="Blog & Articles"
         title={
           <>
             Legal Insights <span className="italic text-gold-light">&amp;</span> Developments
@@ -50,7 +50,7 @@ export default function InsightsPage() {
         intro="Perspectives on legal developments, legislation, landmark judgments and emerging legal questions — written to inform, not to advise on any particular matter."
         crumbs={[
           { name: 'Home', path: '/' },
-          { name: 'Insights & News', path: '/insights' },
+          { name: 'Blog & Articles', path: '/blog' },
         ]}
       />
       <section className="container py-16 md:py-20">
@@ -61,7 +61,7 @@ export default function InsightsPage() {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Home', path: '/' },
-          { name: 'Insights & News', path: '/insights' },
+          { name: 'Blog & Articles', path: '/blog' },
         ])}
       />
     </>

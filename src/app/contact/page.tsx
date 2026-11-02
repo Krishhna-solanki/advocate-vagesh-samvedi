@@ -1,5 +1,6 @@
 import PageHeader from '@/components/PageHeader';
 import ContactForm from '@/components/ContactForm';
+import OfficeLocations from '@/components/OfficeLocations';
 import JsonLd from '@/components/JsonLd';
 import { site } from '@/lib/site';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
@@ -63,12 +64,13 @@ export default function ContactPage() {
             </div>
           </dl>
         </div>
-        <div className="border-t border-line pt-12 lg:col-span-7 lg:col-start-6 lg:border-l lg:border-t-0 lg:pl-16 lg:pt-0" data-anim="fade-up" data-delay="450">
+        <div className="form-panel lg:col-span-7 lg:col-start-6" data-anim="fade-up" data-delay="450">
           <h2 className="font-serif text-3xl">Send a message</h2>
           <p className="mb-10 mt-3 text-sm text-muted">All fields are required.</p>
           <ContactForm />
         </div>
       </section>
+      <OfficeLocations />
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
     </>
   );

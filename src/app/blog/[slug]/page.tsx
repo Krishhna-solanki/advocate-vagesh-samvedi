@@ -7,7 +7,7 @@ import TableOfContents from '@/components/TableOfContents';
 import ShareButtons from '@/components/ShareButtons';
 import JsonLd from '@/components/JsonLd';
 import { getAdjacent, getAllArticles, getArticle, getRelated, renderMarkdown } from '@/lib/insights';
-import { articleJsonLd, breadcrumbJsonLd } from '@/lib/seo';
+import { articleJsonLd, breadcrumbJsonLd, metaDescription } from '@/lib/seo';
 import { absoluteUrl } from '@/lib/site';
 
 type Params = { params: Promise<{ slug: string }> };
@@ -23,17 +23,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const a = getArticle(slug);
   if (!a) return {};
   const title = a.seoTitle ?? a.title;
-  const description = a.seoDescription ?? a.excerpt;
+  const description = a.seoDescription ?? metaDescription(a.excerpt);
   return {
     title,
     description,
-    alternates: { canonical: `/insights/${a.slug}` },
+    alternates: { canonical: `/blog/${a.slug}` },
     robots: a.draft ? { index: false, follow: false } : undefined,
     openGraph: {
       type: 'article',
       title,
       description,
-      url: `/insights/${a.slug}`,
+      url: `/blog/${a.slug}`,
       publishedTime: a.date,
       modifiedTime: a.updated ?? a.date,
       section: a.categoryName,
@@ -54,10 +54,13 @@ export default async function ArticlePage({ params }: Params) {
   const { previous, next } = getAdjacent(slug);
   const related = getRelated(article);
   const showToc = headings.length >= 3;
+  // An excerpt that is just the article's opening words would repeat the first paragraph
+  const flat = (s: string) => s.replace(/[\\*_]/g, '').replace(/[…\s]+$/u, '').replace(/\s+/g, ' ').trim().toLowerCase();
+  const showStandfirst = Boolean(article.excerpt) && !flat(article.body).startsWith(flat(article.excerpt).slice(0, 80));
   const crumbs = [
     { name: 'Home', path: '/' },
-    { name: 'Insights & News', path: '/insights' },
-    { name: article.title, path: `/insights/${article.slug}` },
+    { name: 'Blog & Articles', path: '/blog' },
+    { name: article.title, path: `/blog/${article.slug}` },
   ];
 
   return (
@@ -75,9 +78,11 @@ export default async function ArticlePage({ params }: Params) {
             <h1 data-anim="heading" data-delay="150" className="display mt-6 text-4xl leading-[1.08] sm:text-5xl lg:text-[4rem]">
               {article.title}
             </h1>
-            <p className="mt-8 max-w-3xl font-serif text-xl italic leading-relaxed text-ivory/75 md:text-2xl" data-anim="fade-up" data-delay="450">
-              {article.excerpt}
-            </p>
+            {showStandfirst && (
+              <p className="mt-8 max-w-3xl font-serif text-xl italic leading-relaxed text-ivory/75 md:text-2xl" data-anim="fade-up" data-delay="450">
+                {article.excerpt}
+              </p>
+            )}
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted" data-anim="fade-up" data-delay="600">
               {article.author && (
                 <span>
@@ -98,7 +103,6 @@ export default async function ArticlePage({ params }: Params) {
           <div data-anim="image" data-delay="300">
             <CoverImage article={article} priority sizes="(min-width: 1280px) 1152px, 100vw" className="aspect-[16/9]" />
           </div>
-          {article.coverAlt && <figcaption className="mt-3 text-xs text-muted">{article.coverAlt}</figcaption>}
         </figure>
 
         <div id="article-body" className={`mx-auto grid max-w-6xl gap-12 py-16 md:py-20 ${showToc ? 'lg:grid-cols-[1fr_240px] lg:gap-20' : ''}`}>
@@ -130,7 +134,7 @@ export default async function ArticlePage({ params }: Params) {
             )}
 
             <div data-anim="fade-up" className="mt-12 max-w-prose border-y border-line py-8">
-              <ShareButtons url={absoluteUrl(`/insights/${article.slug}`)} title={article.title} />
+              <ShareButtons url={absoluteUrl(`/blog/${article.slug}`)} title={article.title} />
             </div>
 
             <p className="mt-8 max-w-prose text-xs leading-6 text-muted/80">
@@ -152,7 +156,7 @@ export default async function ArticlePage({ params }: Params) {
           <nav aria-label="More articles" data-anim="stagger" className="mx-auto grid max-w-6xl border-t border-line sm:grid-cols-2">
             <div className="border-line py-10 sm:border-r sm:pr-10">
               {previous && (
-                <Link href={`/insights/${previous.slug}`} className="group block">
+                <Link href={`/blog/${previous.slug}`} className="group block">
                   <span className="label text-muted">← Previous article</span>
                   <span className="mt-3 block font-serif text-2xl leading-snug transition-colors group-hover:text-gold-light">
                     {previous.title}
@@ -162,7 +166,7 @@ export default async function ArticlePage({ params }: Params) {
             </div>
             <div className="border-t border-line py-10 text-right sm:border-t-0 sm:pl-10">
               {next && (
-                <Link href={`/insights/${next.slug}`} className="group block">
+                <Link href={`/blog/${next.slug}`} className="group block">
                   <span className="label text-muted">Next article →</span>
                   <span className="mt-3 block font-serif text-2xl leading-snug transition-colors group-hover:text-gold-light">
                     {next.title}
@@ -181,7 +185,7 @@ export default async function ArticlePage({ params }: Params) {
               <h2 id="related-heading" data-anim="heading" className="display text-4xl">
                 Related insights
               </h2>
-              <Link href="/insights" className="link-gold">
+              <Link href="/blog" className="link-gold">
                 <span className="arrow" aria-hidden>
                   ←
                 </span>{' '}

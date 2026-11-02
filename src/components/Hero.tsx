@@ -63,7 +63,7 @@ export default function Hero() {
             <Link href="/about" className="btn-gold" data-magnetic>
               Explore Professional Profile
             </Link>
-            <Link href="/insights" className="btn-outline" data-magnetic>
+            <Link href="/blog" className="btn-outline" data-magnetic>
               Read Legal Insights
             </Link>
           </div>

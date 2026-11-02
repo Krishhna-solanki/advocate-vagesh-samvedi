@@ -1,0 +1,28 @@
+{
+  "offices": [
+    {
+      "name": "Indore Office",
+      "address": "Full address to be confirmed",
+      "city": "Indore, Madhya Pradesh",
+      "mapUrl": "",
+      "phone": "",
+      "placeholder": true
+    },
+    {
+      "name": "Office Location 2",
+      "address": "Address to be confirmed",
+      "city": "City to be confirmed",
+      "mapUrl": "",
+      "phone": "",
+      "placeholder": true
+    },
+    {
+      "name": "Office Location 3",
+      "address": "Address to be confirmed",
+      "city": "City to be confirmed",
+      "mapUrl": "",
+      "phone": "",
+      "placeholder": true
+    }
+  ]
+}

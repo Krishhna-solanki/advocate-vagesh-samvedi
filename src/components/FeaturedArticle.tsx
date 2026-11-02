@@ -17,7 +17,7 @@ export default function FeaturedArticle({ article, headingLevel = 'h3' }: { arti
         <p className="label mb-6">Featured</p>
         <ArticleMetaLine article={article} />
         <H className="display mt-5 text-3xl leading-[1.12] transition-colors group-hover:text-gold-light sm:text-4xl xl:text-[2.75rem]">
-          <Link href={`/insights/${article.slug}`} className="after:absolute after:inset-0">
+          <Link href={`/blog/${article.slug}`} className="after:absolute after:inset-0">
             {article.title}
           </Link>
         </H>

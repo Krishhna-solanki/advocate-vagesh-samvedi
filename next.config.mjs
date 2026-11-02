@@ -17,10 +17,13 @@ const nextConfig = {
       'law-as-an-career-ba-ll-b-legal-career',
     ];
     return [
-      { source: '/blogs', destination: '/insights', permanent: true },
+      { source: '/blogs', destination: '/blog', permanent: true },
+      // Articles moved from /insights to /blog
+      { source: '/insights', destination: '/blog', permanent: true },
+      { source: '/insights/:slug', destination: '/blog/:slug', permanent: true },
       { source: '/law-books', destination: '/practice-areas', permanent: true },
       { source: '/elementor-948', destination: '/about', permanent: true },
-      ...oldPosts.map((slug) => ({ source: `/${slug}`, destination: `/insights/${slug}`, permanent: true })),
+      ...oldPosts.map((slug) => ({ source: `/${slug}`, destination: `/blog/${slug}`, permanent: true })),
     ];
   },
   async headers() {

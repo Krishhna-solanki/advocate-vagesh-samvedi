@@ -25,7 +25,7 @@ export default function PublicationsPage() {
     description: a.excerpt,
     date: a.date,
     author: a.author,
-    href: `/insights/${a.slug}`,
+    href: `/blog/${a.slug}`,
     external: false,
     venue: a.categoryName,
   }));

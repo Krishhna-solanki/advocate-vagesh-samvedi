@@ -37,11 +37,11 @@ export default function Footer() {
         </nav>
 
         <div className="lg:col-span-3">
-          <h2 className="label mb-6">Recent insights</h2>
+          <h2 className="label mb-6">Recent articles</h2>
           <ul className="space-y-5">
             {recent.map((a) => (
               <li key={a.slug}>
-                <Link href={`/insights/${a.slug}`} className="font-serif text-lg leading-snug text-ivory/85 transition-colors hover:text-gold-light">
+                <Link href={`/blog/${a.slug}`} className="font-serif text-lg leading-snug text-ivory/85 transition-colors hover:text-gold-light">
                   {a.title}
                 </Link>
               </li>

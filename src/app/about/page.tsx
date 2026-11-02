@@ -22,7 +22,7 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
-        label="About the Advocate"
+        label="About Vagesh Samvedi"
         title={
           <>
             An Approach Grounded in Law, <span className="italic text-gold-light">Research</span> &amp; Perspective
@@ -32,7 +32,7 @@ export default function AboutPage() {
       />
 
       <section className="py-24 md:py-32">
-        <div className="container grid gap-16 lg:grid-cols-12 lg:gap-24">
+        <div className="container grid gap-16 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-24">
           <Reveal className="lg:col-span-5" delay={200}>
             <div className="relative lg:sticky lg:top-28">
               <div className="relative aspect-[3/4] overflow-hidden" data-anim="image">
@@ -125,7 +125,7 @@ export default function AboutPage() {
             </Reveal>
 
             <Reveal variant="stagger" className="mt-16 flex flex-col gap-4 sm:flex-row">
-              <Link href="/insights" className="btn-gold">
+              <Link href="/blog" className="btn-gold">
                 Read Legal Insights
               </Link>
               <Link href="/contact" className="btn-outline">

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { absoluteUrl, site } from './site';
 import { practiceAreas } from './practice-areas';
 import type { ArticleMeta } from './insights';
+import type { NewsMeta } from './news';
 
 export function pageMetadata({
   title,
@@ -68,7 +69,7 @@ export const articleJsonLd = (a: ArticleMeta) => ({
   description: a.seoDescription ?? a.excerpt,
   datePublished: a.date,
   dateModified: a.updated ?? a.date,
-  mainEntityOfPage: absoluteUrl(`/insights/${a.slug}`),
+  mainEntityOfPage: absoluteUrl(`/blog/${a.slug}`),
   ...(a.cover ? { image: absoluteUrl(a.cover) } : {}),
   ...(a.author ? { author: { '@type': 'Person', name: a.author, url: absoluteUrl('/about') } } : {}),
   publisher: { '@id': `${site.url}/#person` },
@@ -81,3 +82,23 @@ export const breadcrumbJsonLd = (items: { name: string; path: string }[]) => ({
   '@type': 'BreadcrumbList',
   itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it.name, item: absoluteUrl(it.path) })),
 });
+
+export const newsJsonLd = (n: NewsMeta) => ({
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: n.title,
+  description: n.excerpt,
+  datePublished: n.date,
+  mainEntityOfPage: absoluteUrl(`/news/${n.slug}`),
+  ...(n.cover ? { image: absoluteUrl(n.cover) } : {}),
+  author: { '@id': `${site.url}/#person` },
+  publisher: { '@id': `${site.url}/#person` },
+  articleSection: n.type,
+});
+
+/** Trims long text to a search-result-sized description (~160 characters) at a word boundary. */
+export function metaDescription(text: string, max = 160) {
+  const t = text.replace(/\s+/g, ' ').trim();
+  if (t.length <= max) return t;
+  return t.slice(0, t.lastIndexOf(' ', max - 1)).replace(/[\s,;:—–-]+$/, '') + '…';
+}

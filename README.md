@@ -15,16 +15,30 @@ npm run build && npm start   # production
 | --- | --- |
 | `src/lib/site.ts` | Name, contact details, profiles, firm, enrolment number. **Edit professional details here only.** |
 | `src/lib/practice-areas.ts` | Practice areas and their detail pages. |
-| `content/insights/*.md` | Articles (front matter + Markdown). File name = URL slug. |
+| `content/insights/*.md` | Blog articles (front matter + Markdown), served at `/blog/<file name>`. |
+| `content/news/*.md` | News: professional activities, events, achievements and updates, served at `/news/<file name>`. |
+| `content/social/*.md` | Social Life gallery posts (photograph, caption, platform, optional link to the post). |
 | `content/categories.json` | Article categories. Only categories with articles appear as filters. |
+| `content/offices.json` | Office locations, shown below the Contact section on the homepage and the Contact page. Managed in **Admin → Settings → Office Locations**. Entries marked `placeholder` show a badge and no map link. |
 | `content/publications.json` | External publications (journals, op-eds). Shown on `/publications` when non-empty. |
 | `public/admin/` | Decap CMS (`/admin`). |
 | `scripts/import-wordpress.mjs` | Imports full article text from the old WordPress site. |
 
-Routes: `/`, `/about`, `/practice-areas`, `/practice-areas/[slug]`, `/insights` (search, category filters, load more —
-state kept in the URL, e.g. `/insights?category=arbitration-adr&q=clat`), `/insights/[slug]`, `/publications`, `/contact`,
-`/disclaimer`, `/privacy-policy`, `/sitemap.xml`, `/robots.txt`, `/api/contact`.
-Old WordPress URLs (`/blogs`, `/law-books`, `/elementor-948` and the three post slugs) 308-redirect to their new homes.
+Routes:
+
+- `/`, `/about`, `/practice-areas`, `/practice-areas/[slug]`
+- `/news` (type filter, grouped by year) and `/news/[slug]`
+- `/blog` (search, category filters, load more) and `/blog/[slug]`. Filter state is kept in the URL, e.g. `/blog?category=arbitration-adr&q=clat`.
+- `/social`, `/publications`, `/contact`, `/disclaimer`, `/privacy-policy`
+- `/sitemap.xml`, `/robots.txt`, `/api/contact`
+
+Old URLs 308-redirect to their new homes. That covers the WordPress pages (`/blogs`, `/law-books`, `/elementor-948` and the three post slugs) and the former `/insights` pages.
+
+Homepage order: Hero, About, Practice Areas, **News**, **Blog & Articles**, **Social Life**, **Digital Visiting Card**, Philosophy, Contact. The Digital Visiting Card section links to https://dvc.vageshsamvedi.com/.
+
+News and Social Life show a "coming soon" state until they have published entries.
+
+**Sample content.** The files `content/news/sample-*.md` and `content/social/sample-*.md` are labelled placeholders marked `draft: true`. They let you preview the layouts in `npm run dev`, and never appear on the live site. Delete them once real entries exist.
 
 ## Article front matter
 
@@ -37,7 +51,7 @@ author: Vagesh Samvedi           # verified names only
 excerpt: "…"                     # listing summary + standfirst
 cover: /images/insights/x.jpg
 coverAlt: "…"
-featured: true                   # newest featured article leads /insights
+featured: true                   # newest featured article leads /blog
 draft: false                     # true = hidden in production, visible in `npm run dev`
 seoTitle: "…"                    # optional
 seoDescription: "…"              # optional
@@ -106,14 +120,16 @@ succeeds). Messages are not stored. The in-memory rate limit is per server insta
 
 ## Importing the full WordPress articles
 
-The three articles currently contain **summaries** (flagged on each page) because the full text could not be copied
-automatically. Before switching the domain to this site:
+**Done.** The three published articles were migrated in full from the old site's WordPress API on 2 November 2026.
 
-1. In the old WordPress admin: **Tools → Export → Posts → Download**.
-2. `npm run import:wp -- path/to/export.xml`
-3. Review each file in `content/insights/` and commit. Imported articles are marked `migrationStatus: full`.
+- **Taken from the original:** titles, publication dates, body text, bold lines, excerpts, tags and image descriptions.
+- **Formatting:** paragraph breaks became Markdown paragraphs, and characters Markdown would reinterpret were escaped. Each article's displayed text was checked against the original HTML and is identical.
+- **Skipped:** the two "Test Post for WordPress" placeholders.
 
-Do this before launch: once the domain points here, the old WordPress pages will no longer be reachable.
+To migrate further posts later, use one of:
+
+- `npm run import:wp -- export.xml` (WordPress → **Tools → Export → Posts**);
+- `npm run import:wp -- posts.json` (saved from `/wp-json/wp/v2/posts?per_page=100&_embed`).
 
 ## Verify before launch
 

@@ -71,7 +71,7 @@ export default function ContactForm() {
 
   if (status.kind === 'success') {
     return (
-      <div ref={statusRef} tabIndex={-1} role="status" className="border border-gold/40 bg-charcoal p-8 outline-none md:p-10">
+      <div ref={statusRef} tabIndex={-1} role="status" className="outline-none">
         <p className="label">Message received</p>
         <p className="mt-4 font-serif text-3xl">Thank you for writing.</p>
         <p className="mt-4 text-sm leading-7 text-muted">
@@ -88,7 +88,7 @@ export default function ContactForm() {
     <form onSubmit={onSubmit} noValidate className="space-y-8" aria-describedby="form-note">
       <div className="grid gap-8 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className="label text-muted">
+          <label htmlFor="name" className="label">
             Name
           </label>
           <input
@@ -96,14 +96,14 @@ export default function ContactForm() {
             name="name"
             autoComplete="name"
             required
-            className="field"
+            className="field-boxed"
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? 'name-error' : undefined}
           />
           {fieldError('name')}
         </div>
         <div>
-          <label htmlFor="email" className="label text-muted">
+          <label htmlFor="email" className="label">
             Email
           </label>
           <input
@@ -112,7 +112,7 @@ export default function ContactForm() {
             type="email"
             autoComplete="email"
             required
-            className="field"
+            className="field-boxed"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? 'email-error' : undefined}
           />
@@ -120,7 +120,7 @@ export default function ContactForm() {
         </div>
       </div>
       <div>
-        <label htmlFor="message" className="label text-muted">
+        <label htmlFor="message" className="label">
           Message
         </label>
         <textarea
@@ -129,7 +129,7 @@ export default function ContactForm() {
           rows={5}
           required
           maxLength={3000}
-          className="field resize-y"
+          className="field-boxed resize-y"
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? 'message-error' : undefined}
         />
