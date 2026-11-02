@@ -169,10 +169,6 @@ export default function Header() {
                 </li>
               );
             })}
-            {/* Social icons where there is room for them (narrower screens: in the mobile menu) */}
-            <li data-header-item className="hidden xl:block">
-              <SocialLinks size="sm" />
-            </li>
             <li data-header-item>
               <Link href="/contact" data-magnetic className="btn-outline px-5 py-2.5" aria-current={isActive(pathname, '/contact') ? 'page' : undefined}>
                 Get in Touch
