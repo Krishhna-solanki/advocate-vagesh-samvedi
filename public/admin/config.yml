@@ -86,12 +86,25 @@ collections:
       - { label: Year, field: date, pattern: '\d{4}' }
     fields:
       - { label: Title, name: title, widget: string }
-      - { label: Date, name: date, widget: datetime, format: 'YYYY-MM-DD', time_format: false }
-      - { label: Type, name: type, widget: select, options: ['Achievement', 'Event', 'Professional Activity', 'Legal Update', 'Announcement', 'Media'] }
+      - { label: Date, name: date, widget: datetime, format: 'YYYY-MM-DD', time_format: false, required: false, hint: 'The date printed on the newspaper. Leave empty if the clipping shows no date — never guess; undated items show "Date not stated".' }
+      - { label: Category, name: type, widget: select, options: ['Cyber Law & Courts', 'Human Rights & Legal Affairs', 'Appointments & Achievements', 'Community & Events'] }
       - { label: Location, name: location, widget: string, required: false }
+      - { label: Publication (newspaper / outlet), name: publication, widget: string, required: false, hint: 'For press coverage, e.g. Dainik Crime Darpan. Use the date printed on the newspaper.' }
       - { label: Summary, name: excerpt, widget: text, hint: 'One or two sentences shown in listings.' }
       - { label: Photograph, name: cover, widget: image, required: false }
       - { label: Photograph description (alt text), name: coverAlt, widget: string, required: false }
+      - { label: Image style, name: coverStyle, widget: select, default: photo, options: [{ label: 'Photograph (cropped to fit)', value: photo }, { label: 'Newspaper clipping (shown whole, never cropped)', value: clipping }] }
+      - { label: Gallery heading, name: galleryTitle, widget: string, required: false, hint: 'Optional, e.g. "Photos and press coverage". Defaults to "Also in the press" for clippings, "Photo gallery" for photos.' }
+      - label: Additional images (gallery)
+        name: gallery
+        widget: list
+        required: false
+        summary: '{{fields.caption}}'
+        hint: 'Further clippings or photographs of the same story. Shown as thumbnails below the main image; each opens full size.'
+        fields:
+          - { label: Image, name: image, widget: image }
+          - { label: Description (alt text), name: alt, widget: string }
+          - { label: Caption, name: caption, widget: string, required: false }
       - { label: External link, name: link, widget: string, required: false, hint: 'e.g. press coverage or the original announcement' }
       - { label: External link label, name: linkLabel, widget: string, required: false }
       - { label: Lead story on homepage, name: featured, widget: boolean, default: false }
@@ -99,9 +112,9 @@ collections:
       - { label: Details, name: body, widget: markdown, required: false }
 
   - name: social
-    label: Social Life
+    label: Social Journey
     label_singular: Social post
-    description: Photographs and posts from events and professional activities. Each post needs a photograph.
+    description: Photographs, reels and posts from events and professional activities. Each post needs a photograph (for a reel, its still frame).
     folder: content/social
     create: true
     delete: true
@@ -115,11 +128,14 @@ collections:
       - { label: Platform, field: platform }
     fields:
       - { label: Caption, name: caption, widget: text }
-      - { label: Date, name: date, widget: datetime, format: 'YYYY-MM-DD', time_format: false }
-      - { label: Photograph, name: image, widget: image }
+      - { label: Date, name: date, widget: datetime, format: 'YYYY-MM-DD', time_format: false, required: false, hint: 'Leave empty if unknown.' }
+      - { label: Video (e.g. a reel), name: video, widget: file, required: false, hint: 'MP4 (H.264). Plays muted when visible; sound stays off until the visitor turns it on.' }
+      - { label: Photograph (or the video still), name: image, widget: image, hint: 'For a video, a representative frame shown before it plays.' }
       - { label: Photograph description (alt text), name: imageAlt, widget: string, required: false }
       - { label: Platform, name: platform, widget: select, options: ['LinkedIn', 'Instagram', 'Facebook', 'X', 'YouTube', 'Other'] }
       - { label: Link to the post, name: url, widget: string, required: false }
+      - { label: Added to site, name: addedOn, widget: datetime, format: 'YYYY-MM-DDTHH:mm:ss', hint: 'Filled in automatically. Orders posts when their own date is unknown; the newest appear on the homepage.' }
+      - { label: Show on homepage, name: showOnHomepage, widget: boolean, default: true, hint: 'The homepage shows the latest 4 posts (including the 2 newest reels). Turn off to keep this post on the Social Journey page only.' }
       - { label: Hide from site (draft), name: draft, widget: boolean, default: false }
 
   - name: settings
@@ -145,15 +161,19 @@ collections:
           - label: Offices
             name: offices
             widget: list
-            summary: '{{fields.name}} — {{fields.city}}'
-            hint: 'Add, remove or reorder offices (3–4 recommended). Untick "Placeholder" once the real details are entered.'
+            summary: '{{fields.title}} — {{fields.name}}'
+            max: 4
+            hint: 'Up to 4 offices; add, remove or reorder freely. Untick "Placeholder" once the real details are entered.'
             fields:
-              - { label: Office name, name: name, widget: string }
-              - { label: Address, name: address, widget: text, hint: 'Street address; use new lines where needed.' }
+              - { label: Card title, name: title, widget: string, hint: 'e.g. Petlawad Office' }
+              - { label: Name, name: name, widget: string, required: false, hint: 'Name shown on the card, e.g. the office or court name.' }
+              - { label: Address, name: address, widget: text }
               - { label: City / region, name: city, widget: string, required: false }
-              - { label: Google Maps link, name: mapUrl, widget: string, required: false, hint: 'In Google Maps open the office, choose Share → Copy link, and paste it here. If left empty, the map link searches Google Maps for the address.' }
+              - { label: Latitude, name: lat, widget: number, value_type: float, required: false, hint: 'Places the map pin. In Google Maps, right-click the location and click the coordinates to copy them (first number).' }
+              - { label: Longitude, name: lng, widget: number, value_type: float, required: false, hint: 'Second number of the copied coordinates. Without latitude and longitude the office has no pin.' }
+              - { label: Google Maps directions link, name: mapUrl, widget: string, required: false, hint: 'Optional. Paste a Google Maps directions or place link; a starting point inside the link is removed automatically so directions start from the visitor. If empty, directions use the coordinates.' }
               - { label: Phone, name: phone, widget: string, required: false }
-              - { label: Placeholder (details not yet confirmed), name: placeholder, widget: boolean, default: false, hint: 'Shows a Placeholder badge and hides the map link.' }
+              - { label: Placeholder (details not yet confirmed), name: placeholder, widget: boolean, default: false, hint: 'Shows a "Coming soon" card with no pin or links.' }
       - name: publications
         label: Publications
         file: content/publications.json

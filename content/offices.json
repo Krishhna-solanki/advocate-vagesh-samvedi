@@ -1,27 +1,33 @@
 {
   "offices": [
     {
-      "name": "Indore Office",
-      "address": "Full address to be confirmed",
-      "city": "Indore, Madhya Pradesh",
-      "mapUrl": "",
-      "phone": "",
+      "title": "Petlawad Office",
+      "name": "Advocate Vagesh Samvedi",
+      "address": "Ground Floor, Tarachand Complex, New Bus Stand, Petlawad, Madhya Pradesh – 457773",
+      "lat": 23.0136445,
+      "lng": 74.7955832,
+      "mapUrl": "https://www.google.com/maps/dir/23.0122956,74.7966079/Adv.+Vagesh+samvedi,+Ground+floor,+Tarachand+complex,+New+bus+stand,+Petlawad,+Madhya+Pradesh+457773/",
+      "placeholder": false
+    },
+    {
+      "title": "Indore High Court",
+      "name": "High Court of Madhya Pradesh, Indore Bench",
+      "address": "In front of Gate No. 2, close to Tinku's, South Tukoganj, Indore, Madhya Pradesh – 452001",
+      "lat": 22.7192447,
+      "lng": 75.873654,
+      "mapUrl": "https://www.google.com/maps/dir/23.0122956,74.7966079/High+Court+of+Madhya+Pradesh+Bench+at+Indore,+3-g,+Green+Park+Colony,+behind+High+Court,+South+Tukoganj,+Indore,+Madhya+Pradesh+452001/",
+      "placeholder": false
+    },
+    {
+      "title": "Office Location 3",
+      "name": "Details to be confirmed",
+      "address": "Address to be confirmed",
       "placeholder": true
     },
     {
-      "name": "Office Location 2",
+      "title": "Office Location 4",
+      "name": "Details to be confirmed",
       "address": "Address to be confirmed",
-      "city": "City to be confirmed",
-      "mapUrl": "",
-      "phone": "",
-      "placeholder": true
-    },
-    {
-      "name": "Office Location 3",
-      "address": "Address to be confirmed",
-      "city": "City to be confirmed",
-      "mapUrl": "",
-      "phone": "",
       "placeholder": true
     }
   ]

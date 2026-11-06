@@ -10,10 +10,10 @@ import OfficeLocations from '@/components/OfficeLocations';
 import Reveal from '@/components/Reveal';
 import { getArticleMetas, getFeatured } from '@/lib/insights';
 import { getNewsMetas } from '@/lib/news';
-import { getSocialPosts } from '@/lib/social';
+import { getHomepageSocial, getSocialPosts } from '@/lib/social';
 import { NewsLead, NewsRow } from '@/components/NewsItems';
 import SocialGallery from '@/components/SocialGallery';
-import DigitalCardPromo from '@/components/DigitalCardPromo';
+import DigitalCardBanner from '@/components/DigitalCardBanner';
 import EmptyState from '@/components/EmptyState';
 import { site } from '@/lib/site';
 
@@ -23,9 +23,13 @@ export default function HomePage() {
     .filter((a) => a.slug !== featured?.slug)
     .slice(0, 3);
   const news = getNewsMetas();
-  const leadNews = news.find((n) => n.featured) ?? news[0];
+  // A real featured item outranks the dev-only sample drafts
+  const leadNews = news.find((n) => n.featured && !n.draft) ?? news.find((n) => n.featured) ?? news[0];
   const moreNews = news.filter((n) => n !== leadNews).slice(0, 4);
-  const social = getSocialPosts().slice(0, 5);
+  // Real posts first, so dev-only sample drafts never push them off the homepage
+  // Latest 4 posts, including the 2 most recent reels; the rest stay on /social
+  const social = getHomepageSocial(4, 2);
+  const socialTotal = getSocialPosts().filter((p) => !p.draft).length;
 
   return (
     <>
@@ -186,35 +190,37 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* Social Life */}
+      {/* Social Journey */}
       <section aria-labelledby="social-heading" className="border-t border-line py-28 md:py-36">
         <div className="container">
           <SectionHeading
             id="social-heading"
             align="split"
-            label="Social Life"
+            label="Social Journey"
             title="Beyond the Courtroom"
             intro="Moments from events, professional gatherings and the work behind the practice."
-            aside={
-              social.length > 0 && (
-                <Link href="/social" className="link-gold mt-6">
-                  View the gallery <span className="arrow">→</span>
-                </Link>
-              )
-            }
           />
           <div className="mt-16">
             {social.length > 0 ? (
-              <SocialGallery posts={social} />
+              <>
+                <SocialGallery posts={social} />
+                <div data-anim="fade-up" className="mt-12 flex flex-col items-center gap-3">
+                  <Link href="/social" className="btn-outline">
+                    View All Moments <span aria-hidden>→</span>
+                  </Link>
+                  {socialTotal > social.length && (
+                    <p className="text-xs uppercase tracking-[0.2em] text-muted">{socialTotal} moments in the gallery</p>
+                  )}
+                </div>
+              </>
             ) : (
               <EmptyState title="Gallery coming soon" text="Photographs and posts from events and professional activities will appear here." />
             )}
           </div>
+          <DigitalCardBanner />
         </div>
       </section>
 
-      {/* Digital visiting card */}
-      <DigitalCardPromo />
 
       {/* Philosophy — proposed editorial copy, pending the advocate's approval */}
       <section aria-label="Professional philosophy" className="texture-grain relative overflow-hidden border-y border-line bg-black/40 py-32 md:py-44">

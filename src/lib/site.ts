@@ -31,7 +31,7 @@ export const nav = [
   { href: '/practice-areas', label: 'Practice Areas' },
   { href: '/news', label: 'News' },
   { href: '/blog', label: 'Blog' },
-  { href: '/social', label: 'Social Life' },
+  { href: '/social', label: 'Social Journey' },
   { href: '/contact', label: 'Contact' },
 ];
 

@@ -8,7 +8,7 @@ import SocialLinks from '@/components/SocialLinks';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata({
-  title: 'Social Life',
+  title: 'Social Journey',
   description: 'Photographs and posts from events, professional gatherings and activities of Advocate Vagesh Samvedi.',
   path: '/social',
 });
@@ -17,13 +17,13 @@ export default function SocialPage() {
   const posts = getSocialPosts();
   const crumbs = [
     { name: 'Home', path: '/' },
-    { name: 'Social Life', path: '/social' },
+    { name: 'Social Journey', path: '/social' },
   ];
 
   return (
     <>
       <PageHeader
-        label="Social Life"
+        label="Social Journey"
         title={
           <>
             Beyond the <span className="italic text-gold-light">Courtroom</span>

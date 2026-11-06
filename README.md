@@ -17,9 +17,9 @@ npm run build && npm start   # production
 | `src/lib/practice-areas.ts` | Practice areas and their detail pages. |
 | `content/insights/*.md` | Blog articles (front matter + Markdown), served at `/blog/<file name>`. |
 | `content/news/*.md` | News: professional activities, events, achievements and updates, served at `/news/<file name>`. |
-| `content/social/*.md` | Social Life gallery posts (photograph, caption, platform, optional link to the post). |
+| `content/social/*.md` | Social Journey gallery posts (photograph, caption, platform, optional link to the post). A post can also have a `video`, an MP4 in H.264 format saved in `public/video/`. It plays muted while visible, has pause and sound buttons, and uses `image` as its still frame. |
 | `content/categories.json` | Article categories. Only categories with articles appear as filters. |
-| `content/offices.json` | Office locations, shown below the Contact section on the homepage and the Contact page. Managed in **Admin → Settings → Office Locations**. Entries marked `placeholder` show a badge and no map link. |
+| `content/offices.json` | Office locations, shown below the Contact section on the homepage and the Contact page. Managed in **Admin → Settings → Office Locations** (up to 4). Offices with latitude/longitude get a pin on the interactive map (Leaflet + OpenStreetMap tiles, loaded only when the section scrolls near). "Get Directions" uses the pasted Google Maps link with any starting point removed, so the route starts from the visitor; without a link it uses the coordinates. Entries marked `placeholder` show a "Coming soon" card with no pin or links. |
 | `content/publications.json` | External publications (journals, op-eds). Shown on `/publications` when non-empty. |
 | `public/admin/` | Decap CMS (`/admin`). |
 | `scripts/import-wordpress.mjs` | Imports full article text from the old WordPress site. |
@@ -34,11 +34,13 @@ Routes:
 
 Old URLs 308-redirect to their new homes. That covers the WordPress pages (`/blogs`, `/law-books`, `/elementor-948` and the three post slugs) and the former `/insights` pages.
 
-Homepage order: Hero, About, Practice Areas, **News**, **Blog & Articles**, **Social Life**, **Digital Visiting Card**, Philosophy, Contact. The Digital Visiting Card section links to https://dvc.vageshsamvedi.com/.
+Homepage order: Hero, About, Practice Areas, **News**, **Blog & Articles**, **Social Journey**, Philosophy, Contact. Directly below the Social Journey gallery is a compact banner for the free digital visiting card, linking to https://dvc.vageshsamvedi.com/.
 
-News and Social Life show a "coming soon" state until they have published entries.
+News and Social Journey show a "coming soon" state until they have published entries.
 
-**Sample content.** The files `content/news/sample-*.md` and `content/social/sample-*.md` are labelled placeholders marked `draft: true`. They let you preview the layouts in `npm run dev`, and never appear on the live site. Delete them once real entries exist.
+**Social Journey on the homepage** shows the latest 4 posts, always including the 2 newest reels, followed by a "View All Moments" button to `/social`. "Latest" means the post's own date or, if it has none, its `addedOn` time, which the admin editor fills in automatically. To keep a post on `/social` only, set `showOnHomepage: false` ("Show on homepage" in the admin editor). Every post always appears on `/social`.
+
+**Sample content.** The placeholder sample posts have been removed from both News and Social Journey, now that real entries exist.
 
 ## Article front matter
 
@@ -110,6 +112,34 @@ With reduced motion turned on, visitors get a fade-only version: no smooth scrol
 window load), with a 1.6s minimum and a 3.2s cap. The site skips the preloader and all motion for visitors with
 reduced motion turned on. Without JavaScript, nothing is hidden. If scripts fail to start within 7s, the page reveals
 all content anyway.
+
+## Adding newspaper coverage to News
+
+Follow this for every press clipping, so all reports look and read the same.
+
+1. **Read the clipping first.** Transcribe the masthead (newspaper, city, date, page), headline, deck, byline, body, sidebars and any quotes. Use the **date printed on the newspaper**. Leave out anything the clipping does not state: names, dates, case numbers, amounts, places.
+2. **Image.** Save the clipping unchanged (no crop, resize or recompression) to `public/images/news/YYYY-MM-DD-<newspaper>-<topic>.png`.
+3. **File.** Create `content/news/YYYY-MM-<seo-slug>.md` (the slug is the URL) with:
+   ```yaml
+   title: "<English headline>"
+   date: "YYYY-MM-DD"            # as printed on the newspaper; omit entirely if no date is visible
+                                 # (shown as "Date not stated", listed after dated news, never featured)
+   type: Cyber Law & Courts      # one of: Cyber Law & Courts, Human Rights & Legal Affairs, Appointments & Achievements, Community & Events
+   location: <dateline place>, <state>
+   publication: <Newspaper name>
+   excerpt: "<one-sentence summary, facts from the clipping only>"
+   cover: /images/news/<file>.png
+   coverAlt: "<newspaper, date, page, original headline and what the photos show>"
+   coverStyle: clipping          # shown whole, never cropped or tinted
+   featured: true                # the newest featured item leads the homepage News section
+   draft: false                  # publish only after the facts have been checked
+   gallery:                      # optional: more clippings of the SAME story (do not create a duplicate article)
+     - image: /images/news/<file>.png
+       alt: "<what the clipping shows>"
+       caption: "<source details; say if name/date not visible>"
+   ```
+4. **Body.** Open with a summary paragraph. Then use `##` sections in the order the report gives them (e.g. the incident, the complaint, police action, court order, public advice). Quotes go in a blockquote, attributed and marked "translated from Hindi". Finish with a **Source:** line naming the newspaper, city, date, page and correspondent.
+5. **Before publishing,** check every sentence against the transcription, use gender-neutral wording when the original does not specify gender, and run `npm run dev` to view `/news` and the article page.
 
 ## Contact form
 

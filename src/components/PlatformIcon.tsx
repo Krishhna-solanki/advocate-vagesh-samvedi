@@ -1,4 +1,4 @@
-// Minimal line glyphs for the platforms a Social Life post can link to.
+// Minimal line glyphs for the platforms a Social Journey post can link to.
 const glyphs: Record<string, React.ReactNode> = {
   LinkedIn: (
     <>

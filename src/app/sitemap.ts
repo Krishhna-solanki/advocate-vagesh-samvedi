@@ -24,6 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly' as const,
       priority: 0.8,
     })),
-    ...news.map((n) => ({ url: absoluteUrl(`/news/${n.slug}`), lastModified: n.date, changeFrequency: 'yearly' as const, priority: 0.6 })),
+    ...news.map((n) => ({ url: absoluteUrl(`/news/${n.slug}`), ...(n.date ? { lastModified: n.date } : {}), changeFrequency: 'yearly' as const, priority: 0.6 })),
   ];
 }

@@ -2,7 +2,7 @@ import PageHeader from '@/components/PageHeader';
 import NewsTimeline from '@/components/NewsTimeline';
 import EmptyState from '@/components/EmptyState';
 import JsonLd from '@/components/JsonLd';
-import { getNewsMetas, NEWS_TYPES } from '@/lib/news';
+import { getNewsMetas, NEWS_CATEGORIES } from '@/lib/news';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata({
@@ -13,8 +13,9 @@ export const metadata = pageMetadata({
 
 export default function NewsPage() {
   const items = getNewsMetas();
-  // Only offer filters for types that have entries, in the CMS's order
-  const types = NEWS_TYPES.filter((t) => items.some((n) => n.type === t)) as string[];
+  // One filter per category that has articles: the standard categories in order, then any others once each
+  const present = new Set(items.map((n) => n.type));
+  const types = [...NEWS_CATEGORIES.filter((c) => present.has(c)), ...[...present].filter((t) => !(NEWS_CATEGORIES as readonly string[]).includes(t))];
   const crumbs = [
     { name: 'Home', path: '/' },
     { name: 'News', path: '/news' },

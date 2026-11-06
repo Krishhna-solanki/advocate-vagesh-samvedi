@@ -1,7 +1,7 @@
 import { socialProfiles } from '@/lib/site';
 import SocialLinks from './SocialLinks';
 
-// Shown in place of News / Social Life until real entries are published from the CMS.
+// Shown in place of News / Social Journey until real entries are published from the CMS.
 export default function EmptyState({ title, text }: { title: string; text: string }) {
   return (
     <div data-anim="fade-up" className="relative border border-line px-6 py-16 text-center md:py-20">

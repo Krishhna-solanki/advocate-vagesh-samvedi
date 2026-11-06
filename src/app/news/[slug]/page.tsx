@@ -6,6 +6,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import ShareButtons from '@/components/ShareButtons';
 import JsonLd from '@/components/JsonLd';
 import { NewsRow } from '@/components/NewsItems';
+import NewsGallery from '@/components/NewsGallery';
 import { getAllNews, getNewsItem, getNewsMetas } from '@/lib/news';
 import { renderMarkdown } from '@/lib/insights';
 import { formatDate } from '@/lib/format';
@@ -65,13 +66,23 @@ export default async function NewsItemPage({ params }: Params) {
             <p data-anim="fade-up" data-delay="100" className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] uppercase tracking-[0.18em]">
               <span className="font-semibold text-gold">{item.type}</span>
               <span aria-hidden className="h-px w-4 bg-gold/50" />
-              <time dateTime={item.date} className="text-muted">
-                {formatDate(item.date)}
-              </time>
+              {item.date ? (
+                <time dateTime={item.date} className="text-muted">
+                  {formatDate(item.date)}
+                </time>
+              ) : (
+                <span className="text-muted">Date not stated in the source</span>
+              )}
               {item.location && (
                 <>
                   <span aria-hidden className="h-px w-4 bg-gold/50" />
                   <span className="text-muted">{item.location}</span>
+                </>
+              )}
+              {item.publication && (
+                <>
+                  <span aria-hidden className="h-px w-4 bg-gold/50" />
+                  <span className="text-gold-light/80">{item.publication}</span>
                 </>
               )}
             </p>
@@ -88,12 +99,57 @@ export default async function NewsItemPage({ params }: Params) {
       </header>
 
       <div className="container">
-        {item.cover && (
-          <figure className="mx-auto max-w-5xl pt-12" data-anim="image" data-delay="300">
-            <div className="relative aspect-[16/9] overflow-hidden bg-charcoal">
-              <Image src={item.cover} alt={item.coverAlt} fill priority sizes="(min-width: 1024px) 1024px, 100vw" className="object-cover" />
+        {item.cover && item.coverStyle === 'clipping' && (
+          // Newspaper clipping: shown whole at its own proportions, untouched, with a link to the original file
+          <figure className="mx-auto max-w-md pt-12" data-anim="image" data-delay="300">
+            <div className="relative border border-gold/30 bg-ink p-2 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.95),0_0_0_1px_rgba(0,0,0,0.6)]">
+              <Image
+                src={item.cover}
+                alt={item.coverAlt}
+                width={item.coverSize?.width ?? 0}
+                height={item.coverSize?.height ?? 0}
+                priority
+                sizes="(min-width: 640px) 432px, 92vw"
+                className="h-auto w-full"
+              />
             </div>
+            <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-muted">
+              <span>
+                {[item.publication ?? 'Newspaper clipping', item.date && formatDate(item.date)].filter(Boolean).join(', ')}
+              </span>
+              <a href={item.cover} target="_blank" rel="noopener" className="link-gold">
+                View full size <span className="arrow" aria-hidden>↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </figcaption>
           </figure>
+        )}
+        {item.cover && item.coverStyle !== 'clipping' && (
+          // Photograph: whole, at its own proportions, never wider than its own pixels
+          <figure
+            className="mx-auto max-w-5xl pt-12"
+            // At most 1024px wide or about 720px tall, and never wider than the photo's own pixels
+            style={
+              item.coverSize
+                ? { maxWidth: Math.min(item.coverSize.width, 1024, Math.round((720 * item.coverSize.width) / item.coverSize.height)) }
+                : undefined
+            }
+            data-anim="image"
+            data-delay="300"
+          >
+            <Image
+              src={item.cover}
+              alt={item.coverAlt}
+              width={item.coverSize?.width ?? 0}
+              height={item.coverSize?.height ?? 0}
+              priority
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              className="h-auto w-full border border-gold/25"
+            />
+          </figure>
+        )}
+        {item.gallery.length > 0 && (
+          <NewsGallery images={item.gallery} label={item.galleryTitle ?? (item.coverStyle === 'clipping' ? 'Also in the press' : 'Photo gallery')} />
         )}
         <div className="mx-auto max-w-prose py-16 md:py-20">
           <div data-anim="children" className="prose prose-legal" dangerouslySetInnerHTML={{ __html: html }} />
