@@ -10,8 +10,7 @@ cover: /images/news/advocate-vagesh-samvedi-speaking-to-media.jpg
 coverAlt: "Advocate Vagesh Samvedi speaking to the media, with microphones from several news outlets held in front of him"
 coverStyle: photo
 featured: true
-# Draft until the details below are checked against the original Jhabua Live report (site unreachable on 6 Nov 2026)
-draft: true
+draft: false
 ---
 
 A small trader who had been struggling for nearly three years to access ₹4,56,341 blocked in his bank account due to a Cyber Lien imposed by the Cyber Department has received significant legal relief.
