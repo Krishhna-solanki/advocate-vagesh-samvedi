@@ -57,7 +57,7 @@ export default function ScrollUI() {
           scrollToTop();
           document.querySelector<HTMLElement>('header a')?.focus({ preventScroll: true });
         }}
-        className="group fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-ink/80 text-gold backdrop-blur transition-[opacity,transform] duration-500 data-[visible=false]:pointer-events-none data-[visible=false]:translate-y-3 data-[visible=false]:opacity-0 md:bottom-8 md:right-8"
+        className="group fixed bottom-24 right-7 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-ink/80 text-gold backdrop-blur transition-[opacity,transform] duration-500 data-[visible=false]:pointer-events-none data-[visible=false]:translate-y-3 data-[visible=false]:opacity-0 md:bottom-28 md:right-10"
         style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
       >
         <svg viewBox="0 0 48 48" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden>

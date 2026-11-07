@@ -1,5 +1,6 @@
 import PageHeader from '@/components/PageHeader';
 import ContactForm from '@/components/ContactForm';
+import BookAppointmentButton from '@/components/BookAppointmentButton';
 import OfficeLocations from '@/components/OfficeLocations';
 import SocialLinks from '@/components/SocialLinks';
 import JsonLd from '@/components/JsonLd';
@@ -72,6 +73,13 @@ export default function ContactPage() {
           <h2 className="font-serif text-3xl">Send a message</h2>
           <p className="mb-10 mt-3 text-sm text-muted">All fields are required.</p>
           <ContactForm />
+          <div className="mt-12 flex flex-col gap-5 border-t border-line pt-10 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h3 className="font-serif text-2xl">Prefer to meet?</h3>
+              <p className="mt-2 text-sm text-muted">See the times open for appointments and book one in a few steps.</p>
+            </div>
+            <BookAppointmentButton className="shrink-0" />
+          </div>
         </div>
       </section>
       <OfficeLocations />

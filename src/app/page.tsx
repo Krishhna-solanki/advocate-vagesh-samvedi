@@ -42,11 +42,11 @@ export default function HomePage() {
             <Reveal variant="image" className="relative aspect-[4/5] overflow-hidden">
               <div className="absolute -inset-y-[10%] inset-x-0" data-speed="0.25">
                 <Image
-                  src={site.portrait}
-                  alt="Advocate Vagesh Samvedi taking notes, with books on his desk"
+                  src="/images/about-portrait.jpg"
+                  alt="Advocate Vagesh Samvedi reading a law book in his chamber, with law reports on the shelves behind him"
                   fill
                   sizes="(min-width: 1024px) 38vw, 92vw"
-                  className="object-cover object-[30%_78%] grayscale-[35%]"
+                  className="object-cover object-[48%_50%] grayscale-[35%]"
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
@@ -115,8 +115,39 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Social Journey */}
+      <section aria-labelledby="social-heading" className="border-t border-line py-28 md:py-36">
+        <div className="container">
+          <SectionHeading
+            id="social-heading"
+            align="split"
+            label="Social Journey"
+            title="Beyond the Courtroom"
+            intro="Moments from events, professional gatherings and the work behind the practice."
+          />
+          <div className="mt-16">
+            {social.length > 0 ? (
+              <>
+                <SocialGallery posts={social} />
+                <div data-anim="fade-up" className="mt-12 flex flex-col items-center gap-3">
+                  <Link href="/social" className="btn-outline">
+                    View All Moments <span aria-hidden>→</span>
+                  </Link>
+                  {socialTotal > social.length && (
+                    <p className="text-xs uppercase tracking-[0.2em] text-muted">{socialTotal} moments in the gallery</p>
+                  )}
+                </div>
+              </>
+            ) : (
+              <EmptyState title="Gallery coming soon" text="Photographs and posts from events and professional activities will appear here." />
+            )}
+          </div>
+          <DigitalCardBanner />
+        </div>
+      </section>
+
       {/* News */}
-      <section aria-labelledby="news-heading" className="border-t border-line py-28 md:py-36">
+      <section aria-labelledby="news-heading" className="border-t border-line bg-charcoal/40 py-28 md:py-36">
         <div className="container">
           <SectionHeading
             id="news-heading"
@@ -157,7 +188,7 @@ export default function HomePage() {
 
       {/* Blog & Articles */}
       {featured && (
-        <section aria-labelledby="insights-heading" className="border-t border-line bg-charcoal/40 py-28 md:py-36">
+        <section aria-labelledby="insights-heading" className="border-t border-line py-28 md:py-36">
           <div className="container">
             <SectionHeading
               id="insights-heading"
@@ -189,37 +220,6 @@ export default function HomePage() {
           </div>
         </section>
       )}
-
-      {/* Social Journey */}
-      <section aria-labelledby="social-heading" className="border-t border-line py-28 md:py-36">
-        <div className="container">
-          <SectionHeading
-            id="social-heading"
-            align="split"
-            label="Social Journey"
-            title="Beyond the Courtroom"
-            intro="Moments from events, professional gatherings and the work behind the practice."
-          />
-          <div className="mt-16">
-            {social.length > 0 ? (
-              <>
-                <SocialGallery posts={social} />
-                <div data-anim="fade-up" className="mt-12 flex flex-col items-center gap-3">
-                  <Link href="/social" className="btn-outline">
-                    View All Moments <span aria-hidden>→</span>
-                  </Link>
-                  {socialTotal > social.length && (
-                    <p className="text-xs uppercase tracking-[0.2em] text-muted">{socialTotal} moments in the gallery</p>
-                  )}
-                </div>
-              </>
-            ) : (
-              <EmptyState title="Gallery coming soon" text="Photographs and posts from events and professional activities will appear here." />
-            )}
-          </div>
-          <DigitalCardBanner />
-        </div>
-      </section>
 
 
       {/* Philosophy — proposed editorial copy, pending the advocate's approval */}

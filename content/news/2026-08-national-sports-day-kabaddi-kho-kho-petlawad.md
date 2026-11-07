@@ -22,7 +22,7 @@ gallery:
     alt: "Vanvasi Today newspaper report headlined 'पेटलावद में राष्ट्रीय खेल दिवस पर उत्साह का माहौल, कबड्डी और खो-खो प्रतियोगिता के विजेताओं का किया गया सम्मान', with event photographs and boxes listing the competition results and honoured players"
     caption: "Also reported in Vanvasi Today (वनवासी TODAY), page 16. Date not visible."
 galleryTitle: Photos and press coverage
-featured: true
+featured: false
 # Facts verified against the Vanvasi Today report (6 Nov 2026)
 draft: false
 ---

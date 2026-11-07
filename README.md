@@ -148,6 +148,41 @@ sends via [Resend](https://resend.com). Set `RESEND_API_KEY`, `CONTACT_TO_EMAIL`
 sender domain). Without them the form returns a clear "not configured" error in production (in development it logs and
 succeeds). Messages are not stored. The in-memory rate limit is per server instance; use a shared store on serverless.
 
+## Appointment booking chatbot
+
+A gold chat button on every page (and **Book an Appointment** under the contact form) opens the assistant.
+
+**It costs nothing to run.** There is no AI service, database or paid email provider. It uses only Google Calendar API and Gmail API (free within Google's normal quotas) and Vercel's free plan.
+
+- **Questions** are answered in the visitor's browser by matching keywords (English, Hinglish and Hindi) to topics: about, practice areas, offices with directions, contact, fees, news, blog, social profiles, timings. Answers come only from the site's own content (`src/lib/assistant/knowledge.ts`), so nothing is invented. Personal legal problems get a polite "no advice in chat, please book" reply. To teach it a new way of asking, add words in `src/lib/assistant/answer.ts` (topics) or `AREA_KEYWORDS` in `knowledge.ts` (practice areas).
+- **Booking:** date (date picker) → free times → full name → address → email → phone → purpose → confirm.
+- **Google Calendar is the single source of truth.** The possible slots are Monday–Saturday, 6:00–9:00 pm IST, 30 minutes each (`src/lib/appointments/schedule.ts`). Sundays, past dates, configured holidays and slots less than an hour away are never offered. Any slot overlapping a busy period in the advocate's calendar (FreeBusy API) is hidden. Visitors see only free times, never event details. Edits made directly in Google Calendar take effect on the next availability check.
+- **Before booking,** the server checks the calendar again, then creates the event "Client Appointment – Name" with the client's details in the description. Each slot has a fixed event id, so Google itself refuses a second booking of the same slot, even from two visitors at the same moment. "Appointment booked" is shown only after Google confirms the event exists. If the calendar can't be reached, nothing is confirmed.
+- **Email:** the advocate gets a notification (Gmail API, sent from the connected account) at `APPOINTMENT_NOTIFY_EMAIL`. If sending fails, the booking stays and the failure is logged in Vercel; no second event is ever created.
+- **Holidays:** `src/config/holidays-mp.ts`. Only `general` entries block booking; `optional` ones don't. Apart from the national days, the 2026 dates come from published calendars and are marked `verified: false` until checked against the GAD notification. For 2027 only the national days are listed so far, so add the full 2027 list when it is notified.
+- **No admin dashboard:** the advocate manages the diary in Google Calendar. To block an evening, add an event, or mark the day busy.
+
+### Google setup (one time, free)
+
+1. **Google Cloud project.** Go to [console.cloud.google.com](https://console.cloud.google.com), sign in, and create a project (e.g. "Advocate Website"). No billing account is needed.
+2. **Enable APIs.** In APIs & Services → Library, enable **Google Calendar API** and **Gmail API**.
+3. **OAuth consent screen** (Google Auth Platform → Branding / Audience / Data access):
+   - Set user type to **External**, with an app name, support email and developer email.
+   - Under Data access, add the scopes `…/auth/calendar.freebusy`, `…/auth/calendar.events` and `…/auth/gmail.send`.
+   - Under Audience, **Publish app** (status "In production"). While an app is in "Testing", Google expires its refresh tokens after 7 days. Publishing doesn't need Google's review for your own use: the advocate just sees an "unverified app" notice when connecting, and chooses **Advanced → Go to … (unsafe)**. If you keep it in Testing instead, add the account under **Test users** and reconnect weekly.
+4. **OAuth client.** Go to Clients → Create client → **Web application**. Add these authorised redirect URIs:
+   - `https://advocate-vagesh-samvedi.vercel.app/api/google/callback`
+   - `https://www.vageshsamvedi.com/api/google/callback` (once the domain is live)
+   - `http://localhost:3000/api/google/callback` (for local testing)
+
+   Copy the client ID and client secret.
+5. **Vercel environment variables:** set `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_CONNECT_KEY` (a long random text you keep private) and `APPOINTMENT_NOTIFY_EMAIL`. Redeploy.
+6. **Connect the calendar account.** Open `https://<site>/api/google/connect?key=<GOOGLE_CONNECT_KEY>` and sign in as the calendar owner. Allow all requested permissions. The page then shows a refresh token: save it as `GOOGLE_REFRESH_TOKEN` in Vercel and redeploy.
+7. **Check it.** `https://<site>/api/google/status?key=<GOOGLE_CONNECT_KEY>` should show `"ok": true`.
+8. **Test** with a real booking from the chat. Check that the event appears in Google Calendar and the email arrives. Then delete the test event; the slot becomes free again.
+
+To switch to the advocate's own account later, repeat step 6 signed in as that account and replace `GOOGLE_REFRESH_TOKEN`. To use a calendar other than the main one, set `GOOGLE_CALENDAR_ID` to that calendar's ID (Google Calendar → Settings → the calendar → Integrate calendar).
+
 ## Importing the full WordPress articles
 
 **Done.** The three published articles were migrated in full from the old site's WordPress API on 2 November 2026.

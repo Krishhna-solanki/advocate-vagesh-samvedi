@@ -1,6 +1,6 @@
 ---
 title: "Advocate Vagesh Samvedi Appointed District President of Judicial Human Rights Council, Jhabua"
-# No date: neither the report nor the appointment letter in the clipping shows one
+date: "2026-08-31"
 type: Appointments & Achievements
 location: Jhabua, Madhya Pradesh
 excerpt: "The Judicial Human Rights Council, Madhya Pradesh has appointed Advocate Vagesh Samvedi as District President for Jhabua, as part of expanding the organisation and making its district-level work on justice, human rights and social concerns more effective."
@@ -37,4 +37,4 @@ The council conveyed its best wishes to Advocate Samvedi for the new responsibil
 
 ---
 
-**Source:** Newspaper report by Ishwar Lal Rathore, datelined Jhaknawda/Jhabua, headlined "न्यायिक मानवाधिकार परिषद ने अधिवक्ता वागेश सामवेदी को बनाया जिला झाबुआ अध्यक्ष". The newspaper's name and the publication date are not visible in the clipping. This English article is based on the original Hindi report and the appointment letter, both reproduced above.
+**Source:** Newspaper report by Ishwar Lal Rathore, datelined Jhaknawda/Jhabua, headlined "न्यायिक मानवाधिकार परिषद ने अधिवक्ता वागेश सामवेदी को बनाया जिला झाबुआ अध्यक्ष". Published 31 August 2026; the newspaper's name is not visible in the clipping. This English article is based on the original Hindi report and the appointment letter, both reproduced above.

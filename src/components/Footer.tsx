@@ -66,16 +66,6 @@ export default function Footer() {
             </p>
           </address>
           <SocialLinks className="mt-6" />
-          <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-            {site.profiles.filter((p) => !p.social).map((p) => (
-              <li key={p.href}>
-                <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-gold transition-colors hover:text-gold-light">
-                  {p.label}
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
 

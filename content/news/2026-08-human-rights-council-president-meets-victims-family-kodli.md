@@ -8,7 +8,7 @@ excerpt: "Bhanwar Singh Shekhawat, State President of the Judicial Human Rights 
 cover: /images/news/2026-08-07-anchal-express-kodli-human-rights-council-visit.png
 coverAlt: "Anchal Express newspaper report on the visit of Judicial Human Rights Council President Bhanwar Singh Shekhawat to Kodli."
 coverStyle: clipping
-featured: true
+featured: false
 draft: false
 ---
 

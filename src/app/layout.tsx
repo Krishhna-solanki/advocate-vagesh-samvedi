@@ -12,6 +12,8 @@ import ScrollAnimations from '@/components/ScrollAnimations';
 import SmoothScroll from '@/components/SmoothScroll';
 import ScrollUI from '@/components/ScrollUI';
 import Magnetic from '@/components/Magnetic';
+import ChatWidget from '@/components/ChatWidget';
+import { getAssistantKnowledge } from '@/lib/assistant/knowledge';
 
 const serif = Cormorant_Garamond({
   subsets: ['latin'],
@@ -65,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <ScrollUI />
+        <ChatWidget knowledge={getAssistantKnowledge()} />
         <JsonLd data={[personJsonLd(), websiteJsonLd()]} />
       </body>
     </html>

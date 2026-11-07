@@ -23,15 +23,17 @@ export default function Hero() {
       <div data-hero-media className="absolute inset-0 -z-10 lg:left-[44%]">
         <div data-hero-parallax className="absolute -inset-y-[8%] inset-x-0 will-change-transform">
           <Image
-            src={site.portrait}
-            alt="Advocate Vagesh Samvedi writing at his desk"
+            src="/images/hero-portrait.webp"
+            alt="Advocate Vagesh Samvedi writing at his desk in his chamber, with law books on the shelves behind him"
             fill
             priority
             sizes="(min-width: 1024px) 56vw, 100vw"
-            className="object-cover object-[60%_30%]"
+            className="object-cover object-[60%_40%] brightness-[0.72] contrast-[1.05] saturate-[0.9]"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/20 lg:bg-gradient-to-r lg:from-ink lg:via-ink/40 lg:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 to-ink/45 lg:bg-gradient-to-r lg:from-ink lg:via-ink/40 lg:to-transparent" />
+        {/* Keeps the header readable over the bright wall in this photo */}
+        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-ink/85 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent" />
         {/* One light sweep across the portrait after it is revealed */}
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden mix-blend-soft-light">

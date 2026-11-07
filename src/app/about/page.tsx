@@ -37,11 +37,11 @@ export default function AboutPage() {
             <div className="relative lg:sticky lg:top-28">
               <div className="relative aspect-[3/4] overflow-hidden" data-anim="image">
                 <Image
-                  src={site.portrait}
-                  alt="Portrait of Advocate Vagesh Samvedi"
+                  src="/images/about-portrait.jpg"
+                  alt="Advocate Vagesh Samvedi reading a law book in his chamber"
                   fill
                   sizes="(min-width: 1024px) 38vw, 92vw"
-                  className="object-cover object-[65%_30%]"
+                  className="object-cover object-[48%_50%]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
               </div>
