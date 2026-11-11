@@ -1,12 +1,13 @@
 import PageHeader from '@/components/PageHeader';
 import PracticeGrid from '@/components/PracticeGrid';
+import GeographicReach from '@/components/GeographicReach';
 import JsonLd from '@/components/JsonLd';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata({
-  title: 'Practice Areas',
+  title: 'Legal Practice Areas | Advocate Vagesh Samvedi',
   description:
-    'Areas of practice of Advocate Vagesh Samvedi: civil law and dispute resolution, arbitration and ADR, business and corporate advisory, intellectual property, cyber law and startup consulting.',
+    'Explore legal assistance relating to civil litigation, property, criminal law, family matters, cyber law, intellectual property and dispute resolution.',
   path: '/practice-areas',
 });
 
@@ -20,12 +21,13 @@ export default function PracticeAreasPage() {
       <PageHeader
         label="Practice Areas"
         title="Areas of Legal Practice"
-        intro="Advisory and dispute-resolution work across civil, commercial, intellectual property and technology law. The information below describes the nature of the work and is not an offer of services or a promise of any result."
+        intro="Legal representation requires an understanding of the facts, applicable legislation, procedural requirements and remedies available under law. Advocate Vagesh Samvedi undertakes legal matters across multiple areas of practice, providing representation and legal assistance according to the nature and jurisdiction of each matter."
         crumbs={crumbs}
       />
       <section className="container py-20 md:py-28">
         <PracticeGrid headingLevel="h2" />
       </section>
+      <GeographicReach />
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
     </>
   );

@@ -1,5 +1,13 @@
+// Canonical URLs, sitemap and share cards use this address. An explicit NEXT_PUBLIC_SITE_URL wins;
+// otherwise Vercel's production domain is used, so it switches automatically when a custom
+// domain (e.g. www.vageshsamvedi.com) is attached to the project as its production domain.
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: { NEXT_PUBLIC_SITE_URL: siteUrl },
   // Lets a verification build run without clashing with a running `next dev`
   distDir: process.env.NEXT_DIST_DIR || '.next',
   images: {
@@ -23,6 +31,8 @@ const nextConfig = {
       { source: '/insights/:slug', destination: '/blog/:slug', permanent: true },
       { source: '/law-books', destination: '/practice-areas', permanent: true },
       { source: '/elementor-948', destination: '/about', permanent: true },
+      // Practice area retired in the November 2026 content update
+      { source: '/practice-areas/startup-advisory', destination: '/practice-areas/business-corporate', permanent: true },
       ...oldPosts.map((slug) => ({ source: `/${slug}`, destination: `/blog/${slug}`, permanent: true })),
     ];
   },

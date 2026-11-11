@@ -99,7 +99,7 @@ const TOPICS: Topic[] = [
               k.offices.map((o) => `• ${o.title} — ${o.name ? `${o.name}, ` : ''}${o.address}`).join('\n'),
             links: [...officeLinks(k), { label: hi ? 'सभी ऑफिस मैप पर' : 'All offices on the map', href: '/contact#offices-heading' }],
           }
-        : { text: hi ? `ऑफिस ${k.city}, ${k.region} में है।` : `The practice is based in ${k.city}, ${k.region}.`, links: contactLinks(k) },
+        : { text: hi ? `ऑफिस पेटलावद (ज़िला झाबुआ) और इंदौर, मध्य प्रदेश में है।` : 'The professional locations are Petlawad (District Jhabua) and Indore, Madhya Pradesh.', links: contactLinks(k) },
   },
   {
     id: 'contact',
@@ -117,8 +117,8 @@ const TOPICS: Topic[] = [
     words: ['who', 'about', 'advocate', 'lawyer', 'vakil', 'vageesh', 'vagesh', 'samvedi', 'background', 'profile', 'experience', 'kaun', 'firm', 'law astra', 'associates', 'वकील', 'अधिवक्ता', 'कौन', 'बारे'],
     answer: (k, hi) => ({
       text: hi
-        ? `${k.name} ${k.city}, ${k.region} में ${k.role} हैं और ${k.firm} के साथ कार्य करते हैं। उनकी शिक्षा ${k.education} से हुई है।`
-        : `${k.name} is an ${k.role.toLowerCase()} based in ${k.city}, ${k.region}, practising with ${k.firm}. He studied at ${k.education}.`,
+        ? `अधिवक्ता ${k.name} एक स्वतंत्र विधि व्यवसायी हैं, जो मध्य प्रदेश और गुजरात के चुनिंदा स्थानों में मुकदमेबाज़ी, कानूनी प्रतिनिधित्व और सलाह का कार्य करते हैं। उनकी शिक्षा: ${k.educationHi}। वे स्टेट बार काउंसिल ऑफ मध्य प्रदेश में नामांकित हैं।`
+        : `Advocate ${k.name} is an independent legal practitioner engaged in litigation, legal representation and advisory work across Madhya Pradesh and selected locations in Gujarat. He holds ${k.education}, and is enrolled with the State Bar Council of Madhya Pradesh.`,
       links: [{ label: hi ? 'पूरा परिचय' : 'Full profile', href: '/about' }],
       suggestions: [hi ? 'प्रैक्टिस एरिया क्या हैं?' : 'What are the practice areas?'],
     }),
@@ -127,7 +127,7 @@ const TOPICS: Topic[] = [
     id: 'education',
     words: ['education', 'qualification', 'qualified', 'degree', 'study', 'studied', 'university', 'college', 'llb', 'padhai', 'शिक्षा', 'पढ़ाई', 'डिग्री'],
     answer: (k, hi) => ({
-      text: hi ? `उनकी शिक्षा ${k.education} से हुई है।` : `He studied at ${k.education}.`,
+      text: hi ? `उनकी शिक्षा: ${k.educationHi}। उन्होंने 2025 में अखिल भारतीय बार परीक्षा (AIBE) उत्तीर्ण की।` : `He holds ${k.education}, and qualified the All India Bar Examination (AIBE) in 2025.`,
       links: [{ label: hi ? 'पूरा परिचय' : 'Full profile', href: '/about' }],
     }),
   },

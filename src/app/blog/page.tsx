@@ -9,7 +9,7 @@ import { categories } from '@/lib/categories';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata({
-  title: 'Blog & Articles',
+  title: 'Legal Insights & Articles | Advocate Vagesh Samvedi',
   description:
     'Legal insights and developments from Advocate Vagesh Samvedi — perspectives on legislation, judgments, arbitration, business law, intellectual property and technology law.',
   path: '/blog',
@@ -41,13 +41,13 @@ export default function InsightsPage() {
   return (
     <>
       <PageHeader
-        label="Blog & Articles"
+        label="Legal Knowledge"
         title={
           <>
-            Legal Insights <span className="italic text-gold-light">&amp;</span> Developments
+            Legal Insights <span className="italic text-gold-light">&amp;</span> Contemporary Developments
           </>
         }
-        intro="Perspectives on legal developments, legislation, landmark judgments and emerging legal questions — written to inform, not to advise on any particular matter."
+        intro="Explore discussions on Indian law, legal procedures, intellectual property, cyber law, property disputes and emerging legal developments. This section aims to make relevant legal concepts more accessible through informative and research-oriented content."
         crumbs={[
           { name: 'Home', path: '/' },
           { name: 'Blog & Articles', path: '/blog' },

@@ -493,3 +493,315 @@ dialog::backdrop {
     animation: none;
   }
 }
+
+/* ---------- Contact section ---------- */
+/* Soft gold light from two corners, a fine gold rule along the top */
+.contact-luxe {
+  background:
+    radial-gradient(60% 50% at 0% 0%, rgba(200, 164, 93, 0.09), transparent 70%),
+    radial-gradient(55% 55% at 100% 100%, rgba(200, 164, 93, 0.07), transparent 70%),
+    linear-gradient(180deg, rgba(21, 21, 21, 0.55), rgba(11, 11, 11, 0) 40%);
+}
+.contact-luxe::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 164, 93, 0.55), transparent);
+}
+
+/* Contact detail cards */
+.contact-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.15rem;
+  overflow: hidden;
+  border: 1px solid rgba(200, 164, 93, 0.16);
+  padding: 1.35rem 1.4rem;
+  background: linear-gradient(135deg, rgba(200, 164, 93, 0.06), rgba(21, 21, 21, 0.6) 45%, rgba(11, 11, 11, 0.6));
+  transition:
+    border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* A gold accent that draws down the left edge, and a light sheen across, on hover */
+.contact-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #e4cc91, #c8a45d 60%, transparent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.contact-card::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 -60%;
+  width: 45%;
+  background: linear-gradient(105deg, transparent, rgba(228, 204, 145, 0.09), transparent);
+  transform: skewX(-12deg);
+  transition: left 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.contact-card:hover,
+.contact-card:focus-visible {
+  border-color: rgba(200, 164, 93, 0.5);
+  box-shadow: 0 24px 50px -30px rgba(200, 164, 93, 0.45), inset 0 1px 0 rgba(228, 204, 145, 0.08);
+}
+.contact-card:focus-visible {
+  outline: 1px solid #c8a45d;
+  outline-offset: 3px;
+}
+.contact-card:hover::before,
+.contact-card:focus-visible::before {
+  transform: scaleY(1);
+}
+.contact-card:hover::after {
+  left: 120%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  a.contact-card:hover {
+    transform: translateY(-2px);
+  }
+}
+.contact-card__icon {
+  display: flex;
+  height: 2.9rem;
+  width: 2.9rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  color: #e4cc91;
+  border: 1px solid rgba(200, 164, 93, 0.45);
+  background: radial-gradient(circle at 30% 25%, rgba(228, 204, 145, 0.22), rgba(200, 164, 93, 0.05) 60%, transparent);
+  box-shadow: inset 0 0 0 4px rgba(11, 11, 11, 0.6);
+  transition:
+    color 0.5s ease,
+    background 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+.contact-card:hover .contact-card__icon {
+  color: #0b0b0b;
+  border-color: #e4cc91;
+  background: linear-gradient(135deg, #e4cc91, #c8a45d 55%, #8c7442);
+  box-shadow: 0 0 22px rgba(200, 164, 93, 0.45);
+}
+.contact-card__arrow {
+  align-self: center;
+  color: rgba(200, 164, 93, 0.5);
+  transition:
+    color 0.5s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.contact-card:hover .contact-card__arrow {
+  color: #e4cc91;
+  transform: translate(2px, -2px);
+}
+
+/* Form panel: gradient gold frame and a soft glow */
+.form-panel--luxe {
+  border-color: transparent;
+  background:
+    radial-gradient(120% 55% at 50% 0%, rgba(200, 164, 93, 0.1), transparent 62%) padding-box,
+    linear-gradient(180deg, #181713 0%, #0f0f0f 100%) padding-box,
+    linear-gradient(160deg, rgba(228, 204, 145, 0.55), rgba(200, 164, 93, 0.12) 35%, rgba(200, 164, 93, 0.06) 65%, rgba(200, 164, 93, 0.4)) border-box;
+  box-shadow:
+    0 50px 100px -45px rgba(0, 0, 0, 0.95),
+    0 30px 80px -60px rgba(200, 164, 93, 0.35),
+    inset 0 1px 0 rgba(228, 204, 145, 0.08);
+}
+
+/* Form fields: the label lights up while its field is in use */
+.field-group .label {
+  transition: color 0.4s ease;
+}
+.field-group .label {
+  color: rgba(200, 164, 93, 0.85);
+}
+.field-group:focus-within .label {
+  color: #e4cc91;
+}
+.form-panel--luxe .field-boxed {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.35));
+  border-color: rgba(255, 255, 255, 0.07);
+  border-bottom-color: rgba(200, 164, 93, 0.35);
+}
+.form-panel--luxe .field-boxed:hover {
+  border-color: rgba(200, 164, 93, 0.3);
+}
+.form-panel--luxe .field-boxed:focus {
+  border-color: rgba(200, 164, 93, 0.8);
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow:
+    0 0 0 3px rgba(200, 164, 93, 0.12),
+    0 12px 30px -18px rgba(200, 164, 93, 0.5);
+}
+.form-panel--luxe .field-boxed[aria-invalid='true'] {
+  border-color: rgba(232, 165, 152, 0.6);
+}
+
+/* Consent checkbox drawn in gold */
+.consent-box {
+  appearance: none;
+  -webkit-appearance: none;
+  display: grid;
+  place-content: center;
+  border: 1px solid rgba(200, 164, 93, 0.6);
+  background: rgba(0, 0, 0, 0.4);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.consent-box::before {
+  content: '';
+  width: 0.55rem;
+  height: 0.3rem;
+  border-left: 2px solid #0b0b0b;
+  border-bottom: 2px solid #0b0b0b;
+  transform: rotate(-45deg) scale(0);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  margin-top: -2px;
+}
+.consent-box:checked {
+  background: linear-gradient(135deg, #e4cc91, #c8a45d);
+  border-color: #e4cc91;
+}
+.consent-box:checked::before {
+  transform: rotate(-45deg) scale(1);
+}
+.consent-box:hover {
+  border-color: #e4cc91;
+}
+.consent-box:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(200, 164, 93, 0.3);
+}
+.consent-box[aria-invalid='true'] {
+  border-color: rgba(232, 165, 152, 0.8);
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-card,
+  .contact-card::before,
+  .contact-card::after,
+  .contact-card__icon,
+  .contact-card__arrow {
+    transition: none;
+  }
+}
+
+/* ---------- Google Translate (Hindi) ---------- */
+/* Hide Google's toolbar, hover tooltips and highlight; the header switch replaces them */
+iframe.skiptranslate,
+.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-yAWNEb-L7lbkb {
+  display: none !important;
+}
+html.gt-hi body {
+  top: 0 !important;
+  position: static !important;
+}
+.goog-text-highlight,
+.VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
+  background: none !important;
+  box-shadow: none !important;
+}
+/* Devanagari needs a little more line height than Latin text */
+html.gt-hi .display {
+  line-height: 1.18;
+}
+/* Wide letter-spacing (used on small uppercase labels) splits Devanagari letters apart */
+html.gt-hi body :where(*) {
+  letter-spacing: normal !important;
+}
+
+/* Contact form dropdown, matching the boxed fields */
+.field-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.75rem;
+  cursor: pointer;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #c8a45d 50%),
+    linear-gradient(135deg, #c8a45d 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.25rem) 55%,
+    calc(100% - 0.9rem) 55%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+.form-panel--luxe .field-select {
+  background-image:
+    linear-gradient(45deg, transparent 50%, #c8a45d 50%),
+    linear-gradient(135deg, #c8a45d 50%, transparent 50%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.35));
+  background-position:
+    calc(100% - 1.25rem) 55%,
+    calc(100% - 0.9rem) 55%,
+    0 0;
+  background-size: 6px 6px, 6px 6px, 100% 100%;
+}
+.field-select:invalid {
+  color: rgba(170, 166, 160, 0.7);
+}
+.field-select option {
+  background: #151515;
+  color: #f5f1e8;
+}
+.form-panel--luxe .field-select,
+.form-panel--luxe .field-select:focus {
+  background-repeat: no-repeat;
+}
+.form-panel--luxe .field-select:focus {
+  background-image:
+    linear-gradient(45deg, transparent 50%, #e4cc91 50%),
+    linear-gradient(135deg, #e4cc91 50%, transparent 50%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  background-position:
+    calc(100% - 1.25rem) 55%,
+    calc(100% - 0.9rem) 55%,
+    0 0;
+  background-size: 6px 6px, 6px 6px, 100% 100%;
+}
+
+/* ---------- Homepage: credentials ---------- */
+.credentials-luxe {
+  background:
+    radial-gradient(50% 60% at 50% 0%, rgba(200, 164, 93, 0.08), transparent 70%),
+    radial-gradient(40% 50% at 100% 100%, rgba(200, 164, 93, 0.05), transparent 70%);
+}
+@media (min-width: 640px) {
+  .cred-card {
+    min-height: 15.5rem;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cred-card:hover {
+    transform: translateY(-4px);
+  }
+}
+/* A gold line that draws across the foot of the card on hover */
+.cred-card__rule {
+  display: block;
+  height: 1px;
+  margin-top: auto;
+  padding-top: 1.75rem;
+  background: linear-gradient(90deg, #c8a45d, rgba(200, 164, 93, 0)) bottom left / 2.5rem 1px no-repeat;
+  transition: background-size 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cred-card:hover .cred-card__rule {
+  background-size: 100% 1px;
+}

@@ -9,12 +9,14 @@ import type { Knowledge } from './types';
 // Extra words visitors use for each practice area (English, Hinglish and Hindi), on top of the words in its title
 // and listed matters. Add a word here if the assistant misses a common way of asking.
 const AREA_KEYWORDS: Record<string, string[]> = {
-  'civil-law': ['civil', 'property', 'land', 'zameen', 'jameen', 'makaan', 'house', 'rent', 'tenant', 'kirayedar', 'contract', 'agreement', 'consumer', 'recovery', 'partition', 'bantwara', 'suit', 'dispute', 'vivad', 'संपत्ति', 'ज़मीन', 'जमीन', 'मकान', 'दीवानी', 'विवाद', 'उपभोक्ता'],
-  'arbitration-adr': ['arbitration', 'arbitrator', 'mediation', 'conciliation', 'adr', 'settlement', 'samjhauta', 'मध्यस्थता', 'समझौता'],
-  'business-corporate': ['business', 'company', 'corporate', 'firm', 'partnership', 'gst', 'compliance', 'registration', 'drafting', 'vyapar', 'dhandha', 'व्यापार', 'कंपनी', 'व्यवसाय'],
+  'civil-law': ['civil', 'suit', 'injunction', 'stay', 'recovery', 'contract', 'agreement', 'specific performance', 'declaration', 'dispute', 'vivad', 'दीवानी', 'विवाद', 'निषेधाज्ञा'],
+  'property-revenue-law': ['property', 'land', 'zameen', 'jameen', 'makaan', 'house', 'plot', 'mutation', 'namantaran', 'khasra', 'khatauni', 'revenue', 'patwari', 'tehsil', 'registry', 'title', 'possession', 'kabza', 'partition', 'bantwara', 'agricultural', 'संपत्ति', 'ज़मीन', 'जमीन', 'मकान', 'नामांतरण', 'राजस्व', 'कब्जा', 'बंटवारा', 'रजिस्ट्री'],
+  'criminal-law': ['criminal', 'crime', 'bail', 'jamanat', 'fir', 'police', 'arrest', 'complaint', 'defence', 'defense', 'case', 'अपराध', 'आपराधिक', 'जमानत', 'गिरफ्तारी', 'पुलिस'],
+  'family-matrimonial-law': ['family', 'divorce', 'talaq', 'maintenance', 'alimony', 'kharcha', 'matrimonial', 'marriage', 'shaadi', 'husband', 'wife', 'pati', 'patni', 'custody', 'conjugal', 'परिवार', 'तलाक', 'भरण-पोषण', 'विवाह', 'शादी', 'पति', 'पत्नी'],
+  'arbitration-adr': ['arbitration', 'arbitrator', 'mediation', 'conciliation', 'negotiation', 'adr', 'settlement', 'samjhauta', 'मध्यस्थता', 'समझौता', 'सुलह'],
+  'business-corporate': ['business', 'company', 'corporate', 'commercial', 'firm', 'partnership', 'payment', 'outstanding', 'consumer', 'documentation', 'drafting', 'vyapar', 'dhandha', 'व्यापार', 'कंपनी', 'व्यवसाय', 'उपभोक्ता'],
   'intellectual-property': ['trademark', 'trade mark', 'copyright', 'patent', 'brand', 'logo', 'ip', 'infringement', 'licensing', 'ट्रेडमार्क', 'कॉपीराइट', 'पेटेंट'],
   'cyber-law': ['cyber', 'online', 'fraud', 'scam', 'hacking', 'hacked', 'upi', 'bank', 'otp', 'lien', 'frozen', 'freeze', 'blocked account', 'data', 'privacy', 'it act', 'e-commerce', 'thagi', 'dhokha', 'साइबर', 'ऑनलाइन', 'धोखाधड़ी', 'ठगी', 'लियन'],
-  'startup-advisory': ['startup', 'start-up', 'founder', 'new business', 'incorporation', 'llp', 'pvt ltd', 'स्टार्टअप'],
 };
 
 let cached: Knowledge | null = null;
@@ -27,8 +29,8 @@ export function getAssistantKnowledge(): Knowledge {
     role: site.role,
     city: site.location.city,
     region: site.location.region,
-    firm: site.firm.name,
-    education: `${site.education.institution}, ${site.education.city}`,
+    education: 'a B.A. LL.B. (Hons.) from Navsamvat Law College, Ujjain (2025) and an LL.M. in Intellectual Property Rights from Renaissance University, Indore',
+    educationHi: 'नवसंवत लॉ कॉलेज, उज्जैन से B.A. LL.B. (Hons.) (2025) और रेनेसां यूनिवर्सिटी, इंदौर से बौद्धिक संपदा अधिकार (IPR) में LL.M.',
     email: site.email,
     phone: site.phone?.display ?? null,
     phoneHref: site.phone?.href ?? null,

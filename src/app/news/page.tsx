@@ -6,8 +6,8 @@ import { getNewsMetas, NEWS_CATEGORIES } from '@/lib/news';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata({
-  title: 'News',
-  description: 'News from the practice of Advocate Vagesh Samvedi — professional activities, events, achievements and legal updates.',
+  title: 'News & Professional Updates | Advocate Vagesh Samvedi',
+  description: 'Professional developments, documented legal matters, appointments and community initiatives.',
   path: '/news',
 });
 

@@ -13,7 +13,7 @@ export default function OfficeLocations() {
           id="offices-heading"
           align="split"
           label="Offices"
-          title="Office Locations"
+          title="Professional Office Locations"
           intro="Select an office to see it on the map, or choose “Get Directions” to open the route in Google Maps."
         />
         <div className="mt-14">

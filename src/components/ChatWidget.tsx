@@ -6,6 +6,7 @@ import { answer } from '@/lib/assistant/answer';
 import type { Knowledge, Link } from '@/lib/assistant/types';
 import { addDays, checkDate, dateProblem, normalisePhone, SCHEDULE, todayIst, validEmail } from '@/lib/appointments/schedule';
 import { isLang, t, type Lang } from '@/lib/appointments/i18n';
+import { getSiteLang } from '@/lib/site-language';
 
 /**
  * Site-wide assistant: answers questions and books appointments.
@@ -99,8 +100,12 @@ export default function ChatWidget({ knowledge }: { knowledge: Knowledge }) {
   const m = t(lang);
   const L: Lang = lang ?? 'en';
 
-  // The language chosen earlier in this browser session, if any
+  // The site language wins (Hindi site → Hindi chat, no question); otherwise the language chosen earlier in this session
   useEffect(() => {
+    if (getSiteLang() === 'hi') {
+      setLang('hi');
+      return;
+    }
     try {
       const saved = sessionStorage.getItem(LANG_KEY);
       if (isLang(saved)) setLang(saved);
@@ -355,7 +360,8 @@ export default function ChatWidget({ knowledge }: { knowledge: Knowledge }) {
         onClick={() => (open ? close() : setOpen(true))}
         aria-expanded={open}
         aria-controls="vs-chat"
-        className={`group fixed bottom-6 right-6 z-[70] flex items-center gap-2.5 rounded-full border border-gold/60 bg-ink/90 py-2 pl-2 pr-2 text-gold-light shadow-[0_18px_40px_-14px_rgba(200,164,93,0.55)] backdrop-blur transition-[transform,border-color,opacity] duration-500 hover:border-gold motion-safe:hover:-translate-y-0.5 sm:pr-5 md:bottom-8 md:right-8 ${open ? 'max-sm:pointer-events-none max-sm:opacity-0' : ''}`}
+        translate="no"
+        className={`notranslate group fixed bottom-6 right-6 z-[70] flex items-center gap-2.5 rounded-full border border-gold/60 bg-ink/90 py-2 pl-2 pr-2 text-gold-light shadow-[0_18px_40px_-14px_rgba(200,164,93,0.55)] backdrop-blur transition-[transform,border-color,opacity] duration-500 hover:border-gold motion-safe:hover:-translate-y-0.5 sm:pr-5 md:bottom-8 md:right-8 ${open ? 'max-sm:pointer-events-none max-sm:opacity-0' : ''}`}
         style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
       >
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-gold-light via-gold to-gold-dim text-ink">
@@ -370,7 +376,7 @@ export default function ChatWidget({ knowledge }: { knowledge: Knowledge }) {
             </svg>
           )}
         </span>
-        <span className="hidden text-[11px] font-semibold uppercase tracking-[0.18em] sm:inline">{open ? 'Close' : 'Ask · Book'}</span>
+        <span className="hidden text-[11px] font-semibold uppercase tracking-[0.18em] sm:inline">{open ? (lang === 'hi' ? 'बंद करें' : 'Close') : lang === 'hi' ? 'पूछें · बुक करें' : 'Ask · Book'}</span>
         <span className="sr-only">{open ? 'Close the assistant' : 'Open the assistant to ask a question or book an appointment'}</span>
       </button>
 
@@ -378,9 +384,10 @@ export default function ChatWidget({ knowledge }: { knowledge: Knowledge }) {
       {open && (
         <div
           id="vs-chat"
+          translate="no"
           role="dialog"
           aria-label="Assistant and appointment booking"
-          className="vs-chat-panel fixed inset-0 z-[80] flex flex-col bg-ink sm:inset-auto sm:bottom-24 sm:right-6 sm:h-[min(640px,calc(100dvh-8rem))] sm:w-[400px] sm:border sm:border-gold/40 sm:shadow-[0_40px_90px_-30px_rgba(0,0,0,0.9),0_0_0_1px_rgba(200,164,93,0.08)] md:bottom-28 md:right-8"
+          className="notranslate vs-chat-panel fixed inset-0 z-[80] flex flex-col bg-ink sm:inset-auto sm:bottom-24 sm:right-6 sm:h-[min(640px,calc(100dvh-8rem))] sm:w-[400px] sm:border sm:border-gold/40 sm:shadow-[0_40px_90px_-30px_rgba(0,0,0,0.9),0_0_0_1px_rgba(200,164,93,0.08)] md:bottom-28 md:right-8"
         >
           {/* Header */}
           <div className="relative flex items-center gap-3 border-b border-gold/25 bg-gradient-to-b from-charcoal to-ink px-5 py-4">

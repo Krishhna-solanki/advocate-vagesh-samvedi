@@ -4,8 +4,8 @@ export type Knowledge = {
   role: string;
   city: string;
   region: string;
-  firm: string;
   education: string;
+  educationHi: string;
   email: string;
   phone: string | null;
   phoneHref: string | null;

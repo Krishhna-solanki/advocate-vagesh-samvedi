@@ -1,9 +1,9 @@
 ---
-title: "Advocate Vagesh Samvedi's Effective Legal Representation Brings Relief to a Trader After Three Years of Cyber Lien"
+title: "Legal Proceedings Concerning a Cyber Fraud-Related Bank Lien of ₹4,56,341"
 date: "2026-07-30"
 type: Cyber Law & Courts
 publication: Jhabua Live
-excerpt: "A small trader receives significant legal relief after approximately three years, as the court issues an order for removal of a Cyber Lien restricting ₹4,56,341 in his bank account, following legal proceedings initiated by Advocate Vagesh Samvedi."
+excerpt: "A cyber-fraud-related matter involving a bank lien of ₹4,56,341 and legal proceedings, including an Article 21-related writ petition before the High Court of Madhya Pradesh. The matter involved questions concerning the legal basis and continuation of the lien and the remedies available through appropriate judicial proceedings."
 link: "https://jhabualive.com/%e0%a4%85%e0%a4%a7%e0%a4%bf%e0%a4%b5%e0%a4%95%e0%a5%8d%e0%a4%a4%e0%a4%be-%e0%a4%b5%e0%a4%be%e0%a4%97%e0%a5%87%e0%a4%b6-%e0%a4%b8%e0%a4%be%e0%a4%ae%e0%a4%b5%e0%a5%87%e0%a4%a6%e0%a5%80-%e0%a4%95/"
 linkLabel: "Read the original report on Jhabua Live (Hindi)"
 cover: /images/news/advocate-vagesh-samvedi-speaking-to-media.jpg

@@ -10,7 +10,7 @@ import NewsGallery from '@/components/NewsGallery';
 import { getAllNews, getNewsItem, getNewsMetas } from '@/lib/news';
 import { renderMarkdown } from '@/lib/insights';
 import { formatDate } from '@/lib/format';
-import { breadcrumbJsonLd, newsJsonLd } from '@/lib/seo';
+import { breadcrumbJsonLd, defaultShareImage, metaDescription, newsJsonLd, searchTitle } from '@/lib/seo';
 import { absoluteUrl } from '@/lib/site';
 
 type Params = { params: Promise<{ slug: string }> };
@@ -24,20 +24,23 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const n = getNewsItem((await params).slug);
   if (!n) return {};
+  const description = metaDescription(n.excerpt);
+  const image = n.cover ?? n.gallery[0]?.image;
   return {
-    title: n.title,
-    description: n.excerpt,
+    title: { absolute: searchTitle(n.title) },
+    description,
     alternates: { canonical: `/news/${n.slug}` },
     robots: n.draft ? { index: false, follow: false } : undefined,
     openGraph: {
       type: 'article',
       title: n.title,
-      description: n.excerpt,
+      description,
       url: `/news/${n.slug}`,
       publishedTime: n.date,
       section: n.type,
-      ...(n.cover ? { images: [{ url: n.cover, alt: n.coverAlt }] } : {}),
+      images: [image ? { url: image, alt: n.coverAlt || n.title } : defaultShareImage],
     },
+    twitter: { card: 'summary_large_image', title: n.title, description, images: [image ?? defaultShareImage.url] },
   };
 }
 

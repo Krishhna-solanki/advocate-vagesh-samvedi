@@ -5,9 +5,10 @@ import SectionHeading from '@/components/SectionHeading';
 import PracticeGrid from '@/components/PracticeGrid';
 import FeaturedArticle from '@/components/FeaturedArticle';
 import ArticleCard from '@/components/ArticleCard';
-import ContactForm from '@/components/ContactForm';
+import ContactSection from '@/components/ContactSection';
 import OfficeLocations from '@/components/OfficeLocations';
 import Reveal from '@/components/Reveal';
+import Credentials from '@/components/Credentials';
 import { getArticleMetas, getFeatured } from '@/lib/insights';
 import { getNewsMetas } from '@/lib/news';
 import { getHomepageSocial, getSocialPosts } from '@/lib/social';
@@ -15,7 +16,24 @@ import { NewsLead, NewsRow } from '@/components/NewsItems';
 import SocialGallery from '@/components/SocialGallery';
 import DigitalCardBanner from '@/components/DigitalCardBanner';
 import EmptyState from '@/components/EmptyState';
-import { site } from '@/lib/site';
+import { pageMetadata } from '@/lib/seo';
+
+export const metadata = pageMetadata({
+  title: 'Advocate Vagesh Samvedi | Lawyer in Petlawad, Jhabua & Indore',
+  description:
+    'Advocate Vagesh Samvedi, lawyer in Petlawad (Jhabua) and Indore — civil, criminal, property, family, cyber and IP law matters across Madhya Pradesh and Gujarat.',
+  path: '/',
+});
+
+const highlights = [
+  'Independent legal practice since 2025.',
+  'B.A. LL.B. (Hons.), completed in 2025.',
+  'LL.M. in Intellectual Property Rights, completed.',
+  'Enrolled with the State Bar Council of Madhya Pradesh.',
+  'Successfully qualified the All India Bar Examination (AIBE) in 2025.',
+  'District President, Judicial Human Rights Council, Jhabua.',
+  'Secretary, Boxing Association, Jhabua.',
+];
 
 export default function HomePage() {
   const featured = getFeatured();
@@ -37,61 +55,74 @@ export default function HomePage() {
 
       {/* About */}
       <section aria-labelledby="about-heading" className="relative py-28 md:py-36">
-        <div className="container grid gap-16 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-20">
-          <div className="relative lg:col-span-5">
-            <Reveal variant="image" className="relative aspect-[4/5] overflow-hidden">
-              <div className="absolute -inset-y-[10%] inset-x-0" data-speed="0.25">
-                <Image
-                  src="/images/about-portrait.jpg"
-                  alt="Advocate Vagesh Samvedi reading a law book in his chamber, with law reports on the shelves behind him"
-                  fill
-                  sizes="(min-width: 1024px) 38vw, 92vw"
-                  className="object-cover object-[48%_50%] grayscale-[35%]"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
+        <div className="container grid items-start gap-14 lg:grid-cols-12 lg:gap-x-12 xl:gap-x-20">
+          {/* Portrait: natural flow on phones and tablets, pinned beside the text on desktop */}
+          <div className="relative lg:sticky lg:top-28 lg:col-span-6">
+            <Reveal
+              variant="image"
+              className="relative aspect-[4/5] overflow-hidden sm:aspect-[5/6] lg:aspect-auto lg:h-[min(80vh,46rem)]"
+            >
+              <Image
+                src="/images/about-portrait.jpg"
+                alt="Advocate Vagesh Samvedi reading a law book in his chamber, with law reports on the shelves behind him"
+                fill
+                sizes="(min-width: 1024px) 46vw, 92vw"
+                className="object-cover object-[48%_45%] grayscale-[25%]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/5 to-transparent" />
+              <div aria-hidden className="pointer-events-none absolute inset-3 border border-gold/20" />
             </Reveal>
-            <div aria-hidden className="absolute -bottom-6 -right-6 hidden h-40 w-40 md:block">
+            <div aria-hidden className="absolute -bottom-5 -right-5 hidden h-36 w-36 md:block">
               <span className="absolute bottom-0 right-0 h-px w-full bg-gold/50" data-anim="line-x" data-delay="600" />
               <span className="absolute bottom-0 right-0 h-full w-px bg-gold/50" data-anim="line-y" data-delay="600" />
             </div>
+            <div aria-hidden className="absolute -left-5 -top-5 hidden h-24 w-24 border-l border-t border-gold/40 md:block" />
           </div>
 
-          <div className="lg:col-span-7 lg:pt-10">
+          <div className="lg:col-span-6 lg:py-6">
             <SectionHeading
               id="about-heading"
-              label="About Vagesh Samvedi"
+              label="About"
               title={
                 <>
-                  An Approach Grounded in Law, <span className="italic text-gold-light">Research</span> &amp; Perspective
+                  A Legal Practice Shaped by <span className="italic text-gold-light">Knowledge</span>, Reasoning &amp; Responsibility
                 </>
               }
             />
-            <Reveal variant="stagger" className="mt-10 grid gap-8 text-base leading-8 text-ivory/80 md:grid-cols-2">
-              <p>
-                Vagesh Samvedi is an advocate and legal advisor based in {site.location.city}, {site.location.region}, whose work centres on
-                civil law, cyber law and intellectual property law.
+            <Reveal variant="stagger" className="mt-12 max-w-xl space-y-7">
+              <p className="font-serif text-[1.45rem] leading-[1.55] text-ivory md:text-[1.65rem]">
+                Advocate Vagesh Samvedi is an independent legal practitioner whose professional work encompasses litigation, legal
+                representation and advisory services across diverse areas of Indian law.
               </p>
-              <p>
-                His aim is to simplify complex legal matters — combining a commitment to justice with a creative, analytical approach to
-                the questions businesses and individuals bring to him.
+              <p className="border-l border-gold/40 pl-6 text-base leading-8 text-ivory/80 md:text-[1.05rem]">
+                His academic background includes a B.A. LL.B. (Hons.) and a completed LL.M. in Intellectual Property Rights. His legal
+                interests extend beyond conventional litigation to include technology law, cybersecurity, intellectual property and
+                contemporary legal developments.
+              </p>
+              <p className="text-base leading-8 text-ivory/75 md:text-[1.05rem]">
+                His approach to legal practice is informed by careful examination of facts, legal research, statutory interpretation and
+                consideration of applicable judicial precedents.
+              </p>
+              <p className="text-base leading-8 text-ivory/75 md:text-[1.05rem]">
+                Alongside his professional responsibilities, he remains engaged in human rights initiatives, social activities and
+                community-oriented organisational work.
               </p>
             </Reveal>
-            <div className="relative mt-12 pt-8">
-              <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-line" data-anim="line-x" />
-              <Reveal variant="stagger" className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-                <dl className="grid grid-cols-2 gap-x-10 gap-y-4 text-sm">
+            <div className="relative mt-12 max-w-xl pt-9">
+              <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-gold/50 via-line to-transparent" data-anim="line-x" />
+              <Reveal variant="stagger" className="space-y-8">
+                <dl className="grid gap-6 sm:grid-cols-2">
                   <div>
                     <dt className="label text-muted">Education</dt>
-                    <dd className="mt-1.5 text-ivory/90">{site.education.institution}</dd>
+                    <dd className="mt-2 font-serif text-xl text-ivory">B.A. LL.B. (Hons.) · LL.M. (IPR)</dd>
                   </div>
                   <div>
-                    <dt className="label text-muted">Practice</dt>
-                    <dd className="mt-1.5 text-ivory/90">{site.firm.name}</dd>
+                    <dt className="label text-muted">Enrolment</dt>
+                    <dd className="mt-2 font-serif text-xl text-ivory">State Bar Council of Madhya Pradesh</dd>
                   </div>
                 </dl>
-                <Link href="/about" className="link-gold">
-                  Full profile <span className="arrow">→</span>
+                <Link href="/about" className="btn-outline">
+                  Read Full Biography <span aria-hidden>→</span>
                 </Link>
               </Reveal>
             </div>
@@ -105,15 +136,18 @@ export default function HomePage() {
           <SectionHeading
             id="practice-heading"
             align="split"
-            label="Practice Areas"
-            title="Areas of Legal Practice"
-            intro="Advisory and dispute-resolution work across civil, commercial, intellectual property and technology law."
+            label="Areas of Practice"
+            title="Legal Services Across Diverse Areas of Law"
+            intro="Legal matters often require an understanding of different statutory frameworks, procedural requirements and individual circumstances. The practice encompasses legal assistance and representation across various areas of law, subject to the nature of the matter and applicable jurisdiction."
           />
           <div className="mt-16">
             <PracticeGrid />
           </div>
         </div>
       </section>
+
+      {/* Professional profile */}
+      <Credentials items={highlights} />
 
       {/* Social Journey */}
       <section aria-labelledby="social-heading" className="border-t border-line py-28 md:py-36">
@@ -122,8 +156,8 @@ export default function HomePage() {
             id="social-heading"
             align="split"
             label="Social Journey"
-            title="Beyond the Courtroom"
-            intro="Moments from events, professional gatherings and the work behind the practice."
+            title="Beyond the Courtroom: Law, Society and Responsibility"
+            intro="Professional life extends beyond courtroom proceedings. Engagement with human rights, community initiatives, sports and public welfare reflects another dimension of social responsibility. Through organisational roles and community participation, Advocate Vagesh Samvedi remains involved in initiatives concerning human dignity, equality and community development."
           />
           <div className="mt-16">
             {social.length > 0 ? (
@@ -131,7 +165,7 @@ export default function HomePage() {
                 <SocialGallery posts={social} />
                 <div data-anim="fade-up" className="mt-12 flex flex-col items-center gap-3">
                   <Link href="/social" className="btn-outline">
-                    View All Moments <span aria-hidden>→</span>
+                    Explore Social Initiatives <span aria-hidden>→</span>
                   </Link>
                   {socialTotal > social.length && (
                     <p className="text-xs uppercase tracking-[0.2em] text-muted">{socialTotal} moments in the gallery</p>
@@ -193,9 +227,9 @@ export default function HomePage() {
             <SectionHeading
               id="insights-heading"
               align="split"
-              label="Blog & Articles"
-              title="Legal Insights & Developments"
-              intro="Perspectives on legal developments, legislation, landmark judgments and emerging legal questions."
+              label="Legal Knowledge"
+              title="Legal Insights & Contemporary Developments"
+              intro="Explore discussions on Indian law, legal procedures, intellectual property, cyber law, property disputes and emerging legal developments. This section aims to make relevant legal concepts more accessible through informative and research-oriented content."
               aside={
                 <Link href="/blog" className="link-gold mt-6">
                   View all articles <span className="arrow">→</span>
@@ -222,7 +256,7 @@ export default function HomePage() {
       )}
 
 
-      {/* Philosophy — proposed editorial copy, pending the advocate's approval */}
+      {/* Professional philosophy */}
       <section aria-label="Professional philosophy" className="texture-grain relative overflow-hidden border-y border-line bg-black/40 py-32 md:py-44">
         <div aria-hidden className="absolute left-1/2 top-0 h-20 w-px -translate-x-1/2 bg-gradient-to-b from-transparent to-gold/70" />
         <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center" data-speed="0.4">
@@ -233,15 +267,26 @@ export default function HomePage() {
             <p className="label" data-anim="fade-up">
               Professional Philosophy
             </p>
-            <blockquote className="mt-10">
-              <p
-                data-anim="scrub-words"
-                className="font-serif text-[1.9rem] font-normal leading-[1.3] text-gold-light sm:text-[2.5rem] lg:text-[3.4rem]"
-              >
-                “Good legal thinking begins with careful research, a clear understanding of the facts and the discipline to examine every
-                relevant perspective.”
+            <h2
+              data-anim="scrub-words"
+              className="mt-10 font-serif text-[1.9rem] font-normal leading-[1.3] text-gold-light sm:text-[2.5rem] lg:text-[3.4rem]"
+            >
+              A Thoughtful Approach to Law and Justice
+            </h2>
+            <Reveal variant="stagger" className="mx-auto mt-10 max-w-3xl space-y-6 text-base leading-8 text-ivory/75 md:text-lg">
+              <p>
+                Legal practice requires more than an understanding of statutory provisions. It demands careful reasoning, attention to facts,
+                examination of evidence and an appreciation of the circumstances surrounding each matter.
               </p>
-            </blockquote>
+              <p>
+                Advocate Vagesh Samvedi approaches legal matters through considered analysis, legal research and an understanding of the
+                remedies available under applicable law.
+              </p>
+              <p>
+                The emphasis remains on professional diligence, procedural fairness, responsible legal representation and respect for the
+                principles underlying the rule of law.
+              </p>
+            </Reveal>
             <div aria-hidden className="mx-auto mt-12 flex items-center justify-center gap-4">
               <span className="h-px w-12 bg-gold/60" data-anim="line-x" />
               <span className="h-1.5 w-1.5 rotate-45 bg-gold" data-anim="fade-up" data-delay="300" />
@@ -252,50 +297,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact */}
-      <section aria-labelledby="contact-heading" className="py-28 md:py-36">
-        <div className="container grid gap-16 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <SectionHeading id="contact-heading" label="Contact" title="Professional Enquiries" />
-            <div className="mt-10 space-y-8">
-              <p className="max-w-md leading-8 text-muted" data-anim="fade-up">
-                For professional enquiries, please write using the form or by email. Information shared here is general and does not create
-                an advocate–client relationship.
-              </p>
-              <Reveal as="div" variant="stagger" className="space-y-6 border-t border-line pt-8">
-                <div>
-                  <p className="label text-muted">Email</p>
-                  <p className="mt-2 font-serif text-xl">
-                    <a href={`mailto:${site.email}`} className="break-all hover:text-gold-light">
-                      {site.email}
-                    </a>
-                  </p>
-                </div>
-                {site.phone && (
-                  <div>
-                    <p className="label text-muted">Phone</p>
-                    <p className="mt-2 font-serif text-xl">
-                      <a href={site.phone.href} className="hover:text-gold-light">
-                        {site.phone.display}
-                      </a>
-                    </p>
-                  </div>
-                )}
-                <div>
-                  <p className="label text-muted">Location</p>
-                  <p className="mt-2 font-serif text-xl">
-                    {site.location.city}, {site.location.region}
-                  </p>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-          <Reveal delay={150} className="form-panel lg:col-span-6 lg:col-start-7 lg:mt-6">
-            <h3 className="font-serif text-3xl">Send a message</h3>
-            <p className="mb-10 mt-3 text-sm text-muted">All fields are required.</p>
-            <ContactForm />
-          </Reveal>
-        </div>
-      </section>
+      <ContactSection />
 
       {/* Office locations */}
       <OfficeLocations />

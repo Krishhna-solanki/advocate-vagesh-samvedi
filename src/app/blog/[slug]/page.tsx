@@ -7,7 +7,7 @@ import TableOfContents from '@/components/TableOfContents';
 import ShareButtons from '@/components/ShareButtons';
 import JsonLd from '@/components/JsonLd';
 import { getAdjacent, getAllArticles, getArticle, getRelated, renderMarkdown } from '@/lib/insights';
-import { articleJsonLd, breadcrumbJsonLd, metaDescription } from '@/lib/seo';
+import { articleJsonLd, breadcrumbJsonLd, defaultShareImage, metaDescription, searchTitle } from '@/lib/seo';
 import { absoluteUrl } from '@/lib/site';
 
 type Params = { params: Promise<{ slug: string }> };
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const title = a.seoTitle ?? a.title;
   const description = a.seoDescription ?? metaDescription(a.excerpt);
   return {
-    title,
+    title: { absolute: searchTitle(title) },
     description,
     alternates: { canonical: `/blog/${a.slug}` },
     robots: a.draft ? { index: false, follow: false } : undefined,
@@ -39,9 +39,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       section: a.categoryName,
       tags: a.tags,
       ...(a.author ? { authors: [a.author] } : {}),
-      ...(a.cover ? { images: [{ url: a.cover, alt: a.coverAlt }] } : {}),
+      images: [a.cover ? { url: a.cover, alt: a.coverAlt } : defaultShareImage],
     },
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: { card: 'summary_large_image', title, description, images: [a.cover ?? defaultShareImage.url] },
   };
 }
 

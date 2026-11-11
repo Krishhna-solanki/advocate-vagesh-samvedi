@@ -29,6 +29,9 @@ const delayOf = (el: Element) => Number((el as HTMLElement).dataset.delay ?? 0) 
 let ctx: gsap.Context | null = null;
 let ready = false;
 let splits: SplitText[] = [];
+
+// With Google Translate active (Hindi), text must stay whole sentences, so headings fade instead of being split into words/lines
+const translating = () => document.documentElement.classList.contains('gt-hi');
 let processed: HTMLElement[] = [];
 
 // Elements under root that have not been animated yet (marks them as taken).
@@ -61,7 +64,9 @@ function heroIntro(hero: HTMLElement) {
     .fromTo(q('[data-hero-label]'), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 1.1 }, 0.5);
 
   // Headline: word by word, each rising from behind its own mask
-  if (title) {
+  if (title && translating()) {
+    tl.fromTo(title, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 1.3 }, 0.6);
+  } else if (title) {
     gsap.set(title, { autoAlpha: 1 });
     const split = SplitText.create(title, { type: 'words', mask: 'words', wordsClass: 'split-word' });
     splits.push(split);
@@ -156,6 +161,10 @@ function setup(root: ParentNode) {
   );
 
   all('[data-anim="heading"]').forEach((el) => {
+    if (translating()) {
+      gsap.fromTo(el, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 1.2, ease: EASE, delay: delayOf(el), scrollTrigger: onEnter(el) });
+      return;
+    }
     gsap.set(el, { autoAlpha: 1 });
     splits.push(
       SplitText.create(el, {
@@ -192,6 +201,10 @@ function setup(root: ParentNode) {
   );
 
   all('[data-anim="scrub-words"]').forEach((el) => {
+    if (translating()) {
+      gsap.fromTo(el, { autoAlpha: 0.15 }, { autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: el, start: 'top 80%', end: 'top 45%', scrub: 0.6 } });
+      return;
+    }
     gsap.set(el, { autoAlpha: 1 });
     const split = SplitText.create(el, { type: 'words' });
     splits.push(split);

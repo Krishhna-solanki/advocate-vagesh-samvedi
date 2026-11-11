@@ -34,6 +34,31 @@ const paths: Record<PracticeArea['icon'], React.ReactNode> = {
       <path d="M18 22h12v10H18zM20.5 22v-3a3.5 3.5 0 0 1 7 0v3" />
     </>
   ),
+  // Property & revenue: a pillared building on a land plot
+  landmark: (
+    <>
+      <path d="M6 18 24 7l18 11H6Z" />
+      <path d="M11 22v12M19 22v12M29 22v12M37 22v12" />
+      <path d="M7 38h34M4 42h40" />
+    </>
+  ),
+  // Family: two figures under one roof
+  family: (
+    <>
+      <path d="M6 22 24 8l18 14" />
+      <circle cx="18" cy="24" r="3.5" />
+      <circle cx="30" cy="24" r="3.5" />
+      <path d="M11 40v-4a7 7 0 0 1 14 0v4M23 40v-4a7 7 0 0 1 14 0v4" />
+    </>
+  ),
+  // Dispute resolution: clasped hands
+  handshake: (
+    <>
+      <path d="M4 20l8-6 8 3 6-3 8 1 10 7" />
+      <path d="M4 20v10l7 4M44 22v8l-7 4" />
+      <path d="M20 17l-6 7a2.5 2.5 0 0 0 3.6 3.4L23 23l9 8a2.4 2.4 0 0 1-3.4 3.4M26 34l-3.5-3.5M22 37l-3.5-3.5M29 31l-5-4.5" />
+    </>
+  ),
   compass: (
     <>
       <circle cx="24" cy="24" r="18" />

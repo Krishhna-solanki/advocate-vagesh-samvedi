@@ -3,16 +3,44 @@ import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/Reveal';
 import JsonLd from '@/components/JsonLd';
-import { practiceAreas } from '@/lib/practice-areas';
 import { site } from '@/lib/site';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata({
-  title: 'About',
+  title: 'About Advocate Vagesh Samvedi | Professional Profile',
   description:
-    'About Advocate Vagesh Samvedi — an advocate and legal advisor in Indore, Madhya Pradesh, working in civil law, cyber law and intellectual property law.',
+    'Explore the professional background, legal education, qualifications and professional journey of Advocate Vagesh Samvedi.',
   path: '/about',
 });
+
+const principles = [
+  'Respect for the rule of law and judicial institutions.',
+  'Careful examination of facts and documentary evidence.',
+  'Application of statutory provisions and relevant judicial precedents.',
+  'Recognition of individual rights and procedural safeguards.',
+  'Professional diligence in legal preparation and representation.',
+  'Respect for equality, fairness and access to justice.',
+  'Continuous learning and engagement with evolving legal developments.',
+];
+
+const roleNotes: Record<string, string> = {
+  'Judicial Human Rights Council, Jhabua':
+    'An organisational responsibility involving engagement with human rights, social awareness and community-oriented initiatives.',
+  'Boxing Association, Jhabua':
+    'An organisational role associated with sports administration and participation in activities concerning sports and youth development.',
+};
+
+function Block({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+  return (
+    <section aria-labelledby={id} className="relative mt-20 pt-12">
+      <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-line" data-anim="line-x" />
+      <h2 id={id} className="display text-3xl md:text-4xl" data-anim="heading">
+        {title}
+      </h2>
+      <div className="mt-8">{children}</div>
+    </section>
+  );
+}
 
 export default function AboutPage() {
   const crumbs = [
@@ -22,12 +50,13 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
-        label="About Vagesh Samvedi"
+        label="About"
         title={
           <>
-            An Approach Grounded in Law, <span className="italic text-gold-light">Research</span> &amp; Perspective
+            About Advocate <span className="italic text-gold-light">Vagesh Samvedi</span>
           </>
         }
+        intro="An Independent Legal Practitioner Committed to Legal Reasoning, Professional Responsibility and Justice."
         crumbs={crumbs}
       />
 
@@ -47,86 +76,146 @@ export default function AboutPage() {
               </div>
               <div aria-hidden className="absolute -left-5 -top-5 hidden h-32 w-32 border-l border-t border-gold/50 md:block" />
               <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted">
-                Vagesh Samvedi · {site.location.city}
+                {site.fullName} · {site.reach}
               </p>
             </div>
           </Reveal>
 
           <div className="lg:col-span-7">
-            <Reveal variant="stagger" className="space-y-7 text-lg leading-9 text-ivory/85">
+            {/* Professional background */}
+            <h2 className="label" data-anim="fade-up">
+              Professional Background
+            </h2>
+            <Reveal variant="stagger" className="mt-8 space-y-7 text-lg leading-9 text-ivory/85">
               <p className="font-serif text-3xl leading-snug text-ivory md:text-[2.1rem]">
-                Vagesh Samvedi is an advocate and legal advisor based in {site.location.city}, {site.location.region}, whose practice centres on
-                civil law, cyber law and intellectual property law.
+                Advocate Vagesh Samvedi is an independent legal practitioner engaged in litigation, legal representation and advisory work
+                across various areas of Indian law.
+              </p>
+              <p>His professional journey reflects an engagement with legal practice, academic learning and social responsibility.</p>
+              <p>
+                Having completed his B.A. LL.B. (Hons.) in 2025 and subsequently pursued and completed an LL.M. in Intellectual Property
+                Rights, he has developed an academic foundation that combines conventional legal education with an interest in
+                contemporary legal developments.
               </p>
               <p>
-                His mission is to simplify complex legal matters — work driven by a passion for both justice and creativity, and by the
-                belief that people and businesses decide better when the law is explained clearly.
+                His professional practice encompasses civil litigation, property and revenue disputes, criminal matters, family law, cyber
+                law, intellectual property and other legal issues requiring representation and legal assistance.
               </p>
               <p>
-                He practises with <strong className="font-medium text-ivory">{site.firm.name}</strong>, an {site.firm.city}-based firm whose
-                work includes arbitration and alternative dispute resolution, corporate law, intellectual property rights, regulatory
-                compliance and legal advisory for startups, entrepreneurs, businesses and individuals.
+                As an independent practitioner, he undertakes legal matters individually, involving legal research, preparation, drafting,
+                procedural applications and representation according to the requirements of each case. His professional work includes
+                matters in which favourable legal outcomes have been achieved.
               </p>
               <p>
-                Alongside his practice, he writes on legal topics for businesses and individuals — from arbitration and business compliance to
-                guidance for students considering a career in law.
+                His academic interests extend to the relationship between law and technology, particularly intellectual property,
+                cybersecurity, artificial intelligence and digital rights.
+              </p>
+              <p>
+                Beyond legal practice, he holds organisational responsibilities as District President of the Judicial Human Rights Council,
+                Jhabua, and Secretary of the Boxing Association, Jhabua. These responsibilities form part of his engagement with human
+                rights, sports administration and community-oriented initiatives.
+              </p>
+              <p>
+                His professional outlook is informed by the importance of legal knowledge, careful reasoning, procedural fairness and
+                respect for the rule of law.
               </p>
             </Reveal>
 
-            <Reveal className="mt-16 border-y border-line py-12">
-              <blockquote>
-                <p className="font-serif text-3xl italic leading-snug text-gold-light md:text-4xl">“Strong businesses are built on smart decisions.”</p>
-                <footer className="mt-5 text-sm uppercase tracking-[0.2em] text-muted">— Vagesh Samvedi</footer>
-              </blockquote>
-            </Reveal>
+            <Block id="about-education" title="Education & Academic Qualifications">
+              <Reveal as="ol" variant="stagger" className="relative border-l border-gold/30 pl-8">
+                {site.education.map((e) => (
+                  <li key={e.degree} className="relative pb-9 last:pb-0">
+                    <span aria-hidden className="absolute -left-[2.3rem] top-2 h-2.5 w-2.5 rotate-45 border border-gold bg-ink" />
+                    <p className="font-serif text-2xl leading-snug text-ivory">{e.degree}</p>
+                    <p className="mt-1.5 text-ivory/75">{e.institution}</p>
+                    <p className="mt-1 text-sm uppercase tracking-[0.16em] text-gold">{e.detail}</p>
+                  </li>
+                ))}
+              </Reveal>
+            </Block>
 
-            <Reveal className="mt-16">
-              <dl className="grid gap-x-12 gap-y-10 sm:grid-cols-2">
-                <div>
-                  <dt className="label">Legal Education</dt>
-                  <dd className="mt-3 font-serif text-2xl">{site.education.institution}</dd>
-                  <dd className="mt-1 text-sm text-muted">{site.education.city}, Madhya Pradesh</dd>
-                </div>
-                <div>
-                  <dt className="label">Practice</dt>
-                  <dd className="mt-3 font-serif text-2xl">{site.firm.name}</dd>
-                  <dd className="mt-1 text-sm text-muted">
-                    {site.firm.city}, {site.location.region}
-                  </dd>
-                </div>
-                {site.enrolment && (
-                  <div>
-                    <dt className="label">Enrolment</dt>
-                    <dd className="mt-3 font-serif text-2xl">{site.enrolment}</dd>
+            <Block id="about-registration" title="Professional Registration & Qualifications">
+              <Reveal as="ul" variant="stagger" className="border-t border-line">
+                {[
+                  `Advocate enrolled with the ${site.barCouncil}.`,
+                  'Successfully qualified the All India Bar Examination (AIBE) in 2025.',
+                  'Engaged in independent legal practice since 2025.',
+                  ...(site.enrolment ? [`Enrolment number: ${site.enrolment}`] : []),
+                ].map((item) => (
+                  <li key={item} className="flex gap-4 border-b border-line py-4 text-ivory/85">
+                    <span aria-hidden className="mt-3 h-px w-4 shrink-0 bg-gold" />
+                    {item}
+                  </li>
+                ))}
+              </Reveal>
+            </Block>
+
+            <Block id="about-practice" title="Independent Practice & Legal Representation">
+              <Reveal variant="stagger" className="space-y-6 text-lg leading-9 text-ivory/80">
+                <p>
+                  Advocate Vagesh Samvedi follows an independent approach to legal practice, undertaking and handling legal matters
+                  individually across different areas of law.
+                </p>
+                <p>
+                  His professional responsibilities involve examining case facts, studying relevant legal provisions, preparing legal
+                  documents, developing appropriate legal strategies and pursuing remedies available under the applicable legal framework.
+                </p>
+                <p>
+                  His practice includes civil, property, revenue, criminal, family and cyber-related matters, alongside legal interests in
+                  intellectual property and emerging areas of law.
+                </p>
+                <p>
+                  The experience gained through independently handled matters has contributed to his understanding of legal procedures,
+                  litigation requirements and the practical application of legal principles.
+                </p>
+                <p>Each matter is approached according to its individual circumstances, evidentiary position and applicable law.</p>
+              </Reveal>
+            </Block>
+
+            <Block id="about-principles" title="Principles That Guide the Practice">
+              <Reveal variant="stagger" className="space-y-6 text-lg leading-9 text-ivory/80">
+                <p>A responsible legal practice requires a balance of knowledge, preparation, reasoning and professional integrity.</p>
+                <p>The foundation of Advocate Vagesh Samvedi’s professional outlook includes:</p>
+              </Reveal>
+              <Reveal as="ul" variant="stagger" className="mt-6 grid gap-x-8 border-t border-line sm:grid-cols-2">
+                {principles.map((p) => (
+                  <li key={p} className="flex gap-4 border-b border-line py-4 text-ivory/85">
+                    <span aria-hidden className="mt-2.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-gold" />
+                    {p}
+                  </li>
+                ))}
+              </Reveal>
+            </Block>
+
+            <Block id="about-interests" title="Beyond Conventional Legal Practice">
+              <Reveal variant="stagger" className="space-y-6 text-lg leading-9 text-ivory/80">
+                <p>
+                  His academic and intellectual interests include Intellectual Property Rights, artificial intelligence and law,
+                  cybersecurity, digital regulation, technology-related legal questions and the evolving interpretation of established legal
+                  principles.
+                </p>
+                <p>
+                  His interdisciplinary learning also includes psychology, contributing to an interest in human behaviour, social interaction
+                  and the circumstances surrounding legal disputes.
+                </p>
+              </Reveal>
+            </Block>
+
+            <Block id="about-roles" title="Professional Responsibilities Beyond Legal Practice">
+              <Reveal variant="stagger" className="grid gap-4 sm:grid-cols-2">
+                {site.roles.map((r) => (
+                  <div key={r.organisation} className="contact-card group flex-col !gap-3">
+                    <p className="label">{r.title}</p>
+                    <p className="font-serif text-2xl leading-snug text-ivory">{r.organisation}</p>
+                    <p className="text-sm leading-7 text-muted">{roleNotes[r.organisation]}</p>
                   </div>
-                )}
-                <div className="sm:col-span-2">
-                  <dt className="label">Areas of Focus</dt>
-                  <dd className="mt-4">
-                    <ul data-anim="stagger" className="grid gap-x-8 sm:grid-cols-2">
-                      {practiceAreas.map((p) => (
-                        <li key={p.slug} className="border-b border-line">
-                          <Link href={`/practice-areas/${p.slug}`} className="flex items-center justify-between py-3.5 transition-colors hover:text-gold-light">
-                            {p.title}
-                            <span aria-hidden className="text-gold">→</span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </dd>
-                </div>
-                <div className="sm:col-span-2">
-                  <dt className="label">Writing</dt>
-                  <dd className="mt-3 leading-8 text-ivory/80">
-                    Arbitration and alternative dispute resolution, legal support for businesses, and legal education and careers in India.
-                  </dd>
-                </div>
-              </dl>
-            </Reveal>
+                ))}
+              </Reveal>
+            </Block>
 
             <Reveal variant="stagger" className="mt-16 flex flex-col gap-4 sm:flex-row">
-              <Link href="/blog" className="btn-gold">
-                Read Legal Insights
+              <Link href="/practice-areas" className="btn-gold">
+                Explore Practice Areas
               </Link>
               <Link href="/contact" className="btn-outline">
                 Contact

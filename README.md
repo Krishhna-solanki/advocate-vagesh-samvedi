@@ -207,4 +207,6 @@ To migrate further posts later, use one of:
 - [ ] **Bar Council of India compliance review** — including whether to restore an entry disclaimer pop-up (removed at the owner's request), the "Get in Touch" button, and the
       promotional passages about Law Astra & Associates in two migrated articles.
 - [ ] **Privacy policy** — review against actual hosting/email providers.
-- [ ] Set `NEXT_PUBLIC_SITE_URL` for canonical URLs, sitemap and Open Graph tags.
+- [ ] Canonical URLs follow the Vercel production domain automatically. Only set `NEXT_PUBLIC_SITE_URL` once that address serves this site (www.vageshsamvedi.com still shows the old WordPress site).
+- [ ] Verify the site in Google Search Console and Bing Webmaster Tools (`NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, `NEXT_PUBLIC_BING_SITE_VERIFICATION`), then submit `/sitemap.xml`.
+- [ ] Create or claim a Google Business Profile for each office (Petlawad, Indore) with the same name, address and phone as the site.

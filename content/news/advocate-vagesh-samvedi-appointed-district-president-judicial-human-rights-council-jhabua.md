@@ -3,7 +3,7 @@ title: "Advocate Vagesh Samvedi Appointed District President of Judicial Human R
 date: "2026-08-31"
 type: Appointments & Achievements
 location: Jhabua, Madhya Pradesh
-excerpt: "The Judicial Human Rights Council, Madhya Pradesh has appointed Advocate Vagesh Samvedi as District President for Jhabua, as part of expanding the organisation and making its district-level work on justice, human rights and social concerns more effective."
+excerpt: "Advocate Vagesh Samvedi has been appointed District President of the Judicial Human Rights Council, Jhabua, Madhya Pradesh. The appointment represents an organisational responsibility involving engagement with human rights, social awareness and community-oriented initiatives. The appointment documentation and available media coverage are included as supporting records of this professional milestone."
 cover: /images/news/jhrc-jhabua-district-president-appointment-clipping.png
 coverAlt: "Newspaper report announcing Advocate Vagesh Samvedi's appointment as District President of the Judicial Human Rights Council, Jhabua."
 coverStyle: clipping

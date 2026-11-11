@@ -2,17 +2,32 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { normalisePhone } from '@/lib/appointments/schedule';
+
+export const LEGAL_AREAS = [
+  'Civil Litigation',
+  'Property & Revenue Law',
+  'Criminal Law',
+  'Family & Matrimonial Law',
+  'Cyber Law',
+  'Intellectual Property Rights',
+  'Business & Commercial Law',
+  'Alternative Dispute Resolution',
+  'Other',
+] as const;
 
 type Status = { kind: 'idle' } | { kind: 'sending' } | { kind: 'success' } | { kind: 'error'; message: string };
-type Errors = Partial<Record<'name' | 'email' | 'message' | 'consent', string>>;
+type Errors = Partial<Record<'name' | 'email' | 'phone' | 'area' | 'message' | 'consent', string>>;
 
 function validate(f: FormData): Errors {
   const errors: Errors = {};
   const name = String(f.get('name') ?? '').trim();
   const email = String(f.get('email') ?? '').trim();
   const message = String(f.get('message') ?? '').trim();
-  if (name.length < 2) errors.name = 'Please enter your name.';
+  if (name.length < 2) errors.name = 'Please enter your full name.';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = 'Please enter a valid email address.';
+  if (!normalisePhone(String(f.get('phone') ?? ''))) errors.phone = 'Please enter a valid contact number (10-digit mobile, or with country code).';
+  if (!f.get('area')) errors.area = 'Please choose the area of your legal concern.';
   if (message.length < 20) errors.message = 'Please write at least 20 characters.';
   if (message.length > 3000) errors.message = 'Please keep your message under 3,000 characters.';
   if (!f.get('consent')) errors.consent = 'Please confirm you have read the disclaimer.';
@@ -47,6 +62,8 @@ export default function ContactForm() {
         body: JSON.stringify({
           name: data.get('name'),
           email: data.get('email'),
+          phone: data.get('phone'),
+          area: data.get('area'),
           message: data.get('message'),
           website: data.get('website'), // honeypot
           elapsedMs: Date.now() - startedAt.current,
@@ -72,13 +89,13 @@ export default function ContactForm() {
   if (status.kind === 'success') {
     return (
       <div ref={statusRef} tabIndex={-1} role="status" className="outline-none">
-        <p className="label">Message received</p>
-        <p className="mt-4 font-serif text-3xl">Thank you for writing.</p>
+        <p className="label">Enquiry received</p>
+        <p className="mt-4 font-serif text-3xl">Thank you for submitting your enquiry.</p>
         <p className="mt-4 text-sm leading-7 text-muted">
-          Your message has been delivered. Please do not send confidential or time-sensitive information through this form.
+          Your message has been received and will be reviewed through the available contact channel.
         </p>
         <button type="button" onClick={() => setStatus({ kind: 'idle' })} className="link-gold mt-6">
-          Send another message
+          Submit another enquiry
         </button>
       </div>
     );
@@ -87,9 +104,9 @@ export default function ContactForm() {
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-8" aria-describedby="form-note">
       <div className="grid gap-8 sm:grid-cols-2">
-        <div>
+        <div className="field-group">
           <label htmlFor="name" className="label">
-            Name
+            Full Name
           </label>
           <input
             id="name"
@@ -102,9 +119,9 @@ export default function ContactForm() {
           />
           {fieldError('name')}
         </div>
-        <div>
+        <div className="field-group">
           <label htmlFor="email" className="label">
-            Email
+            Email Address
           </label>
           <input
             id="email"
@@ -119,9 +136,52 @@ export default function ContactForm() {
           {fieldError('email')}
         </div>
       </div>
-      <div>
+      <div className="grid gap-8 sm:grid-cols-2">
+        <div className="field-group">
+          <label htmlFor="phone" className="label">
+            Contact Number
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            required
+            className="field-boxed"
+            aria-invalid={!!errors.phone}
+            aria-describedby={errors.phone ? 'phone-error' : undefined}
+          />
+          {fieldError('phone')}
+        </div>
+        <div className="field-group">
+          <label htmlFor="area" className="label">
+            Area of Legal Concern
+          </label>
+          <select
+            id="area"
+            name="area"
+            required
+            defaultValue=""
+            className="field-boxed field-select"
+            aria-invalid={!!errors.area}
+            aria-describedby={errors.area ? 'area-error' : undefined}
+          >
+            <option value="" disabled>
+              Select an area
+            </option>
+            {LEGAL_AREAS.map((a) => (
+              <option key={a} value={a}>
+                {a}
+              </option>
+            ))}
+          </select>
+          {fieldError('area')}
+        </div>
+      </div>
+      <div className="field-group">
         <label htmlFor="message" className="label">
-          Message
+          Brief Description of the Matter
         </label>
         <textarea
           id="message"
@@ -147,7 +207,7 @@ export default function ContactForm() {
           <input
             type="checkbox"
             name="consent"
-            className="mt-1 h-4 w-4 shrink-0 accent-[#C8A45D]"
+            className="consent-box mt-1 h-4 w-4 shrink-0"
             aria-invalid={!!errors.consent}
             aria-describedby={errors.consent ? 'consent-error' : undefined}
           />
@@ -168,7 +228,8 @@ export default function ContactForm() {
       </div>
 
       <p id="form-note" className="text-xs leading-6 text-muted/80">
-        Please do not share confidential or privileged details in this form.
+        Please avoid submitting highly sensitive personal information or confidential legal documents through this general enquiry form.
+        Submission of an enquiry does not automatically establish an advocate-client relationship.
       </p>
 
       {status.kind === 'error' && (
@@ -184,7 +245,12 @@ export default function ContactForm() {
             Sending…
           </>
         ) : (
-          'Send Message'
+          <>
+            Submit Enquiry
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M5 12h13M13 6l6 6-6 6" />
+            </svg>
+          </>
         )}
       </button>
     </form>

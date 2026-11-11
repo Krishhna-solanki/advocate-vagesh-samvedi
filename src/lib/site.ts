@@ -1,21 +1,40 @@
 // Single source of truth for professional details.
-// Everything here was taken from the previous website (vageshsamvedi.com) or the
-// advocate's public LinkedIn profile. Confirm before launch — see README "Verify before launch".
+// Updated from the client's "Final Website Content & Developer Implementation Document" (November 2026).
 export const site = {
   name: 'Vagesh Samvedi',
+  /** The professional name, used wherever the full name is shown */
+  fullName: 'Advocate Vagesh Samvedi',
   shortName: 'Adv. Vagesh Samvedi',
   role: 'Advocate & Legal Consultant',
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.vageshsamvedi.com').replace(/\/$/, ''),
+  // Set at build time in next.config.mjs (NEXT_PUBLIC_SITE_URL, else the Vercel production domain)
+  url: (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, ''),
   description:
-    'Advocate Vagesh Samvedi — legal advisory in civil law, cyber law and intellectual property, with legal insights on developments that matter to businesses and individuals.',
-  location: { city: 'Indore', region: 'Madhya Pradesh', country: 'India' },
+    'Advocate Vagesh Samvedi is an independent legal practitioner engaged in litigation, legal representation and advisory work across Madhya Pradesh and Gujarat.',
+  /** Principal professional location (structured data, compact displays) */
+  location: { city: 'Petlawad', district: 'Jhabua', region: 'Madhya Pradesh', country: 'India' },
+  /** Professional locations shown in contact details */
+  locations: ['Petlawad, District Jhabua', 'Indore'],
+  /** Geographical reach — areas of professional reach, not offices */
+  reach: 'Madhya Pradesh & selected locations in Gujarat',
   email: 'adv.vageshsamvedi@gmail.com',
   // Listed publicly on the previous homepage. Set to null to hide everywhere.
   phone: { display: '+91 78040 97520', href: 'tel:+917804097520' } as { display: string; href: string } | null,
-  // Bar Council enrolment number — permitted on advocate websites. Add when confirmed.
+  // Bar Council enrolment number — display only once supplied and approved.
   enrolment: null as string | null,
-  education: { institution: 'Vikram University', city: 'Ujjain' },
-  firm: { name: 'Law Astra & Associates', city: 'Indore', logo: '/images/law-astra-logo.png' },
+  barCouncil: 'State Bar Council of Madhya Pradesh',
+  practiceSince: 2025,
+  education: [
+    { degree: 'B.A. LL.B. (Honours)', institution: 'Navsamvat Law College, Ujjain', detail: 'Completed: 2025' },
+    { degree: 'Master of Laws (LL.M.) — Intellectual Property Rights', institution: 'Renaissance University, Indore', detail: 'Status: Completed' },
+    { degree: 'Psychology Certificate Course', institution: 'Indira Gandhi National Open University (IGNOU)', detail: '2022' },
+    { degree: 'Cybersecurity Certification', institution: 'NSDC / Skill India', detail: '2024' },
+    { degree: 'Alternative Dispute Resolution Certificate', institution: 'Alison', detail: '2025' },
+  ],
+  /** Organisational responsibilities */
+  roles: [
+    { title: 'District President', organisation: 'Judicial Human Rights Council, Jhabua' },
+    { title: 'Secretary', organisation: 'Boxing Association, Jhabua' },
+  ],
   profiles: [
     // Verified by the client (2 November 2026). `social: true` entries appear as icons in the header, footer and social sections.
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/adv-vagesh-samvedi-07a545232/', social: true },
@@ -32,6 +51,18 @@ export const nav = [
   { href: '/news', label: 'News' },
   { href: '/blog', label: 'Blog' },
   { href: '/social', label: 'Social Journey' },
+  { href: '/contact', label: 'Contact' },
+];
+
+/** Footer navigation (content document, Page 10) */
+export const footerNav = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/practice-areas', label: 'Practice Areas' },
+  { href: '/publications', label: 'Research & Publications' },
+  { href: '/blog', label: 'Legal Insights' },
+  { href: '/news', label: 'News & Updates' },
+  { href: '/social', label: 'Beyond the Courtroom' },
   { href: '/contact', label: 'Contact' },
 ];
 

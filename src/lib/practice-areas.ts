@@ -1,114 +1,192 @@
-// Practice areas as described on the previous website (homepage, Legal Advisory and
-// Law Astra & Associates pages). Descriptions deliberately avoid any promise of outcome.
+// Practice areas, worded as in the client's content document (November 2026, Page 3).
+// Existing URLs are kept where an area continues (civil-law, cyber-law, intellectual-property, business-corporate,
+// arbitration-adr); the former "startup-advisory" page redirects to business-corporate (next.config.mjs).
 export type PracticeArea = {
   slug: string;
+  /** Card title */
   title: string;
-  icon: 'scales' | 'gavel' | 'briefcase' | 'seal' | 'shield' | 'compass';
+  /** Heading on the area's own page */
+  pageTitle: string;
+  icon: 'scales' | 'gavel' | 'briefcase' | 'seal' | 'shield' | 'compass' | 'landmark' | 'family' | 'handshake';
+  /** Card description */
   summary: string;
   intro: string;
+  listIntro: string;
   matters: string[];
+  closing: string;
+  seoDescription: string;
   insightCategory?: string;
 };
 
 export const practiceAreas: PracticeArea[] = [
   {
     slug: 'civil-law',
-    title: 'Civil Law & Dispute Resolution',
+    title: 'Civil Litigation',
+    pageTitle: 'Civil Litigation',
     icon: 'scales',
-    summary:
-      'Advice and representation in property, contractual and consumer disputes, with an emphasis on early, preventive resolution.',
-    intro:
-      'Civil disputes are often best addressed before they harden into litigation. Advice in this area focuses on understanding the facts and documents early, exploring negotiated solutions, and — where litigation is necessary — representation and careful case management.',
+    summary: 'Civil suits, contractual disputes, recovery proceedings, injunctions, declaratory relief and other civil remedies.',
+    intro: 'Civil litigation involves disputes concerning legal rights, contractual obligations, property interests and other civil claims.',
+    listIntro: 'Advocate Vagesh Samvedi undertakes civil legal matters involving:',
     matters: [
-      'Property disputes',
-      'Contractual disagreements',
-      'Consumer protection matters',
-      'General civil litigation',
-      'Preventive advice and negotiation',
+      'Civil suits and recovery proceedings.',
+      'Contractual disputes and enforcement.',
+      'Temporary and permanent injunctions.',
+      'Declaratory relief.',
+      'Specific performance.',
+      'Civil procedural applications.',
+      'Documentary evidence and legal claims.',
     ],
-    insightCategory: 'legal-commentary',
+    closing:
+      'The approach to civil litigation involves examining the underlying facts, identifying the applicable legal provisions and pursuing appropriate remedies through the competent court.',
+    seoDescription: 'Information about civil litigation, recovery proceedings, contractual disputes, injunctions and civil remedies.',
   },
   {
-    slug: 'arbitration-adr',
-    title: 'Arbitration & ADR',
+    slug: 'property-revenue-law',
+    title: 'Property & Revenue Law',
+    pageTitle: 'Property & Revenue Law',
+    icon: 'landmark',
+    summary: 'Property disputes, land ownership, possession matters, mutation, revenue records and land-related proceedings.',
+    intro: 'Property and revenue disputes frequently involve questions of ownership, possession, title, land records and statutory rights.',
+    listIntro: 'Legal assistance in this area may involve:',
+    matters: [
+      'Property ownership and title disputes.',
+      'Possession-related disputes.',
+      'Agricultural land matters.',
+      'Mutation and revenue-record proceedings.',
+      'Correction of land records.',
+      'Revenue appeals and applications.',
+      'Property documentation disputes.',
+      'Matters involving registration and transfer of property.',
+    ],
+    closing:
+      'Each matter requires careful examination of title documents, revenue records, applicable legislation and the legal remedies available before the competent authority or court.',
+    seoDescription: 'Legal information concerning property disputes, land records, mutation, ownership and revenue proceedings.',
+  },
+  {
+    slug: 'criminal-law',
+    title: 'Criminal Law',
+    pageTitle: 'Criminal Litigation',
     icon: 'gavel',
-    summary: 'Commercial arbitration, mediation and conciliation as alternatives to conventional court proceedings.',
-    intro:
-      'Arbitration, mediation and conciliation offer parties a private and often more flexible route to resolving disputes. Work in this area — including through Law Astra & Associates, Indore — covers commercial and contractual matters.',
+    summary: 'Criminal proceedings, bail applications, criminal defence, complaints and procedural remedies.',
+    intro: 'Criminal law concerns offences, investigation, prosecution, defence and procedural safeguards recognised under Indian law.',
+    listIntro: 'Legal assistance in this area may include:',
     matters: [
-      'Commercial arbitration',
-      'Contractual disputes',
-      'Partnership disagreements',
-      'Cross-border matters',
-      'Mediation and conciliation',
+      'Bail applications.',
+      'Criminal defence proceedings.',
+      'Criminal complaints.',
+      'Procedural applications.',
+      'Matters involving investigation and prosecution.',
+      'Representation concerning applicable criminal-law provisions.',
+      'Legal remedies available under criminal procedure.',
     ],
-    insightCategory: 'arbitration-adr',
+    closing:
+      'The approach to criminal matters requires careful consideration of allegations, evidence, procedural compliance and the legal rights of the persons involved.',
+    seoDescription: 'Legal information concerning criminal proceedings, bail applications, defence and procedural remedies.',
   },
   {
-    slug: 'business-corporate',
-    title: 'Business & Corporate Advisory',
-    icon: 'briefcase',
-    summary: 'Contracts, business structuring, compliance and commercial disputes for businesses and entrepreneurs.',
+    slug: 'family-matrimonial-law',
+    title: 'Family & Matrimonial Law',
+    pageTitle: 'Family & Matrimonial Law',
+    icon: 'family',
+    summary: 'Divorce, maintenance, matrimonial disputes, restitution of conjugal rights and related family proceedings.',
     intro:
-      'Businesses face legal questions at every stage — at formation, in their contracts, with employees and in their dealings with regulators. Advisory work here aims to identify risk early and document relationships clearly.',
+      'Family-law matters involve personal relationships, matrimonial rights, maintenance obligations and disputes arising within family relationships.',
+    listIntro: 'Legal assistance may include:',
     matters: [
-      'Corporate and commercial law',
-      'Contract drafting and review',
-      'Business structuring and registration',
-      'Regulatory compliance',
-      'Commercial disputes',
+      'Divorce proceedings.',
+      'Maintenance applications.',
+      'Matrimonial disputes.',
+      'Restitution of conjugal rights.',
+      'Related family-law proceedings.',
+      'Matrimonial settlements and negotiated resolution.',
+      'Proceedings under applicable personal and statutory laws.',
     ],
-    insightCategory: 'business-taxation',
+    closing:
+      'Each matter is considered with due regard to its individual circumstances, applicable personal laws and procedural requirements.',
+    seoDescription: 'Information about matrimonial disputes, divorce, maintenance and family-law proceedings.',
+  },
+  {
+    slug: 'cyber-law',
+    title: 'Cyber Law & Digital Offences',
+    pageTitle: 'Cyber Law & Digital Legal Remedies',
+    icon: 'shield',
+    summary: 'Online financial fraud, cyber complaints, electronic evidence, digital offences and applicable legal remedies.',
+    intro:
+      'Digital transactions and technology-enabled activities have created legal challenges involving online fraud, electronic evidence, privacy and cyber offences.',
+    listIntro: 'Legal assistance in this area may include:',
+    matters: [
+      'Online financial fraud matters.',
+      'Cybercrime complaints.',
+      'Digital payment fraud.',
+      'Bank-account lien and freezing-related disputes.',
+      'Electronic records and digital evidence.',
+      'Legal issues under the Information Technology Act, 2000.',
+      'Appropriate legal remedies before competent authorities and courts.',
+    ],
+    closing:
+      'Cyber-related matters often require timely action, preservation of digital records and an understanding of the legal and procedural framework governing electronic transactions.',
+    seoDescription: 'Legal information concerning cyber fraud, digital offences, electronic evidence and available legal remedies.',
+    insightCategory: 'technology-it-law',
   },
   {
     slug: 'intellectual-property',
     title: 'Intellectual Property Rights',
+    pageTitle: 'Intellectual Property Rights',
     icon: 'seal',
-    summary: 'Trademark, copyright and patent registration, licensing, enforcement and infringement disputes.',
+    summary: 'Trademark, copyright, intellectual property protection and emerging technology-related legal questions.',
     intro:
-      'A brand, a body of creative work or an invention is frequently a business’s most valuable asset. Advice in this area covers securing those rights and responding when they are infringed.',
+      'Intellectual Property Rights concern the protection and lawful use of creative works, distinctive marks, inventions and other forms of intellectual property.',
+    listIntro: 'This area of legal interest includes:',
     matters: [
-      'Trademark registration and protection',
-      'Copyright registration',
-      'Patent registration',
-      'Licensing arrangements',
-      'Enforcement and infringement disputes',
+      'Trademark protection and disputes.',
+      'Copyright protection.',
+      'Intellectual property infringement.',
+      'Legal issues involving digital content.',
+      'Intellectual property rights in technology-related developments.',
+      'Emerging questions concerning artificial intelligence and intellectual property.',
     ],
+    closing:
+      'With an academic qualification in Intellectual Property Rights, this area forms an important part of Advocate Vagesh Samvedi’s academic and professional interests.',
+    seoDescription: 'Explore intellectual property interests involving trademarks, copyright and emerging technology-related legal questions.',
     insightCategory: 'intellectual-property',
   },
   {
-    slug: 'cyber-law',
-    title: 'Cyber Law & Data Protection',
-    icon: 'shield',
-    summary: 'IT Act compliance, data protection, online fraud, data breaches and e-commerce disputes.',
+    slug: 'business-corporate',
+    title: 'Business & Commercial Law',
+    pageTitle: 'Business & Commercial Legal Matters',
+    icon: 'briefcase',
+    summary: 'Contractual disputes, commercial recovery, business documentation and legal advisory.',
     intro:
-      'Technology raises legal questions that move quickly. Work in this area covers compliance under the Information Technology Act, data-protection obligations and disputes that arise online.',
+      'Commercial legal matters involve contractual relationships, business obligations, monetary claims and disputes arising from commercial transactions.',
+    listIntro: 'Legal assistance may include:',
     matters: [
-      'IT Act compliance',
-      'Data protection and privacy compliance',
-      'Online fraud and identity theft',
-      'Data breaches',
-      'E-commerce disputes',
-      'Cybersecurity regulations',
+      'Contractual disputes.',
+      'Recovery of outstanding amounts.',
+      'Commercial claims.',
+      'Business documentation.',
+      'Contract interpretation.',
+      'Consumer-related disputes.',
+      'Legal advisory concerning applicable commercial obligations.',
     ],
-    insightCategory: 'technology-it-law',
+    closing:
+      'The focus is on understanding contractual rights, identifying legal risks and examining appropriate remedies under the applicable law.',
+    seoDescription: 'Information about contractual disputes, commercial recovery, business documentation and commercial legal advisory.',
+    insightCategory: 'business-taxation',
   },
   {
-    slug: 'startup-advisory',
-    title: 'Startup & Legal Consulting',
-    icon: 'compass',
-    summary:
-      'Legal groundwork for founders — formation, founding agreements, compliance and protecting early brand assets.',
+    slug: 'arbitration-adr',
+    title: 'Alternative Dispute Resolution',
+    pageTitle: 'Alternative Dispute Resolution',
+    icon: 'handshake',
+    summary: 'Mediation, negotiation, conciliation and arbitration-related legal assistance.',
     intro:
-      'Early legal decisions shape a startup’s future. Consulting in this area helps founders choose a structure, document their arrangements and put compliance and intellectual property on a sound footing.',
-    matters: [
-      'Choosing a business structure',
-      'Formation and registration',
-      'Founder and vendor agreements',
-      'Compliance foundations',
-      'Brand and IP protection',
-    ],
-    insightCategory: 'business-taxation',
+      'Alternative Dispute Resolution provides mechanisms for resolving disputes outside conventional contested litigation, wherever legally appropriate.',
+    listIntro: 'Relevant methods include:',
+    matters: ['Mediation.', 'Negotiation.', 'Conciliation.', 'Arbitration-related legal assistance.', 'Settlement discussions.'],
+    closing:
+      'The suitability of an alternative dispute-resolution mechanism depends on the nature of the dispute, the parties involved and the applicable statutory framework.',
+    seoDescription: 'Information about mediation, negotiation, conciliation and arbitration-related legal assistance in India.',
+    insightCategory: 'arbitration-adr',
   },
 ];
 

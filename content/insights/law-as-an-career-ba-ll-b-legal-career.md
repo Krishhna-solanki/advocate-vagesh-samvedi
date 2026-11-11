@@ -1,5 +1,5 @@
 ---
-title: LAW as an career.
+title: "Law as a Career: Understanding Legal Education and Professional Development in India"
 date: '2024-04-29T07:34:07'
 category: legal-education
 tags:
@@ -12,12 +12,7 @@ tags:
   - Legal
   - LLB
 author: Vagesh Samvedi
-excerpt: >-
-  Considering a Career in Law? Let’s Navigate through India’s Legal Education
-  System So, you’re intrigued by the idea of pursuing law as a career path. It’s
-  quite a journey, isn’t it? But hey, don’t worry if you’re feeling a tad lost
-  in the maze of legal education in India. That’s what we’re here for –
-  [&hellip;]
+excerpt: "An introduction to legal education, professional qualifications, the role of the Bar and the continuing learning required in the legal profession."
 cover: /images/insights/law-career.jpg
 coverAlt: ''
 featured: false

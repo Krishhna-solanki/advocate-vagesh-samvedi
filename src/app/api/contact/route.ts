@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { normalisePhone } from '@/lib/appointments/schedule';
+
+const AREAS = ['Civil Litigation', 'Property & Revenue Law', 'Criminal Law', 'Family & Matrimonial Law', 'Cyber Law', 'Intellectual Property Rights', 'Business & Commercial Law', 'Alternative Dispute Resolution', 'Other'] as const;
 
 const schema = z.object({
   name: z.string().trim().min(2).max(120),
   email: z.string().trim().email().max(200),
+  phone: z.string().trim().min(1).max(25),
+  area: z.enum(AREAS),
   message: z.string().trim().min(20).max(3000),
   website: z.string().optional().nullable(), // honeypot
   elapsedMs: z.number().optional(),
@@ -35,7 +40,11 @@ export async function POST(req: Request) {
   if (!parsed.success) {
     return NextResponse.json({ error: 'Please check the form fields and try again.' }, { status: 400 });
   }
-  const { name, email, message, website, elapsedMs } = parsed.data;
+  const { name, email, area, message, website, elapsedMs } = parsed.data;
+  const phone = normalisePhone(parsed.data.phone);
+  if (!phone) {
+    return NextResponse.json({ error: 'Please enter a valid contact number.' }, { status: 400 });
+  }
 
   // Spam: filled honeypot or submitted implausibly fast. Respond as if successful.
   if (website || (elapsedMs !== undefined && elapsedMs < 3000)) {
@@ -64,9 +73,9 @@ export async function POST(req: Request) {
       from,
       to: [to],
       reply_to: email,
-      subject: `Website enquiry from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-      html: `<p><strong>Name:</strong> ${escapeHtml(name)}<br><strong>Email:</strong> ${escapeHtml(email)}</p><p style="white-space:pre-wrap">${escapeHtml(message)}</p>`,
+      subject: `Legal enquiry (${area}) from ${name}`,
+      text: `Full Name: ${name}\nEmail Address: ${email}\nContact Number: ${phone}\nArea of Legal Concern: ${area}\n\n${message}`,
+      html: `<p><strong>Full Name:</strong> ${escapeHtml(name)}<br><strong>Email Address:</strong> ${escapeHtml(email)}<br><strong>Contact Number:</strong> ${escapeHtml(phone)}<br><strong>Area of Legal Concern:</strong> ${escapeHtml(area)}</p><p style="white-space:pre-wrap">${escapeHtml(message)}</p>`,
     }),
   });
 

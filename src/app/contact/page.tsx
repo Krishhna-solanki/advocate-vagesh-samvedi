@@ -1,15 +1,14 @@
 import PageHeader from '@/components/PageHeader';
-import ContactForm from '@/components/ContactForm';
-import BookAppointmentButton from '@/components/BookAppointmentButton';
+import ContactSection from '@/components/ContactSection';
 import OfficeLocations from '@/components/OfficeLocations';
-import SocialLinks from '@/components/SocialLinks';
+import GeographicReach from '@/components/GeographicReach';
 import JsonLd from '@/components/JsonLd';
-import { site } from '@/lib/site';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata({
-  title: 'Contact',
-  description: `Professional contact details for Advocate Vagesh Samvedi, ${site.location.city}, ${site.location.region}.`,
+  title: 'Contact Advocate Vagesh Samvedi | Legal Enquiries',
+  description:
+    'Contact Advocate Vagesh Samvedi in Petlawad (District Jhabua) or Indore, Madhya Pradesh, for legal representation, litigation and advisory enquiries.',
   path: '/contact',
 });
 
@@ -22,67 +21,25 @@ export default function ContactPage() {
     <>
       <PageHeader
         label="Contact"
-        title="Professional Enquiries"
-        intro="For professional enquiries, please write using the form below or by email. Contacting the advocate through this website does not by itself create an advocate–client relationship."
+        title={
+          <>
+            Contact Advocate <span className="italic text-gold-light">Vagesh Samvedi</span>
+          </>
+        }
+        intro={
+          <>
+            For enquiries concerning legal representation, litigation or advisory assistance, you may connect through the contact details
+            and enquiry facilities provided below.
+            <span className="mt-4 block">
+              All enquiries are considered according to the nature of the matter, relevant facts and applicable legal jurisdiction.
+            </span>
+          </>
+        }
         crumbs={crumbs}
       />
-      <section className="container grid gap-16 py-20 md:py-28 lg:grid-cols-12">
-        <div className="lg:col-span-4">
-          <dl data-anim="stagger" data-delay="300" className="space-y-10">
-            <div>
-              <dt className="label">Email</dt>
-              <dd className="mt-3 font-serif text-2xl">
-                <a href={`mailto:${site.email}`} className="break-all hover:text-gold-light">
-                  {site.email}
-                </a>
-              </dd>
-            </div>
-            {site.phone && (
-              <div>
-                <dt className="label">Phone</dt>
-                <dd className="mt-3 font-serif text-2xl">
-                  <a href={site.phone.href} className="hover:text-gold-light">
-                    {site.phone.display}
-                  </a>
-                </dd>
-              </div>
-            )}
-            <div>
-              <dt className="label">Location</dt>
-              <dd className="mt-3 font-serif text-2xl">
-                {site.location.city}, {site.location.region}
-              </dd>
-              <dd className="mt-1 text-sm text-muted">{site.firm.name}</dd>
-            </div>
-            <div>
-              <dt className="label">Profiles</dt>
-              <dd className="mt-4">
-                <SocialLinks variant="labelled" />
-              </dd>
-              <dd className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
-                {site.profiles.filter((p) => !p.social).map((p) => (
-                  <a key={p.href} href={p.href} target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light">
-                    {p.label} ↗<span className="sr-only"> (opens in a new tab)</span>
-                  </a>
-                ))}
-              </dd>
-            </div>
-          </dl>
-        </div>
-        <div className="form-panel lg:col-span-7 lg:col-start-6" data-anim="fade-up" data-delay="450">
-          <h2 className="font-serif text-3xl">Send a message</h2>
-          <p className="mb-10 mt-3 text-sm text-muted">All fields are required.</p>
-          <ContactForm />
-          <div className="mt-12 flex flex-col gap-5 border-t border-line pt-10 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h3 className="font-serif text-2xl">Prefer to meet?</h3>
-              <p className="mt-2 text-sm text-muted">See the times open for appointments and book one in a few steps.</p>
-            </div>
-            <BookAppointmentButton className="shrink-0" />
-          </div>
-        </div>
-      </section>
+      <ContactSection variant="page" />
       <OfficeLocations />
+      <GeographicReach />
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
     </>
   );

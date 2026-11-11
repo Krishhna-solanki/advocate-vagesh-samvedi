@@ -1,10 +1,10 @@
 ---
-title: "82-Year-Old Cyber Fraud Victim Recovers ₹41,805"
+title: "Legal Assistance in a Cyber Fraud Matter Involving Recovery of ₹41,805 for an Elderly Victim"
 date: "2026-07-10"
 type: Cyber Law & Courts
 location: Petlawad, Madhya Pradesh
 publication: Dainik Crime Darpan
-excerpt: "An 82-year-old retired bank manager who lost ₹41,805 to cyber fraudsters has had the amount returned, following prompt action by Petlawad Police, legal proceedings by Advocate Vagesh Samvedi and an order of the Judicial Magistrate First Class, Petlawad."
+excerpt: "A cyber-fraud-related matter involving an elderly victim and an amount of ₹41,805. The matter reflects the importance of timely legal assistance, preservation of financial records and appropriate remedies in cases involving online financial fraud."
 cover: /images/news/2026-07-10-dainik-crime-darpan-cyber-fraud-recovery.png
 coverAlt: "Page 4 of Dainik Crime Darpan, Indore, dated Friday 10 July 2026, carrying the Hindi headline '82 वर्षीय पीड़ित को वापस मिले ₹41,805', with a photograph of Advocate Vagesh Samvedi and of Petlawad Police Station"
 coverStyle: clipping

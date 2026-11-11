@@ -165,8 +165,8 @@ collections:
             max: 4
             hint: 'Up to 4 offices; add, remove or reorder freely. Untick "Placeholder" once the real details are entered.'
             fields:
-              - { label: Card title, name: title, widget: string, hint: 'e.g. Petlawad Office' }
-              - { label: Name, name: name, widget: string, required: false, hint: 'Name shown on the card, e.g. the office or court name.' }
+              - { label: Label, name: title, widget: string, hint: 'Small label above the name, e.g. Principal Professional Location' }
+              - { label: Name, name: name, widget: string, required: false, hint: 'Shown as the card heading, e.g. Petlawad, District Jhabua' }
               - { label: Address, name: address, widget: text }
               - { label: City / region, name: city, widget: string, required: false }
               - { label: Latitude, name: lat, widget: number, value_type: float, required: false, hint: 'Places the map pin. In Google Maps, right-click the location and click the coordinates to copy them (first number).' }

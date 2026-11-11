@@ -53,7 +53,7 @@ function parseFile(file: string): Article {
     author: data.author || undefined,
     excerpt: data.excerpt ?? '',
     cover: data.cover || undefined,
-    coverAlt: data.coverAlt ?? '',
+    coverAlt: data.coverAlt || String(data.title),
     featured: Boolean(data.featured),
     draft: Boolean(data.draft),
     seoTitle: data.seoTitle || undefined,

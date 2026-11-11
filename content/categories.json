@@ -1,13 +1,20 @@
 {
   "categories": [
+    { "slug": "civil-procedural-law", "name": "Civil & Procedural Law", "description": "Civil suits, procedure, injunctions and civil remedies." },
+    { "slug": "property-revenue-law", "name": "Property & Revenue Law", "description": "Ownership, possession, mutation and revenue records." },
+    { "slug": "criminal-law", "name": "Criminal Law", "description": "Criminal procedure, bail and procedural safeguards." },
+    { "slug": "family-law", "name": "Family Law", "description": "Matrimonial disputes, maintenance and family proceedings." },
+    { "slug": "cyber-law", "name": "Cyber Law", "description": "Online fraud, electronic evidence and the IT Act." },
+    { "slug": "intellectual-property", "name": "Intellectual Property Rights", "description": "Trademarks, copyright, patents and brand protection." },
+    { "slug": "technology-ai", "name": "Technology & Artificial Intelligence", "description": "Legal questions raised by technology and artificial intelligence." },
+    { "slug": "human-rights-constitutional-law", "name": "Human Rights & Constitutional Law", "description": "Individual rights, equality and access to justice." },
+    { "slug": "arbitration-adr", "name": "Alternative Dispute Resolution", "description": "Arbitration, mediation, negotiation and conciliation." },
+    { "slug": "legal-education", "name": "Legal Education & Careers", "description": "Studying law and building a legal career in India." },
+    { "slug": "business-taxation", "name": "Business & Taxation", "description": "Commercial, corporate and compliance questions for businesses." },
+    { "slug": "technology-it-law", "name": "Technology & IT Law", "description": "Cyber law, data protection and the IT Act." },
     { "slug": "legal-news", "name": "Legal News", "description": "Notable legal developments and legislative updates." },
     { "slug": "supreme-court-high-courts", "name": "Supreme Court & High Courts", "description": "Developments from the constitutional courts." },
     { "slug": "case-analysis", "name": "Case Analysis", "description": "Close readings of judgments and their implications." },
-    { "slug": "intellectual-property", "name": "Intellectual Property Rights", "description": "Trademarks, copyright, patents and brand protection." },
-    { "slug": "technology-it-law", "name": "Technology & IT Law", "description": "Cyber law, data protection and the IT Act." },
-    { "slug": "business-taxation", "name": "Business & Taxation", "description": "Commercial, corporate and compliance questions for businesses." },
-    { "slug": "arbitration-adr", "name": "Arbitration & ADR", "description": "Arbitration, mediation and conciliation." },
-    { "slug": "legal-education", "name": "Legal Education & Careers", "description": "Studying law and building a legal career in India." },
     { "slug": "legal-commentary", "name": "Legal Commentary", "description": "Perspectives on emerging legal questions." }
   ]
 }

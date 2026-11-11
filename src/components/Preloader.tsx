@@ -142,7 +142,7 @@ export default function Preloader() {
   }, []);
 
   return (
-    <div ref={root} className="preloader fixed inset-0 z-[200] flex-col" aria-hidden="true">
+    <div ref={root} translate="no" className="notranslate preloader fixed inset-0 z-[200] flex-col" aria-hidden="true">
       <div className="pl-top absolute inset-x-0 top-0 h-1/2 bg-ink" />
       <div className="pl-bottom absolute inset-x-0 bottom-0 h-1/2 bg-ink" />
       <div className="pl-seam absolute inset-x-0 top-1/2 h-px origin-center scale-x-0 bg-gold" />

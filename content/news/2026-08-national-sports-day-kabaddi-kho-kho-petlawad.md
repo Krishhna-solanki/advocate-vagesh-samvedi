@@ -1,10 +1,10 @@
 ---
-title: "National Sports Day Celebrated with Kabaddi and Kho-Kho Competitions in Petlawad"
+title: "Participation in National Sports Day and Community Sports Initiatives"
 date: "2026-08-29"
 type: Community & Events
 location: Sandipani School, Petlawad, Madhya Pradesh
 publication: Tribal Anchal Express
-excerpt: "National Sports Day was celebrated at Sandipani School, Petlawad, with Kabaddi and Kho-Kho competitions. Advocate Vagesh Samvedi, District President of the Human Rights Council, attended the event and encouraged young athletes to participate in sports and develop discipline, confidence and teamwork."
+excerpt: "Participation in sports-related activities and community initiatives associated with National Sports Day, reflecting an interest in sports administration, youth participation and community engagement."
 cover: /images/news/2026-08-29-national-sports-day-petlawad-competition.png
 coverAlt: "A Kho-Kho match on the Sandipani School sports ground in Petlawad on National Sports Day, with players crouched in a line and students and guests watching from the side"
 coverStyle: photo

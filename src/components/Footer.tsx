@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { nav, site } from '@/lib/site';
+import { footerNav, site } from '@/lib/site';
 import { getArticleMetas } from '@/lib/insights';
 import Monogram from './Monogram';
 import SocialLinks from './SocialLinks';
@@ -15,11 +15,14 @@ export default function Footer() {
         <div className="lg:col-span-4">
           <Link href="/" className="inline-flex items-center gap-4">
             <Monogram size="lg" />
-            <span className="font-serif text-2xl text-ivory">Vagesh Samvedi</span>
+            <span className="flex flex-col">
+              <span className="font-serif text-2xl text-ivory">{site.fullName}</span>
+              <span className="mt-1 text-[11px] uppercase tracking-[0.2em] text-gold">{site.role}</span>
+            </span>
           </Link>
           <p className="mt-6 max-w-sm text-sm leading-7 text-muted">
-            Advocate &amp; legal consultant based in {site.location.city}, {site.location.region} — advising on civil law, cyber law
-            and intellectual property.
+            Independent legal practice involving litigation, legal representation and advisory services across Madhya Pradesh and
+            selected locations in Gujarat.
           </p>
           <div className="rule-gold mt-8" />
         </div>
@@ -27,7 +30,7 @@ export default function Footer() {
         <nav aria-label="Footer" className="lg:col-span-2">
           <h2 className="label mb-6">Navigate</h2>
           <ul className="space-y-3 text-sm">
-            {nav.map((n) => (
+            {footerNav.map((n) => (
               <li key={n.href}>
                 <Link href={n.href} className="text-ivory/75 transition-colors hover:text-gold-light">
                   {n.label}
@@ -53,17 +56,17 @@ export default function Footer() {
         <div className="lg:col-span-3">
           <h2 className="label mb-6">Contact</h2>
           <address className="space-y-3 text-sm not-italic text-ivory/75">
-            <a href={`mailto:${site.email}`} className="block break-all transition-colors hover:text-gold-light">
+            <a href={`mailto:${site.email}`} translate="no" className="notranslate block break-all transition-colors hover:text-gold-light">
               {site.email}
             </a>
             {site.phone && (
-              <a href={site.phone.href} className="block transition-colors hover:text-gold-light">
+              <a href={site.phone.href} translate="no" className="notranslate block transition-colors hover:text-gold-light">
                 {site.phone.display}
               </a>
             )}
-            <p>
-              {site.location.city}, {site.location.region}, {site.location.country}
-            </p>
+            {site.locations.map((l) => (
+              <p key={l}>{l}, Madhya Pradesh</p>
+            ))}
           </address>
           <SocialLinks className="mt-6" />
         </div>
@@ -79,7 +82,7 @@ export default function Footer() {
           </p>
           <div className="mt-6 flex flex-col gap-4 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
             <p>
-              © {year} {site.name}. All rights reserved.
+              © {year} {site.fullName}. All Rights Reserved.
             </p>
             <ul className="flex gap-6">
               <li>

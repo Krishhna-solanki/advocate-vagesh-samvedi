@@ -50,7 +50,7 @@ export default function Hero() {
           />
 
           <p data-hero-label className="label">
-            Advocate &amp; Legal Consultant
+            {site.fullName} <span className="text-gold/50">·</span> {site.role}
           </p>
           <h1 data-hero-title className="display mt-8 text-[2.9rem] sm:text-6xl xl:text-[5.5rem]">
             Clarity in Law.
@@ -58,15 +58,16 @@ export default function Hero() {
             <span className="italic text-gold-light">Confidence</span> in Every Decision.
           </h1>
           <p data-hero-text className="mt-8 max-w-xl text-base leading-8 text-ivory/75 md:text-lg">
-            Thoughtful legal analysis, informed perspectives and a commitment to navigating complex legal questions with clarity and
-            precision.
+            An independent legal practitioner engaged in litigation, legal representation and advisory services across Madhya Pradesh and
+            Gujarat. With academic qualifications in law and Intellectual Property Rights, his professional interests extend to civil and
+            property disputes, criminal law, family matters, cyber law and emerging legal challenges involving technology and digital rights.
           </p>
           <div data-hero-cta className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <Link href="/about" className="btn-gold" data-magnetic>
-              Explore Professional Profile
+            <Link href="/practice-areas" className="btn-gold" data-magnetic>
+              Explore Practice Areas
             </Link>
-            <Link href="/blog" className="btn-outline" data-magnetic>
-              Read Legal Insights
+            <Link href="/about" className="btn-outline" data-magnetic>
+              About Advocate Vagesh Samvedi
             </Link>
           </div>
         </div>
@@ -85,9 +86,7 @@ export default function Hero() {
         data-hero-meta
         className="pointer-events-none absolute bottom-8 right-8 hidden items-center gap-4 text-[10px] uppercase tracking-[0.3em] text-muted lg:flex"
       >
-        <span>
-          {site.location.city} · {site.location.region}
-        </span>
+        <span>Madhya Pradesh · Gujarat</span>
         <span className="h-px w-12 bg-gold/60" />
       </div>
     </section>

@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { nav, site } from '@/lib/site';
 import Monogram from './Monogram';
 import SocialLinks from './SocialLinks';
+import LanguageSwitcher from './LanguageSwitcher';
 import { gsap, ScrollTrigger, EASE, prefersReducedMotion } from '@/lib/gsap';
 import { whenPreloaderDone } from '@/lib/preloader-signal';
 import { lockScroll } from '@/lib/smooth-scroll';
@@ -152,7 +153,7 @@ export default function Header() {
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-8">
+          <ul className="flex items-center gap-6 xl:gap-8">
             {nav.slice(0, -1).map((item) => {
               const active = isActive(pathname, item.href);
               return (
@@ -174,9 +175,15 @@ export default function Header() {
                 Get in Touch
               </Link>
             </li>
+            <li data-header-item>
+              <LanguageSwitcher />
+            </li>
           </ul>
         </nav>
 
+        <div data-header-item className="ml-auto lg:hidden">
+          <LanguageSwitcher />
+        </div>
         <button
           ref={toggleRef}
           data-header-item
@@ -219,11 +226,11 @@ export default function Header() {
             })}
           </ul>
           <div data-menu-meta className="mt-10 space-y-2 text-sm text-muted">
-            <a href={`mailto:${site.email}`} className="block hover:text-gold-light">
+            <a href={`mailto:${site.email}`} translate="no" className="notranslate block hover:text-gold-light">
               {site.email}
             </a>
             <p>
-              {site.location.city}, {site.location.region}
+              {site.locations.join(' · ')}, Madhya Pradesh
             </p>
             <SocialLinks size="sm" className="pt-4" />
           </div>
