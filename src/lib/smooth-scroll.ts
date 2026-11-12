@@ -20,7 +20,8 @@ export function lockScroll(reason: string, locked: boolean) {
   else lenis.start();
 }
 
-const HEADER_OFFSET = 110;
+// Fixed announcement bar (32px) + header row (80px) + breathing room
+const HEADER_OFFSET = 132;
 
 /** Scrolls to an element (smoothly when Lenis is active) and moves keyboard focus to it. */
 export function scrollToElement(el: HTMLElement, { focus = true } = {}) {

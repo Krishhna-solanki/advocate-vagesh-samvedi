@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getArticleMetas } from '@/lib/insights';
 import { getNewsMetas } from '@/lib/news';
 import { practiceAreas } from '@/lib/practice-areas';
+import { getResponsibilities, responsibilityPath } from '@/lib/responsibilities';
 import { absoluteUrl, site } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -32,6 +33,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ...(p.lastModified ? { lastModified: p.lastModified } : {}),
       ...(p.images ? { images: p.images } : {}),
     })),
+    // Responsibility pages join the sitemap once their final content replaces the placeholder
+    ...getResponsibilities()
+      .filter((r) => !r.placeholder)
+      .map((r) => ({ url: absoluteUrl(responsibilityPath(r.slug)), changeFrequency: 'monthly' as const, priority: 0.6 })),
     ...practiceAreas.map((p) => ({ url: absoluteUrl(`/practice-areas/${p.slug}`), changeFrequency: 'monthly' as const, priority: 0.8 })),
     ...articles.map((a) => ({
       url: absoluteUrl(`/blog/${a.slug}`),

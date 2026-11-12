@@ -1,3 +1,5 @@
+import { PHASE_DEVELOPMENT_SERVER } from 'next/constants.js';
+
 // Canonical URLs, sitemap and share cards use this address. An explicit NEXT_PUBLIC_SITE_URL wins;
 // otherwise Vercel's production domain is used, so it switches automatically when a custom
 // domain (e.g. www.vageshsamvedi.com) is attached to the project as its production domain.
@@ -32,6 +34,7 @@ const nextConfig = {
       { source: '/law-books', destination: '/practice-areas', permanent: true },
       { source: '/elementor-948', destination: '/about', permanent: true },
       // Practice area retired in the November 2026 content update
+      { source: '/about/responsibilities', destination: '/#responsibilities', permanent: false },
       { source: '/practice-areas/startup-advisory', destination: '/practice-areas/business-corporate', permanent: true },
       ...oldPosts.map((slug) => ({ source: `/${slug}`, destination: `/blog/${slug}`, permanent: true })),
     ];
@@ -51,4 +54,9 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+// `next dev` writes to .next-dev so a running dev server never locks the folder `next build`
+// needs (on Windows that made the build hang right after the "▲ Next.js" banner).
+export default function config(phase) {
+  if (phase === PHASE_DEVELOPMENT_SERVER && !process.env.NEXT_DIST_DIR) return { ...nextConfig, distDir: '.next-dev' };
+  return nextConfig;
+}

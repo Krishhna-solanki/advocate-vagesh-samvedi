@@ -7,6 +7,7 @@ import { nav, site } from '@/lib/site';
 import Monogram from './Monogram';
 import SocialLinks from './SocialLinks';
 import LanguageSwitcher from './LanguageSwitcher';
+import AnnouncementBar from './AnnouncementBar';
 import { gsap, ScrollTrigger, EASE, prefersReducedMotion } from '@/lib/gsap';
 import { whenPreloaderDone } from '@/lib/preloader-signal';
 import { lockScroll } from '@/lib/smooth-scroll';
@@ -45,7 +46,7 @@ export default function Header() {
     // Sliding the header away is motion; reduced-motion visitors keep it fixed
     if (reduce) return cancel;
 
-    const show = () => gsap.to(header, { yPercent: 0, duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
+    const show = () => gsap.to(header, { yPercent: 0, y: 0, duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
     const trigger = ScrollTrigger.create({
       start: 0,
       end: 'max',
@@ -53,7 +54,7 @@ export default function Header() {
         // Keep it visible while the menu is open or a keyboard user is inside it
         if (openRef.current || header.contains(document.activeElement)) return show();
         if (self.direction === 1 && self.scroll() > 240) {
-          gsap.to(header, { yPercent: -100, duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
+          gsap.to(header, { yPercent: -100, y: -4, duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
         } else show();
       },
     });
@@ -82,7 +83,7 @@ export default function Header() {
 
   useEffect(() => {
     setOpen(false);
-    if (headerRef.current) gsap.set(headerRef.current, { yPercent: 0 });
+    if (headerRef.current) gsap.set(headerRef.current, { yPercent: 0, y: 0 });
   }, [pathname]);
 
   useEffect(() => {
@@ -135,9 +136,14 @@ export default function Header() {
   const solid = scrolled || open;
 
   return (
+    <>
+    {/* Always visible; the header below slides away beneath it on scroll down and returns on scroll up */}
+    <div className="fixed inset-x-0 top-0 z-[55]">
+      <AnnouncementBar />
+    </div>
     <header
       ref={headerRef}
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ${
+      className={`fixed inset-x-0 top-8 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ${
         solid ? 'border-b border-line bg-ink/95 backdrop-blur-md' : 'border-b border-transparent bg-transparent'
       }`}
     >
@@ -205,7 +211,7 @@ export default function Header() {
         id="mobile-menu"
         ref={panelRef}
         hidden={!open}
-        className="h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line bg-ink lg:hidden"
+        className="h-[calc(100dvh-7rem)] overflow-y-auto border-t border-line bg-ink lg:hidden"
       >
         <nav aria-label="Mobile" className="container flex min-h-full flex-col justify-between py-10">
           <ul className="space-y-1">
@@ -237,5 +243,6 @@ export default function Header() {
         </nav>
       </div>
     </header>
+    </>
   );
 }

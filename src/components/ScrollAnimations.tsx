@@ -14,6 +14,9 @@ import { whenPreloaderDone } from '@/lib/preloader-signal';
  *   data-anim="children"     each child rises as it scrolls into view (long text)
  *   data-anim="image"        clip-path wipe with the image settling from a zoom
  *   data-anim="line-x|line-y" gold rule draws across / down
+ *   data-anim="draw-y"       gold line grows downward with the scroll position (timelines)
+ *   data-anim="edu-item"     timeline entry: its [data-edu-node] pops in, its [data-edu-card] slides in from data-side
+ *   data-anim="resp-card"    card rises, its [data-resp-media] settles from a zoom, [data-resp-item]s follow in turn
  *   data-anim="scrub-words"  words brighten as the reader scrolls
  *   data-anim="progress"     reading-progress bar scrubbed to the page
  *   data-speed="0.2"         gentle parallax
@@ -52,6 +55,23 @@ function fresh(root: ParentNode, sel: string) {
 const isDesktop = () => window.matchMedia('(min-width: 768px) and (hover: hover)').matches;
 
 const onEnter = (el: Element, start = 'top 88%') => ({ trigger: el, start, once: true });
+
+/**
+ * A paused timeline started by its own one-shot ScrollTrigger. Timelines given `scrollTrigger: { once: true }`
+ * directly initialise a tick late; when the page is already scrolled past several of them at setup (reload
+ * mid-page, opening /#section), GSAP 3.15 can refresh one early, it kills itself mid-loop and ScrollTrigger
+ * throws "Cannot read properties of undefined (reading 'end')". A plain trigger avoids that.
+ */
+function revealTimeline(el: Element, start: string, delay = 0) {
+  const tl = gsap.timeline({ paused: true });
+  ScrollTrigger.create({
+    trigger: el,
+    start,
+    once: true,
+    onEnter: () => (delay ? gsap.delayedCall(delay, () => tl.play()) : tl.play()),
+  });
+  return tl;
+}
 
 // Elements marked data-mobile-fast get a quick, undelayed reveal on phones/tablets (desktop keeps the full effect)
 const fastMobile = (el: Element) => !!el.closest('[data-mobile-fast]') && !isDesktop();
@@ -117,7 +137,7 @@ function setupGentle(root: ParentNode) {
       .fromTo(q('[data-hero-glow]'), { autoAlpha: 0 }, { ...fade, duration: 2 }, 0.3);
   }
 
-  all('[data-anim="fade-up"], [data-anim="heading"], [data-anim="image"], [data-anim="line-x"], [data-anim="line-y"], [data-anim="scrub-words"]').forEach(
+  all('[data-anim="fade-up"], [data-anim="heading"], [data-anim="image"], [data-anim="edu-item"], [data-anim="resp-card"], [data-anim="line-x"], [data-anim="line-y"], [data-anim="scrub-words"]').forEach(
     (el) => gsap.fromTo(el, { autoAlpha: 0 }, { ...fade, delay: delayOf(el), scrollTrigger: onEnter(el, 'top 92%') }),
   );
   all('[data-anim="stagger"]').forEach((el) =>
@@ -194,10 +214,55 @@ function setup(root: ParentNode) {
       if (img) gsap.fromTo(img, { scale: 1.06 }, { scale: 1, duration: 0.9, ease: 'power2.out', scrollTrigger: onEnter(el, 'top bottom') });
       return;
     }
-    const tl = gsap.timeline({ delay: delayOf(el), scrollTrigger: onEnter(el, 'top 85%') });
+    const tl = revealTimeline(el, 'top 85%', delayOf(el));
     tl.fromTo(el, { autoAlpha: 1, clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' });
     const img = el.querySelector('img');
     if (img) tl.fromTo(img, { scale: 1.25 }, { scale: 1, duration: 2, ease: EASE }, 0);
+  });
+
+  // Timeline line: drawn in step with scrolling through its list (light scrub, also fine on phones)
+  all('[data-anim="draw-y"]').forEach((el) => {
+    const track = el.parentElement ?? el;
+    gsap.fromTo(
+      el,
+      { scaleY: 0, transformOrigin: 'top center' },
+      { scaleY: 1, ease: 'none', scrollTrigger: { trigger: track, start: 'top 72%', end: 'bottom 72%', scrub: 0.6 } },
+    );
+  });
+
+  // Timeline entry: the node pops in on the line, then the card slides in from its side (rises on phones)
+  all('[data-anim="edu-item"]').forEach((el) => {
+    const card = el.querySelector('[data-edu-card]');
+    const node = el.querySelector('[data-edu-node]');
+    const wide = isDesktop();
+    const fromX = wide ? (el.dataset.side === 'left' ? -56 : 56) : 0;
+    gsap.set(el, { autoAlpha: 1 });
+    const tl = revealTimeline(el, wide ? 'top 82%' : 'top 90%');
+    if (node) tl.fromTo(node, { scale: 0, rotation: 45, autoAlpha: 0 }, { scale: 1, rotation: 45, autoAlpha: 1, duration: wide ? 0.6 : 0.4, ease: 'back.out(2)' }, 0);
+    if (card)
+      tl.fromTo(
+        card,
+        { autoAlpha: 0, x: fromX, y: wide ? 0 : 20 },
+        { autoAlpha: 1, x: 0, y: 0, duration: wide ? 1.1 : 0.6, ease: wide ? EASE : 'power2.out', clearProps: 'transform' },
+        wide ? 0.1 : 0,
+      );
+  });
+
+  // Homepage responsibility cards (quicker and simpler on phones/tablets)
+  all('[data-anim="resp-card"]').forEach((el, i) => {
+    const wide = isDesktop();
+    const media = el.querySelector('[data-resp-media]');
+    const items = el.querySelectorAll('[data-resp-item]');
+    const tl = revealTimeline(el, wide ? 'top 85%' : 'top 95%', wide ? (i % 2) * 0.15 : 0);
+    tl.fromTo(el, { autoAlpha: 0, y: wide ? 70 : 24 }, { autoAlpha: 1, y: 0, duration: wide ? 1.2 : 0.6, ease: wide ? EASE : 'power2.out', clearProps: 'transform' });
+    if (media) tl.fromTo(media, { scale: wide ? 1.2 : 1.06 }, { scale: 1, duration: wide ? 1.8 : 0.9, ease: EASE, clearProps: 'transform' }, 0);
+    if (items.length)
+      tl.fromTo(
+        items,
+        { autoAlpha: 0, y: wide ? 22 : 10 },
+        { autoAlpha: 1, y: 0, duration: wide ? 0.9 : 0.5, ease: EASE, stagger: wide ? 0.08 : 0.05, clearProps: 'transform' },
+        wide ? 0.35 : 0.1,
+      );
   });
 
   all('[data-anim="line-x"]').forEach((el) =>

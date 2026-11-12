@@ -40,7 +40,7 @@ const themes = [
     title: 'Sports Administration & Youth Engagement',
     paragraphs: [
       'Sports provide opportunities for discipline, participation, teamwork and personal development.',
-      'Through his organisational responsibility as Secretary of the Boxing Association, Jhabua, and participation in community sports activities, Advocate Vagesh Samvedi remains engaged with initiatives relating to sports administration and youth participation.',
+      'Through his organisational responsibility as Joint Secretary of the Boxing Association, Jhabua, and participation in community sports activities, Advocate Vagesh Samvedi remains engaged with initiatives relating to sports administration and youth participation.',
       'Activities involving Kabaddi, Kho-Kho, boxing and National Sports Day may be documented through the photographs and event records presented here.',
     ],
   },

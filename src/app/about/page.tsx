@@ -23,12 +23,6 @@ const principles = [
   'Continuous learning and engagement with evolving legal developments.',
 ];
 
-const roleNotes: Record<string, string> = {
-  'Judicial Human Rights Council, Jhabua':
-    'An organisational responsibility involving engagement with human rights, social awareness and community-oriented initiatives.',
-  'Boxing Association, Jhabua':
-    'An organisational role associated with sports administration and participation in activities concerning sports and youth development.',
-};
 
 function Block({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
@@ -113,7 +107,7 @@ export default function AboutPage() {
               </p>
               <p>
                 Beyond legal practice, he holds organisational responsibilities as District President of the Judicial Human Rights Council,
-                Jhabua, and Secretary of the Boxing Association, Jhabua. These responsibilities form part of his engagement with human
+                Jhabua, and Joint Secretary of the Boxing Association, Jhabua. These responsibilities form part of his engagement with human
                 rights, sports administration and community-oriented initiatives.
               </p>
               <p>
@@ -199,18 +193,6 @@ export default function AboutPage() {
                   His interdisciplinary learning also includes psychology, contributing to an interest in human behaviour, social interaction
                   and the circumstances surrounding legal disputes.
                 </p>
-              </Reveal>
-            </Block>
-
-            <Block id="about-roles" title="Professional Responsibilities Beyond Legal Practice">
-              <Reveal variant="stagger" className="grid gap-4 sm:grid-cols-2">
-                {site.roles.map((r) => (
-                  <div key={r.organisation} className="contact-card group flex-col !gap-3">
-                    <p className="label">{r.title}</p>
-                    <p className="font-serif text-2xl leading-snug text-ivory">{r.organisation}</p>
-                    <p className="text-sm leading-7 text-muted">{roleNotes[r.organisation]}</p>
-                  </div>
-                ))}
               </Reveal>
             </Block>
 

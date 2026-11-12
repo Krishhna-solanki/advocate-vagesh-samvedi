@@ -8,7 +8,9 @@ import ArticleCard from '@/components/ArticleCard';
 import ContactSection from '@/components/ContactSection';
 import OfficeLocations from '@/components/OfficeLocations';
 import Reveal from '@/components/Reveal';
-import Credentials from '@/components/Credentials';
+import Education from '@/components/Education';
+import Responsibilities from '@/components/Responsibilities';
+import { getResponsibilities } from '@/lib/responsibilities';
 import { getArticleMetas, getFeatured } from '@/lib/insights';
 import { getNewsMetas } from '@/lib/news';
 import { getHomepageSocial, getSocialPosts } from '@/lib/social';
@@ -24,16 +26,6 @@ export const metadata = pageMetadata({
     'Advocate Vagesh Samvedi, lawyer in Petlawad (Jhabua) and Indore — civil, criminal, property, family, cyber and IP law matters across Madhya Pradesh and Gujarat.',
   path: '/',
 });
-
-const highlights = [
-  'Independent legal practice since 2025.',
-  'B.A. LL.B. (Hons.), completed in 2025.',
-  'LL.M. in Intellectual Property Rights, completed.',
-  'Enrolled with the State Bar Council of Madhya Pradesh.',
-  'Successfully qualified the All India Bar Examination (AIBE) in 2025.',
-  'District President, Judicial Human Rights Council, Jhabua.',
-  'Secretary, Boxing Association, Jhabua.',
-];
 
 export default function HomePage() {
   const featured = getFeatured();
@@ -54,7 +46,7 @@ export default function HomePage() {
       <Hero />
 
       {/* About */}
-      <section aria-labelledby="about-heading" className="relative py-28 md:py-36">
+      <section aria-labelledby="about-heading" className="relative pb-28 pt-14 md:pb-36 md:pt-20 lg:pt-36">
         <div className="container grid items-start gap-14 lg:grid-cols-12 lg:gap-x-12 xl:gap-x-20">
           {/* Portrait: natural flow on phones and tablets, pinned beside the text on desktop */}
           <div className="relative lg:sticky lg:top-28 lg:col-span-6">
@@ -147,8 +139,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Professional profile */}
-      <Credentials items={highlights} />
+      {/* Education & academic qualifications */}
+      <Education />
+
+      {/* Professional responsibilities beyond legal practice */}
+      <Responsibilities items={getResponsibilities()} />
 
       {/* Social Journey */}
       <section aria-labelledby="social-heading" className="border-t border-line py-28 md:py-36">

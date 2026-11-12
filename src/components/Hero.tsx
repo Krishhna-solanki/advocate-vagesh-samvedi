@@ -41,7 +41,8 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="container relative pb-20 pt-40 lg:py-40">
+      {/* Less bottom padding on phones/tablets so the next section starts sooner; desktop unchanged */}
+      <div className="container relative pb-10 pt-40 md:pb-12 lg:py-40">
         <div data-hero-content className="relative max-w-2xl lg:pl-12">
           <span
             data-hero-line

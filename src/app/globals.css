@@ -211,6 +211,8 @@ html.js:not(.anim-off) :is(
     [data-anim='stagger'] > *,
     [data-anim='children'] > *,
     [data-anim='image'],
+    [data-anim='edu-item'],
+    [data-anim='resp-card'],
     [data-anim='line-x'],
     [data-anim='line-y'],
     [data-hero-label],
@@ -777,31 +779,230 @@ html.gt-hi body :where(*) {
   background-size: 6px 6px, 6px 6px, 100% 100%;
 }
 
-/* ---------- Homepage: credentials ---------- */
-.credentials-luxe {
+/* ---------- Homepage: education timeline ---------- */
+.education-luxe {
   background:
     radial-gradient(50% 60% at 50% 0%, rgba(200, 164, 93, 0.08), transparent 70%),
     radial-gradient(40% 50% at 100% 100%, rgba(200, 164, 93, 0.05), transparent 70%);
 }
-@media (min-width: 640px) {
-  .cred-card {
-    min-height: 15.5rem;
+.edu-card {
+  padding: 1.75rem;
+  border: 1px solid rgba(200, 164, 93, 0.16);
+  background: linear-gradient(160deg, rgba(23, 23, 23, 0.92), rgba(11, 11, 11, 0.92));
+  box-shadow: 0 30px 60px -40px rgba(0, 0, 0, 0.9);
+  transition:
+    border-color 0.6s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.6s ease;
+}
+.edu-card--degree {
+  border-color: rgba(200, 164, 93, 0.3);
+  background:
+    radial-gradient(80% 60% at 100% 0%, rgba(200, 164, 93, 0.09), transparent 70%),
+    linear-gradient(160deg, rgba(23, 23, 23, 0.95), rgba(11, 11, 11, 0.95));
+}
+@media (min-width: 768px) {
+  .edu-card {
+    padding: 2.25rem;
   }
 }
+.edu-card:hover {
+  border-color: rgba(200, 164, 93, 0.45);
+  box-shadow: 0 40px 70px -40px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(200, 164, 93, 0.08);
+}
 @media (prefers-reduced-motion: no-preference) {
-  .cred-card:hover {
+  .edu-card:hover {
     transform: translateY(-4px);
   }
 }
 /* A gold line that draws across the foot of the card on hover */
-.cred-card__rule {
+.edu-card__rule {
   display: block;
   height: 1px;
-  margin-top: auto;
-  padding-top: 1.75rem;
   background: linear-gradient(90deg, #c8a45d, rgba(200, 164, 93, 0)) bottom left / 2.5rem 1px no-repeat;
   transition: background-size 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.cred-card:hover .cred-card__rule {
+.edu-card__rule {
+  margin-top: 1.5rem;
+}
+.edu-card:hover .edu-card__rule {
   background-size: 100% 1px;
+}
+
+/* ---------- Homepage: responsibility cards ---------- */
+.resp-card {
+  --mx: 50%;
+  --my: 30%;
+  isolation: isolate;
+  transition:
+    border-color 0.6s ease,
+    box-shadow 0.6s ease;
+}
+/* Soft gold light that follows the pointer (position set by SpotlightGroup) */
+.resp-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(200, 164, 93, 0.13), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.resp-card:hover::before,
+.resp-card:focus-visible::before {
+  opacity: 1;
+}
+.resp-card:hover,
+.resp-card:focus-visible {
+  border-color: rgba(200, 164, 93, 0.5);
+  box-shadow: 0 50px 90px -50px rgba(0, 0, 0, 1), 0 0 0 1px rgba(200, 164, 93, 0.1);
+}
+.resp-card:focus-visible {
+  outline: 1px solid #c8a45d;
+  outline-offset: 4px;
+}
+.resp-card__index {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(200, 164, 93, 0.45);
+  transition: -webkit-text-stroke-color 0.6s ease;
+}
+.resp-card:hover .resp-card__index {
+  -webkit-text-stroke-color: rgba(228, 204, 145, 0.85);
+}
+/* Gold line across the foot of the card, drawn on hover */
+.resp-card__rule {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: linear-gradient(90deg, #c8a45d, #e4cc91, rgba(200, 164, 93, 0));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.resp-card:hover .resp-card__rule,
+.resp-card:focus-visible .resp-card__rule {
+  transform: scaleX(1);
+}
+
+/* ---------- E-books announcement bar (top of header) ---------- */
+.announce {
+  position: relative;
+  display: flex;
+  height: 2rem;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(200, 164, 93, 0.28);
+  background:
+    linear-gradient(90deg, rgba(11, 11, 11, 1), rgba(11, 11, 11, 0) 12%, rgba(11, 11, 11, 0) 88%, rgba(11, 11, 11, 1)),
+    linear-gradient(90deg, rgba(200, 164, 93, 0.1), rgba(228, 204, 145, 0.2), rgba(200, 164, 93, 0.1)),
+    #0b0b0b;
+  color: rgba(245, 241, 232, 0.78);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.announce:focus-visible {
+  outline: 1px solid #c8a45d;
+  outline-offset: -3px;
+}
+.announce-track {
+  display: flex;
+  width: max-content;
+  animation: announce-marquee 45s linear infinite;
+}
+.announce:hover .announce-track,
+.announce:focus-visible .announce-track {
+  animation-play-state: paused;
+}
+.announce-run {
+  display: flex;
+  flex-shrink: 0;
+}
+.announce-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding-right: 1.1rem;
+  transition: color 0.4s ease;
+}
+.announce:hover .announce-item {
+  color: #e4cc91;
+}
+.announce-diamond {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  flex-shrink: 0;
+  transform: rotate(45deg);
+  background: #c8a45d;
+}
+.announce-static {
+  display: none;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+@keyframes announce-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (max-width: 639px) {
+  .announce {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+  .announce-track {
+    animation-duration: 32s;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .announce-track {
+    display: none;
+  }
+  .announce-static {
+    display: flex;
+  }
+}
+
+/* ---------- Contact: WhatsApp channel button ---------- */
+.wa-channel {
+  background: linear-gradient(135deg, rgba(200, 164, 93, 0.1), rgba(11, 11, 11, 0.6) 60%);
+  box-shadow: 0 20px 40px -30px rgba(0, 0, 0, 0.9);
+  transition:
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+.wa-channel:hover,
+.wa-channel:focus-visible {
+  border-color: #e4cc91;
+  box-shadow: 0 24px 50px -28px rgba(200, 164, 93, 0.45);
+}
+.wa-channel:focus-visible {
+  outline: 1px solid #c8a45d;
+  outline-offset: 4px;
+}
+/* Gold sweep that fills the button from the left on hover */
+.wa-channel__fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #c8a45d, #e4cc91);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.wa-channel:hover .wa-channel__fill,
+.wa-channel:focus-visible .wa-channel__fill {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-channel__fill {
+    transition: none;
+  }
 }

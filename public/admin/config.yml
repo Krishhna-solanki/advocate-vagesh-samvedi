@@ -111,6 +111,49 @@ collections:
       - { label: Hide from site (draft), name: draft, widget: boolean, default: false }
       - { label: Details, name: body, widget: markdown, required: false }
 
+  - name: responsibilities
+    label: Responsibilities
+    label_singular: Responsibility
+    description: 'Organisational roles shown as cards under "Professional Responsibilities Beyond Legal Practice" on the About page. Each has its own detail page.'
+    folder: content/responsibilities
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    identifier_field: organisation
+    preview_path: 'about/responsibilities/{{slug}}'
+    summary: '{{organisation}} — {{role}}'
+    sortable_fields: ['order', 'organisation']
+    fields:
+      - { label: Organisation, name: organisation, widget: string }
+      - { label: Role / position, name: role, widget: string }
+      - { label: Page heading, name: heading, widget: string, required: false, hint: 'e.g. "Leadership in Human Rights & Social Justice". Leave empty to use the organisation name.' }
+      - { label: Order on the About page, name: order, widget: number, value_type: int, default: 1 }
+      - { label: Summary, name: summary, widget: text, hint: 'One or two sentences, shown on the About page card and at the top of the detail page.' }
+      - { label: Main photograph, name: cover, widget: image, required: false }
+      - { label: Photograph description (alt text), name: coverAlt, widget: string, required: false }
+      - { label: Photo credit, name: coverCredit, widget: string, required: false, hint: 'Only needed for photographs taken by someone else (leave empty for your own photos).' }
+      - label: Areas of focus
+        name: themes
+        widget: list
+        required: false
+        summary: '{{fields.title}}'
+        hint: 'Small cards shown below the page text.'
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Text, name: text, widget: text }
+      - label: Photographs (gallery)
+        name: gallery
+        widget: list
+        required: false
+        summary: '{{fields.caption}}'
+        fields:
+          - { label: Image, name: image, widget: image }
+          - { label: Description (alt text), name: alt, widget: string }
+          - { label: Caption, name: caption, widget: string, required: false }
+      - { label: Page content, name: body, widget: markdown }
+      - { label: Still placeholder content, name: placeholder, widget: boolean, default: false, hint: 'While on, the page shows a "being prepared" notice and is hidden from search engines. Turn off once the final content is in.' }
   - name: social
     label: Social Journey
     label_singular: Social post

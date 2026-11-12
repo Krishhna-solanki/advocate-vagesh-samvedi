@@ -3,6 +3,7 @@ import ContactForm from './ContactForm';
 import SectionHeading from './SectionHeading';
 import SocialLinks from './SocialLinks';
 import BookAppointmentButton from './BookAppointmentButton';
+import WhatsAppChannelButton from './WhatsAppChannelButton';
 import { site } from '@/lib/site';
 
 type IconName = 'mail' | 'phone' | 'pin' | 'globe' | 'quill';
@@ -139,6 +140,11 @@ export default function ContactSection({ variant = 'home' }: { variant?: 'home' 
                 </span>
               </div>
             )}
+          </div>
+
+          {/* WhatsApp channel, directly below the contact details */}
+          <div data-anim="fade-up" data-delay="200" className="mt-6">
+            <WhatsAppChannelButton />
           </div>
         </div>
 

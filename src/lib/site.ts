@@ -33,7 +33,7 @@ export const site = {
   /** Organisational responsibilities */
   roles: [
     { title: 'District President', organisation: 'Judicial Human Rights Council, Jhabua' },
-    { title: 'Secretary', organisation: 'Boxing Association, Jhabua' },
+    { title: 'Joint Secretary', organisation: 'Boxing Association, Jhabua' },
   ],
   profiles: [
     // Verified by the client (2 November 2026). `social: true` entries appear as icons in the header, footer and social sections.
@@ -41,6 +41,8 @@ export const site = {
     { label: 'Instagram', href: 'https://www.instagram.com/adv.vageshsamvedi/?hl=en', social: true },
     { label: 'Digital Card', href: 'https://dvc.vageshsamvedi.com', social: false },
   ],
+  /** Official WhatsApp channel (Contact section button) */
+  whatsappChannel: 'https://whatsapp.com/channel/0029Vb9cw7u1Hsq1s8UVhU06',
   portrait: '/images/portrait.jpg',
 };
 
