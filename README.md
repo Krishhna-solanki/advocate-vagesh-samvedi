@@ -198,7 +198,7 @@ To migrate further posts later, use one of:
 
 ## Verify before launch
 
-- [ ] **Phone and email.** The old site lists two sets: homepage `+91 78040 97520` / `adv.vageshsamvedi@gmail.com`
+- [ ] **Phone and email.** The old site lists two sets: homepage `+91 92023 15511` (updated 12 Nov 2026) / `adv.vageshsamvedi@gmail.com`
       (used here) and Legal Advisory page `9202315511` / `vageshsamvedi@gmail.com`. Confirm which to publish (`src/lib/site.ts`).
 - [ ] **Enrolment number** — add to `site.enrolment` if desired.
 - [ ] **Education** — LinkedIn lists Vikram University; confirm and add the degree if wished.

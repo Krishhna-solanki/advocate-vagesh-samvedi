@@ -60,6 +60,7 @@ export default function HomePage() {
           <div className="relative lg:sticky lg:top-28 lg:col-span-6">
             <Reveal
               variant="image"
+              mobileFast
               className="relative aspect-[4/5] overflow-hidden sm:aspect-[5/6] lg:aspect-auto lg:h-[min(80vh,46rem)]"
             >
               <Image

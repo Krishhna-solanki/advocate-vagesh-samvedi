@@ -17,8 +17,8 @@ export const site = {
   /** Geographical reach — areas of professional reach, not offices */
   reach: 'Madhya Pradesh & selected locations in Gujarat',
   email: 'adv.vageshsamvedi@gmail.com',
-  // Listed publicly on the previous homepage. Set to null to hide everywhere.
-  phone: { display: '+91 78040 97520', href: 'tel:+917804097520' } as { display: string; href: string } | null,
+  // Updated by the client on 12 Nov 2026. Set to null to hide everywhere.
+  phone: { display: '+91 92023 15511', href: 'tel:+919202315511' } as { display: string; href: string } | null,
   // Bar Council enrolment number — display only once supplied and approved.
   enrolment: null as string | null,
   barCouncil: 'State Bar Council of Madhya Pradesh',

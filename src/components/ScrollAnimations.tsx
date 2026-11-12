@@ -53,6 +53,10 @@ const isDesktop = () => window.matchMedia('(min-width: 768px) and (hover: hover)
 
 const onEnter = (el: Element, start = 'top 88%') => ({ trigger: el, start, once: true });
 
+// Elements marked data-mobile-fast get a quick, undelayed reveal on phones/tablets (desktop keeps the full effect)
+const fastMobile = (el: Element) => !!el.closest('[data-mobile-fast]') && !isDesktop();
+const FAST = { duration: 0.55, ease: 'power2.out' };
+
 function heroIntro(hero: HTMLElement) {
   const q = gsap.utils.selector(hero);
   const title = q('[data-hero-title]')[0];
@@ -139,9 +143,13 @@ function setup(root: ParentNode) {
   const [hero] = all('[data-hero]');
   if (hero) heroIntro(hero);
 
-  all('[data-anim="fade-up"]').forEach((el) =>
-    gsap.fromTo(el, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 1.2, ease: EASE, delay: delayOf(el), scrollTrigger: onEnter(el) }),
-  );
+  all('[data-anim="fade-up"]').forEach((el) => {
+    if (fastMobile(el)) {
+      gsap.fromTo(el, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, ...FAST, scrollTrigger: onEnter(el, 'top bottom') });
+      return;
+    }
+    gsap.fromTo(el, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 1.2, ease: EASE, delay: delayOf(el), scrollTrigger: onEnter(el) });
+  });
 
   all('[data-anim="stagger"]').forEach((el) =>
     gsap.fromTo(
@@ -179,6 +187,13 @@ function setup(root: ParentNode) {
   });
 
   all('[data-anim="image"]').forEach((el) => {
+    if (fastMobile(el)) {
+      // Simple fade with a light settle, starting as soon as the image edge enters the screen
+      const img = el.querySelector('img');
+      gsap.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, ...FAST, scrollTrigger: onEnter(el, 'top bottom') });
+      if (img) gsap.fromTo(img, { scale: 1.06 }, { scale: 1, duration: 0.9, ease: 'power2.out', scrollTrigger: onEnter(el, 'top bottom') });
+      return;
+    }
     const tl = gsap.timeline({ delay: delayOf(el), scrollTrigger: onEnter(el, 'top 85%') });
     tl.fromTo(el, { autoAlpha: 1, clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' });
     const img = el.querySelector('img');

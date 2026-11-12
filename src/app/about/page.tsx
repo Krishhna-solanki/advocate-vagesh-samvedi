@@ -62,7 +62,7 @@ export default function AboutPage() {
 
       <section className="py-24 md:py-32">
         <div className="container grid gap-16 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-24">
-          <Reveal className="lg:col-span-5" delay={200}>
+          <Reveal className="lg:col-span-5" delay={200} mobileFast>
             <div className="relative lg:sticky lg:top-28">
               <div className="relative aspect-[3/4] overflow-hidden" data-anim="image">
                 <Image
@@ -70,6 +70,7 @@ export default function AboutPage() {
                   alt="Advocate Vagesh Samvedi reading a law book in his chamber"
                   fill
                   sizes="(min-width: 1024px) 38vw, 92vw"
+                  priority
                   className="object-cover object-[48%_50%]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
