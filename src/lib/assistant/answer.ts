@@ -46,6 +46,48 @@ const bookReply = (hi: boolean): Reply => ({
   action: 'book',
 });
 
+// Places named in the Geographical Reach section, with the spellings visitors use
+const PLACES: Record<string, string[]> = {
+  Jhabua: ['jhabua', 'झाबुआ'],
+  Petlawad: ['petlawad', 'petlavad', 'पेटलावद'],
+  Thandla: ['thandla', 'थांदला'],
+  Indore: ['indore', 'इंदौर'],
+  Ujjain: ['ujjain', 'उज्जैन'],
+  Dhar: ['dhar', 'धार'],
+  Sardarpur: ['sardarpur', 'सरदारपुर'],
+  Ratlam: ['ratlam', 'रतलाम'],
+  Jabalpur: ['jabalpur', 'जबलपुर'],
+  Vadodara: ['vadodara', 'baroda', 'वडोदरा'],
+  Dahod: ['dahod', 'दाहोद'],
+  Ahmedabad: ['ahmedabad', 'ahmdabad', 'अहमदाबाद'],
+  Gujarat: ['gujarat', 'गुजरात'],
+};
+
+const ROLE_HI: Record<string, string> = { 'District President': 'ज़िला अध्यक्ष', 'Joint Secretary': 'संयुक्त सचिव' };
+const ORG_HI: Record<string, string> = {
+  'Judicial Human Rights Council, Jhabua': 'ज्यूडिशियल ह्यूमन राइट्स काउंसिल, झाबुआ',
+  'Boxing Association, Jhabua': 'बॉक्सिंग एसोसिएशन, झाबुआ',
+};
+const roleHi = (r: string) => ROLE_HI[r] ?? r;
+const orgHi = (o: string) => ORG_HI[o] ?? o;
+
+const respLine = (k: Knowledge, hi: boolean) =>
+  k.responsibilities.length
+    ? hi
+      ? ` वे ${k.responsibilities.map((r) => `${orgHi(r.organisation)} के ${roleHi(r.role)}`).join(' और ')} भी हैं।`
+      : ` Beyond practice, he serves as ${k.responsibilities.map((r) => `${r.role} of the ${r.organisation}`).join(' and ')}.`
+    : '';
+
+// "Tell me about the boxing role" — one responsibility, matched by words in its name or focus areas
+const RESP_HINTS: [RegExp, string[]][] = [
+  [/human|council/i, ['human', 'rights', 'manav', 'adhikar', 'council', 'jhrc', 'judicial', 'president', 'adhyaksh', 'मानव', 'अध्यक्ष']],
+  [/boxing/i, ['boxing', 'sport', 'sports', 'khel', 'secretary', 'sachiv', 'youth', 'बॉक्सिंग', 'खेल', 'सचिव']],
+];
+function pickResponsibility(k: Knowledge, q: string) {
+  const found = RESP_HINTS.filter(([, words]) => words.some((w) => hits(q, w))).map(([org]) => k.responsibilities.find((r) => org.test(r.organisation)));
+  return found.length === 1 ? (found[0] ?? null) : null;
+}
+
 const TOPICS: Topic[] = [
   {
     id: 'book',
@@ -90,7 +132,7 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'office',
-    words: ['office', 'offices', 'address', 'location', 'located', 'where', 'directions', 'map', 'reach', 'kahan', 'kaha', 'kidhar', 'pata', 'petlawad', 'indore', 'high court', 'chamber', 'ऑफिस', 'कार्यालय', 'पता', 'कहाँ', 'कहां', 'पेटलावद', 'इंदौर'],
+    words: ['office', 'offices', 'address', 'location', 'located', 'where', 'directions', 'map', 'kahan', 'kaha', 'kidhar', 'pata', 'chamber', 'ऑफिस', 'कार्यालय', 'पता', 'कहाँ', 'कहां'],
     answer: (k, hi) =>
       k.offices.length
         ? {
@@ -117,19 +159,119 @@ const TOPICS: Topic[] = [
     words: ['who', 'about', 'advocate', 'lawyer', 'vakil', 'vageesh', 'vagesh', 'samvedi', 'background', 'profile', 'experience', 'kaun', 'firm', 'law astra', 'associates', 'वकील', 'अधिवक्ता', 'कौन', 'बारे'],
     answer: (k, hi) => ({
       text: hi
-        ? `अधिवक्ता ${k.name} एक स्वतंत्र विधि व्यवसायी हैं, जो मध्य प्रदेश और गुजरात के चुनिंदा स्थानों में मुकदमेबाज़ी, कानूनी प्रतिनिधित्व और सलाह का कार्य करते हैं। उनकी शिक्षा: ${k.educationHi}। वे स्टेट बार काउंसिल ऑफ मध्य प्रदेश में नामांकित हैं।`
-        : `Advocate ${k.name} is an independent legal practitioner engaged in litigation, legal representation and advisory work across Madhya Pradesh and selected locations in Gujarat. He holds ${k.education}, and is enrolled with the State Bar Council of Madhya Pradesh.`,
+        ? `अधिवक्ता ${k.name} एक स्वतंत्र विधि व्यवसायी हैं, जो मध्य प्रदेश और गुजरात के चुनिंदा स्थानों में मुकदमेबाज़ी, कानूनी प्रतिनिधित्व और सलाह का कार्य करते हैं। उनकी शिक्षा: ${k.educationHi}। वे स्टेट बार काउंसिल ऑफ मध्य प्रदेश में नामांकित हैं।${respLine(k, hi)}`
+        : `Advocate ${k.name} is an independent legal practitioner engaged in litigation, legal representation and advisory work across Madhya Pradesh and selected locations in Gujarat. He holds ${k.education}, and is enrolled with the State Bar Council of Madhya Pradesh.${respLine(k, hi)}`,
       links: [{ label: hi ? 'पूरा परिचय' : 'Full profile', href: '/about' }],
-      suggestions: [hi ? 'प्रैक्टिस एरिया क्या हैं?' : 'What are the practice areas?'],
+      suggestions: [hi ? 'प्रैक्टिस एरिया क्या हैं?' : 'What are the practice areas?', hi ? 'सामाजिक ज़िम्मेदारियाँ' : 'Responsibilities beyond practice'],
     }),
   },
   {
     id: 'education',
-    words: ['education', 'qualification', 'qualified', 'degree', 'study', 'studied', 'university', 'college', 'llb', 'padhai', 'शिक्षा', 'पढ़ाई', 'डिग्री'],
+    words: ['education', 'qualification', 'qualifications', 'qualified', 'degree', 'degrees', 'study', 'studied', 'university', 'college', 'llb', 'llm', 'll.b', 'll.m', 'certificate', 'certification', 'certified', 'course', 'courses', 'ignou', 'psychology', 'padhai', 'padhe', 'शिक्षा', 'पढ़ाई', 'डिग्री', 'योग्यता', 'प्रमाणपत्र', 'कोर्स'],
     answer: (k, hi) => ({
-      text: hi ? `उनकी शिक्षा: ${k.educationHi}। उन्होंने 2025 में अखिल भारतीय बार परीक्षा (AIBE) उत्तीर्ण की।` : `He holds ${k.education}, and qualified the All India Bar Examination (AIBE) in 2025.`,
+      text:
+        (hi ? 'शिक्षा एवं शैक्षणिक योग्यताएँ:\n' : 'Education & academic qualifications:\n') +
+        k.qualifications.map((e) => `• ${e.degree} — ${e.institution} (${e.detail.replace(/^(Completed|Status):\s*/, '')})`).join('\n') +
+        (hi ? '\n\nउन्होंने 2025 में अखिल भारतीय बार परीक्षा (AIBE) उत्तीर्ण की।' : '\n\nHe also qualified the All India Bar Examination (AIBE) in 2025.'),
       links: [{ label: hi ? 'पूरा परिचय' : 'Full profile', href: '/about' }],
+      suggestions: [hi ? 'बार काउंसिल रजिस्ट्रेशन' : 'Bar Council registration'],
     }),
+  },
+  {
+    id: 'registration',
+    words: ['bar council', 'registration', 'registered', 'enrolled', 'enrolment', 'enrollment', 'aibe', 'bar exam', 'licence', 'license', 'since when', 'kab se', 'kab se practice', 'practice kab', 'since 20', 'practising since', 'practicing since', 'बार काउंसिल', 'रजिस्ट्रेशन', 'पंजीकरण', 'नामांकित', 'कब से'],
+    answer: (k, hi) => ({
+      text: hi
+        ? `• ${k.barCouncil} में अधिवक्ता के रूप में नामांकित।\n• 2025 में अखिल भारतीय बार परीक्षा (AIBE) उत्तीर्ण।\n• ${k.practiceSince} से स्वतंत्र विधि व्यवसाय में।`
+        : `• Advocate enrolled with the ${k.barCouncil}.\n• Qualified the All India Bar Examination (AIBE) in 2025.\n• Engaged in independent legal practice since ${k.practiceSince}.`,
+      links: [{ label: hi ? 'पूरा परिचय' : 'Full profile', href: '/about#about-registration' }],
+    }),
+  },
+  {
+    id: 'responsibilities',
+    words: ['responsibility', 'responsibilities', 'human rights', 'manav adhikar', 'manavadhikar', 'council', 'jhrc', 'president', 'adhyaksh', 'boxing', 'sport', 'sports', 'khel', 'secretary', 'sachiv', 'organisation', 'organization', 'sanstha', 'social work', 'samaj seva', 'community', 'beyond practice', 'beyond legal', 'मानवाधिकार', 'मानव अधिकार', 'अध्यक्ष', 'बॉक्सिंग', 'खेल', 'सचिव', 'संस्था', 'समाज', 'ज़िम्मेदारी', 'जिम्मेदारी', 'ज़िम्मेदारियाँ'],
+    answer: (k, hi, q) => {
+      const one = pickResponsibility(k, q);
+      const list = one ? [one] : k.responsibilities;
+      if (!list.length) return { text: hi ? 'इसकी जानकारी वेबसाइट पर उपलब्ध नहीं है।' : 'That isn’t covered on the website yet.', links: [{ label: hi ? 'पूरा परिचय' : 'Full profile', href: '/about' }] };
+      const text = one
+        ? hi
+          ? `अधिवक्ता ${k.name} ${orgHi(one.organisation)} के ${roleHi(one.role)} हैं।\nमुख्य विषय: ${one.themes.join(', ')}।`
+          : `Advocate ${k.name} serves as ${one.role} of the ${one.organisation} — ${one.heading}. ${one.summary}\nAreas of focus: ${one.themes.join(', ')}.`
+        : (hi ? 'विधि व्यवसाय के अलावा उनकी संगठनात्मक ज़िम्मेदारियाँ:\n' : 'Beyond legal practice, he holds these organisational responsibilities:\n') +
+          list.map((r) => (hi ? `• ${roleHi(r.role)} — ${orgHi(r.organisation)}` : `• ${r.role} — ${r.organisation} (${r.heading})`)).join('\n');
+      return {
+        text,
+        links: [
+          ...list.map((r) => ({ label: `${r.role} · ${r.organisation}`, href: r.href })),
+          ...(one ? [] : [{ label: hi ? 'होम पेज पर देखें' : 'See on the home page', href: '/#responsibilities' }]),
+        ],
+      };
+    },
+  },
+  {
+    id: 'reach',
+    words: ['jurisdiction', 'which city', 'which cities', 'which district', 'which districts', 'which state', 'which states', 'cases in', 'case in', 'practise in', 'practice in', 'outside', 'other city', 'kaha kaha', 'kahan kahan', 'kis shahar', 'kin shahar', 'kis jile', 'case lete', 'case loge', 'me case', 'mein case', 'में केस', 'madhya pradesh', 'high court', 'highcourt', 'bench', 'जिला', 'ज़िला', 'शहर', 'मध्य प्रदेश', 'हाईकोर्ट', 'उच्च न्यायालय', ...Object.values(PLACES).flat()],
+    answer: (k, hi, q) => {
+      const named = Object.entries(PLACES).find(([, aliases]) => aliases.some((a) => hits(q, a)))?.[0];
+      const covered = !!named && (k.reach.madhyaPradesh.includes(named) || k.reach.gujarat.includes(named) || named === 'Jabalpur');
+      const caveat = hi
+        ? 'किसी विशेष मामले में प्रतिनिधित्व क्षेत्राधिकार, व्यावसायिक अनुमतियों और मामले की प्रकृति पर निर्भर करता है।'
+        : 'Representation in any particular matter depends on the jurisdiction, professional permissions and the nature of the proceedings.';
+      const full = hi
+        ? `मध्य प्रदेश: पूरे प्रदेश में — ${k.reach.madhyaPradesh.join(', ')} सहित, और मध्य प्रदेश उच्च न्यायालय (प्रधान पीठ जबलपुर, इंदौर खंडपीठ)।\nगुजरात: ${k.reach.gujarat.join(', ')}।`
+        : `Madhya Pradesh: statewide, including ${k.reach.madhyaPradesh.join(', ')}, and the High Court of Madhya Pradesh (Principal Seat at Jabalpur, Indore Bench).\nGujarat: ${k.reach.gujarat.join(', ')}.`;
+      const lead =
+        named === 'Gujarat'
+          ? hi
+            ? `गुजरात में व्यावसायिक पहुँच ${k.reach.gujarat.join(', ')} तक है।`
+            : `In Gujarat, the professional reach covers ${k.reach.gujarat.join(', ')}.`
+          : covered
+            ? hi
+              ? `हाँ, ${named} व्यावसायिक पहुँच में शामिल है।`
+              : `Yes — ${named} is within the professional reach.`
+            : hi
+              ? 'व्यावसायिक पहुँच:'
+              : 'Professional reach:';
+      return {
+        text: `${lead}\n${full}\n\n${caveat}`,
+        links: [{ label: hi ? 'भौगोलिक पहुँच' : 'Geographical reach', href: '/contact#reach-heading' }],
+        suggestions: [hi ? 'ऑफिस कहाँ है?' : 'Where are the offices?', hi ? 'अपॉइंटमेंट बुक करें' : 'Book an appointment'],
+      };
+    },
+  },
+  {
+    id: 'interests',
+    words: ['research', 'publication', 'publications', 'interests', 'research interest', 'academic interest', 'artificial intelligence', 'ai', 'technology', 'tech law', 'digital rights', 'shodh', 'शोध', 'रुचि', 'तकनीक'],
+    answer: (k, hi) => ({
+      text: (hi ? 'शैक्षणिक रुचियाँ:\n' : 'Academic and research interests:\n') + k.interests.map((i) => `• ${i}`).join('\n'),
+      links: [
+        { label: hi ? 'रिसर्च और पब्लिकेशन' : 'Research & Publications', href: '/publications' },
+        { label: hi ? 'लेख' : 'Articles', href: '/blog' },
+      ],
+    }),
+  },
+  {
+    id: 'ebooks',
+    words: ['e-book', 'e-books', 'ebook', 'ebooks', 'e book', 'e books', 'books', 'kitab', 'kitabein', 'kitaben', 'pustak', 'किताब', 'किताबें', 'पुस्तक', 'ई-बुक'],
+    answer: (k, hi) => ({
+      text: hi ? 'ई-बुक्स जल्द आ रही हैं। अपडेट के लिए आप व्हाट्सऐप चैनल से जुड़ सकते हैं।' : 'E-Books are coming soon. You can join the WhatsApp channel to stay updated.',
+      links: [
+        { label: 'E-Books', href: '/e-books' },
+        ...(k.whatsappChannel ? [{ label: hi ? 'व्हाट्सऐप चैनल' : 'WhatsApp channel', href: k.whatsappChannel, external: true }] : []),
+      ],
+    }),
+  },
+  {
+    id: 'channel',
+    words: ['whatsapp channel', 'channel', 'stay updated', 'get updates', 'join', 'subscribe', 'चैनल'],
+    answer: (k, hi) =>
+      k.whatsappChannel
+        ? {
+            text: hi ? 'अपडेट के लिए आधिकारिक व्हाट्सऐप चैनल से जुड़ें।' : 'Join the official WhatsApp channel to stay updated.',
+            links: [{ label: hi ? 'व्हाट्सऐप चैनल से जुड़ें' : 'Join WhatsApp Channel', href: k.whatsappChannel, external: true }],
+          }
+        : { text: hi ? 'सोशल मीडिया पर जुड़ें:' : 'Follow the advocate online:', links: k.profiles.map((p) => ({ label: p.label, href: p.href, external: true })) },
   },
   {
     id: 'news',
@@ -167,7 +309,7 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'legal-pages',
-    words: ['privacy policy', 'disclaimer', 'terms', 'bar council', 'bci', 'गोपनीयता'],
+    words: ['privacy policy', 'disclaimer', 'terms', 'bci', 'गोपनीयता'],
     answer: (_k, hi) => ({
       text: hi ? 'ये पेज देखें:' : 'You can read these pages:',
       links: [
@@ -220,6 +362,11 @@ export function answer(question: string, k: Knowledge, lang?: 'en' | 'hi'): Repl
     return TOPICS.find((t) => t.id === 'advice')!.answer(k, hi, q);
   }
 
+  // "Khel me kya karte ho?" — a named responsibility beats the generic "what do you do" words
+  if (['practice', 'about'].includes(ranked[0]?.t.id) && ranked.some((r) => r.t.id === 'responsibilities') && pickResponsibility(k, q)) {
+    return TOPICS.find((t) => t.id === 'responsibilities')!.answer(k, hi, q);
+  }
+
   // "Do you handle cyber fraud cases?" — a specific practice area
   if (area && (!ranked.length || ['practice', 'about'].includes(ranked[0].t.id))) {
     return {
@@ -235,8 +382,8 @@ export function answer(question: string, k: Knowledge, lang?: 'en' | 'hi'): Repl
 
   return {
     text: hi
-      ? 'माफ़ कीजिए, मुझे इसका उत्तर नहीं पता। मैं अधिवक्ता के बारे में, प्रैक्टिस एरिया, ऑफिस, संपर्क और अपॉइंटमेंट बुकिंग में मदद कर सकता हूँ।'
-      : 'Sorry, I don’t have an answer for that. I can help with information about the advocate, practice areas, offices, contact details and booking an appointment.',
+      ? 'माफ़ कीजिए, मुझे इसका उत्तर नहीं पता। मैं अधिवक्ता के बारे में, शिक्षा, प्रैक्टिस एरिया, सामाजिक ज़िम्मेदारियों, कार्यक्षेत्र, ऑफिस, संपर्क और अपॉइंटमेंट बुकिंग में मदद कर सकता हूँ।'
+      : 'Sorry, I don’t have an answer for that. I can help with information about the advocate, his education, practice areas, responsibilities, geographical reach, offices, contact details and booking an appointment.',
     suggestions: suggest(hi),
   };
 }

@@ -12,6 +12,17 @@ export type Knowledge = {
   profiles: { label: string; href: string }[];
   practiceAreas: { title: string; href: string; summary: string; matters: string[]; keywords: string[] }[];
   offices: { title: string; name: string; address: string; directions: string | null }[];
+  /** Every qualification in the Education section, in order */
+  qualifications: { degree: string; institution: string; detail: string }[];
+  barCouncil: string;
+  practiceSince: number;
+  /** Organisational responsibilities beyond legal practice (Home page section + detail pages) */
+  responsibilities: { organisation: string; role: string; heading: string; summary: string; themes: string[]; href: string }[];
+  /** Geographical reach (areas of practice, not offices) */
+  reach: { madhyaPradesh: string[]; gujarat: string[] };
+  /** Academic interests from the Research & Publications page */
+  interests: string[];
+  whatsappChannel: string | null;
   news: { title: string; href: string }[];
   articles: { title: string; href: string }[];
 };

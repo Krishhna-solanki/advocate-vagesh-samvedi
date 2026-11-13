@@ -60,11 +60,11 @@ export const viewport: Viewport = { themeColor: '#0B0B0B', colorScheme: 'dark' }
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-IN" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
-      <head>
-        {/* Animation/preloader states apply only when JS runs, so content is never hidden without it */}
-        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
-      </head>
       <body>
+        {/* Animation/preloader states apply only when JS runs, so content is never hidden without it.
+            First thing in <body> rather than in <head>: hosts such as Netlify inject a comment into <head>,
+            which stops React from finding a script there and makes hydration fail. */}
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
         <BackgroundEmblem />
         <Preloader />
         <ScrollAnimations />

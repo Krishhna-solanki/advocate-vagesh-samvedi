@@ -4,6 +4,7 @@ import { practiceAreas } from '../practice-areas';
 import { offices } from '../offices';
 import { getNewsMetas } from '../news';
 import { getArticleMetas } from '../insights';
+import { getResponsibilities, responsibilityPath } from '../responsibilities';
 import type { Knowledge } from './types';
 
 // Extra words visitors use for each practice area (English, Hinglish and Hindi), on top of the words in its title
@@ -45,6 +46,28 @@ export function getAssistantKnowledge(): Knowledge {
     offices: offices
       .filter((o) => !o.placeholder)
       .map((o) => ({ title: o.title, name: o.name ?? '', address: o.address, directions: o.directionsHref ?? null })),
+    qualifications: site.education.map((e) => ({ degree: e.degree, institution: e.institution, detail: e.detail })),
+    barCouncil: site.barCouncil,
+    practiceSince: site.practiceSince,
+    responsibilities: getResponsibilities().map((r) => ({
+      organisation: r.organisation,
+      role: r.role,
+      heading: r.heading ?? r.organisation,
+      summary: r.summary,
+      themes: r.themes.map((t) => t.title),
+      href: responsibilityPath(r.slug),
+    })),
+    reach: { madhyaPradesh: [...site.reachPlaces.madhyaPradesh], gujarat: [...site.reachPlaces.gujarat] },
+    // Same list as the Research & Publications page
+    interests: [
+      'Intellectual Property Rights',
+      'Artificial Intelligence & Law',
+      'Cybersecurity & Digital Regulation',
+      'Technology & Legal Development',
+      'Constitutional Law & Human Rights',
+      'Alternative Dispute Resolution',
+    ],
+    whatsappChannel: site.whatsappChannel ?? null,
     news: getNewsMetas()
       .filter((n) => !n.draft)
       .slice(0, 3)

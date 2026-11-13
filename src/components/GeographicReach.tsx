@@ -1,9 +1,10 @@
 import SectionHeading from './SectionHeading';
 import Reveal from './Reveal';
+import { site } from '@/lib/site';
 
 // Areas of professional reach — not offices (content document, Page 4).
-const mpPlaces = ['Jhabua', 'Petlawad', 'Thandla', 'Indore', 'Ujjain', 'Dhar', 'Sardarpur', 'Ratlam', 'Other districts and locations across Madhya Pradesh'];
-const gujaratPlaces = ['Vadodara', 'Dahod', 'Ahmedabad'];
+const mpPlaces = [...site.reachPlaces.madhyaPradesh, 'Other districts and locations across Madhya Pradesh'];
+const gujaratPlaces = site.reachPlaces.gujarat;
 
 function PlaceList({ items }: { items: string[] }) {
   return (
